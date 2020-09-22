@@ -2,17 +2,21 @@
 layout: default
 ---
 
-
-{% include career-profile.html %}
+{% comment %}
+  {% include career-profile.html %}
+{% endcomment %}
 
 {% unless site.data.data.sidebar.education %}
   {% include education.html %}
 {% endunless %}
 
-{% include experiences.html %}
+{% include badges.html %}
+{% include certification.html %}
 
-{% include projects.html %}
 
-{% include publications.html %}
-
-{% include skills.html %}
+{% comment %}
+  {% include experiences.html %}
+  {% include projects.html %}
+  {% include publications.html %}
+  {% include skills.html %}
+{% endcomment %}

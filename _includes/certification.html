@@ -1,0 +1,54 @@
+{% assign certificates = site.data.data.certificate %}
+{% if certificates %}
+<section class="section certificate-section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-certificate fa-stack-2x"></i>
+      <i class="fas fa-certificate fa-stack-1x fa-inverse"></i>
+    </span>
+    {{ certificates.title }}
+  </h2>
+
+  {% if certificates.intro %}
+  <div class="intro">
+      <p>{{ certificates.intro }}</p>
+  </div><!--//intro-->
+  {% endif %}
+
+  {% for certificate in certificates.certificate %}
+    <div class="certificate-lisence-item">
+      <img src="{{ certificate.organization_logo }}" class="organization-logo" />
+      <div class="item">
+        <span class="certificate-title">
+          {% if certificate.name %}
+          <a href="{{ certificate.credential_URL }}" target="_blank">{{ certificate.name }}</a>
+          {% else %}
+          {{ certificate.name }}
+          {% endif %}
+        </span>
+
+        <div class="certificate-issuing-organization">
+          {{ certificate.issuing_organization }}
+        </div>
+        <div class="certificate-issuing-date">
+          {{ certificate.issue_date }}
+        </div>
+        {% if certificate.credential_id %}
+        <div class="certificate-credential-id">
+          Credential ID {{ certificate.credential_id }}
+        </div>
+        {% endif %}
+
+        {% if certificate.credential_URL %}
+        <div class="credential_URL">
+          <a href="{{ certificate.credential_URL }}" target="_blank">See credential</a>
+        </div>
+        {% endif %}
+
+      </div><!--//item-->
+    </div>
+  {% endfor %}
+
+</section><!--//section-->
+{% endif %}

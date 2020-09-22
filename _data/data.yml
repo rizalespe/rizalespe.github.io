@@ -27,7 +27,7 @@ sidebar:
 
     languages:
       - idiom: English
-        level: Professional
+        level: Fluent
 
       - idiom: Bahasa Indonesia
         level: Native
@@ -74,6 +74,63 @@ education:
         pretium quis, sem.
           - Bullet point
           - Bullet point
+
+  
+certificate:
+    title: Licenses & Certifications
+    intro: >
+    certificate:
+      - name: "Deep Neural Networks with PyTorch"
+        issuing_organization: "by Coursera, Authorized by IBM"
+        issue_date: "Issued 15 September 2020 - No Expiration Date"
+        credential_id: "3XWJ97FQXWDV"
+        credential_URL: https://www.coursera.org/account/accomplishments/certificate/3XWJ97FQXWDV
+        organization_logo: "assets/images/coursera-logo.jpeg"
+
+      - name: "Deep Learning NLP: Training GPT-2 from scratch"
+        issuing_organization: "by Coursera"
+        issue_date: "Issued 6 September 2020 - No Expiration Date"
+        credential_id: "PGT7XX7VKPMY"
+        credential_URL: https://www.coursera.org/account/accomplishments/certificate/PGT7XX7VKPMY
+        organization_logo: "assets/images/coursera-logo.jpeg"
+
+      - name: "Intermediate Pandas Python Library for Data Science"
+        issuing_organization: "by Coursera"
+        issue_date: "Issued 4 September 2020 - No Expiration Date"
+        credential_id: "3CE48H4PM2FX"
+        credential_URL: https://www.coursera.org/account/accomplishments/certificate/3CE48H4PM2FX
+        organization_logo: "assets/images/coursera-logo.jpeg"
+
+      - name: "Pandas Python Library for Beginners in Data Science"
+        issuing_organization: "by Coursera"
+        issue_date: "Issued 4 September 2020 - No Expiration Date"
+        credential_id: "MLT77FJA7H4Y"
+        credential_URL: https://www.coursera.org/account/accomplishments/certificate/MLT77FJA7H4Y
+        organization_logo: "assets/images/coursera-logo.jpeg"
+
+      - name: "Natural Language Processing with Sequence Models"
+        issuing_organization: "by Coursera"
+        issue_date: "Issued 31 August 2020 - No Expiration Date"
+        credential_id: "JXNGN9ZRWWDP"
+        credential_URL: https://www.coursera.org/account/accomplishments/certificate/JXNGN9ZRWWDP
+        organization_logo: "assets/images/coursera-logo.jpeg"
+
+      - name: "Sentiment Analysis with Deep Learning using BERT"
+        issuing_organization: "by Coursera"
+        issue_date: "Issued 26 August 2020 - No Expiration Date"
+        credential_id: "B6QHTFMY66ZT"
+        credential_URL: https://www.coursera.org/account/accomplishments/certificate/B6QHTFMY66ZT
+        organization_logo: "assets/images/coursera-logo.jpeg"
+
+      - name: "MTA: Software Development Fundamentals"
+        issuing_organization: "by Microsoft"
+        issue_date: "Issued Jun 2017 - No Expiration Date"
+        credential_id:
+        credential_URL: https://www.youracclaim.com/badges/d1d54dcd-6147-4dd6-b89d-c3c82d744aaf
+        organization_logo: "assets/images/microsoft-logo.png"
+
+
+
 experiences:
     - role: Lead Developer
       time: 2015 - Present
@@ -112,10 +169,9 @@ experiences:
         pellentesque eu, pretium quis, sem.
           - Bullet point
           - Bullet point
-certification:
-    title: Certification
+
 projects:
-    title: Certification
+    title: Projects
     intro: >
       You can list your side projects or open source libraries in this
       section. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
