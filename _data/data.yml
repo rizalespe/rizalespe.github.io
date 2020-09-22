@@ -8,11 +8,13 @@ sidebar:
 
     # Profile information
     name: Rizal Setya Perdana
-    tagline: AI enthusiast
+    tagline: Full-time learner
     avatar: profile-rizal.png  #place a 100x100 picture inside /assets/images/ folder and provide the name of the file below
 
     # Sidebar links
     email: rizalespe@ub.ac.id
+    email_alt: rizalespe@gmail
+    google_scholar: 2o91uV4AAAAJ
     phone:
     website: rizalespe.com #do not add http://
     linkedin: rizal-setya-perdana-b8a80939
@@ -75,7 +77,7 @@ education:
           - Bullet point
           - Bullet point
 
-  
+
 certificate:
     title: Licenses & Certifications
     intro: >

@@ -5,6 +5,15 @@
     <li class="email"><i class="fas fa-envelope"></i>
       <a href="mailto:{{ sidebar.email }}">{{ sidebar.email }}</a>
     </li>
+    <li class="email"><i class="fas fa-envelope"></i>
+      <a href="mailto:{{ sidebar.email_alt }}">{{ sidebar.email_alt }}</a>
+    </li>
+    {% endif %}
+
+    {% if sidebar.google_scholar %}
+    <li class="google_scholar"><i class="fas fa-book"></i>
+      <a href="https://scholar.google.co.id/citations?user={{ sidebar.google_scholar }}" target="_blank">Google Scholar</a>
+    </li>
     {% endif %}
 
     {% if sidebar.phone %}
