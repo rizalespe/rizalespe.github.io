@@ -33,6 +33,11 @@
       <a href="http://{{ sidebar.website }}" target="_blank">{{ sidebar.website }}</a>
     </li>
     {% endif %}
+    {% if sidebar.teaching %}
+    <li class="website"><i class="fas fa-globe-americas"></i>
+      <a href="http://{{ sidebar.teaching }}" target="_blank">Teaching</a>
+    </li>
+    {% endif %}
 
     {% if sidebar.linkedin %}
     <li class="linkedin"><i class="fab fa-linkedin"></i>
