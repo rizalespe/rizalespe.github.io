@@ -83,6 +83,13 @@ certificate:
     title: Licenses & Certifications
     intro: >
     certificate:
+      - name: "Microsoft Certified: Azure AI Fundamentals"
+        issuing_organization: "by Microsoft"
+        issue_date: "Issued Sep 2020 - No Expiration Date"
+        credential_id:
+        credential_URL: https://www.youracclaim.com/badges/166a4f25-1e28-4727-884c-5ef9a1982f07/
+        organization_logo: "assets/images/microsoft-logo.png"
+
       - name: "Deep Neural Networks with PyTorch"
         issuing_organization: "by Coursera, Authorized by IBM"
         issue_date: "Issued 15 September 2020 - No Expiration Date"
