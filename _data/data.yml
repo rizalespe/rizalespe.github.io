@@ -231,6 +231,16 @@ publications:
         authors: Edgar T. Irons
         conference: "Comm. ACM 4 (1961), 51–55"
 
+blog_posts:
+    title: Blog Post
+    intro: |
+
+    article:
+      - title: Evaluasi Metrik Kualitas pada Sistem Penghasil Bahasa Alami (ID)
+        link: https://rizalespe.com/evaluasi-metrik-kualitas-pada-sistem-penghasil-bahasa-alami-nlg-metric-evaluation-2079af7a81ea
+        authors: Rizal Setya Perdana
+        conference: "11-10-2020"
+
 skills:
     title: Skills &amp; Proficiency
 

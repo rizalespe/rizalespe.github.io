@@ -1,0 +1,31 @@
+{% assign blog_posts = site.data.data.blog_posts %}
+{% if blog_posts %}
+<section class="section publications-section">
+
+  <h2 class="section-title">
+    <span class="fa-stack fa-xs">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-file-alt fa-stack-1x fa-inverse"></i>
+    </span>
+    {{ blog_posts.title }}
+  </h2>
+
+  {% if blog_posts.intro %}
+  <div class="intro">
+    {{ blog_posts.intro | markdownify }}
+  </div><!--//intro-->
+  {% endif %}
+
+  {% for post in blog_posts.article %}
+  <div class="item">
+    {% if post.link %}
+      <li>({{ post.conference }}) <a target="_blank" href="{{ post.link }}">{{ post.title }}</a></li>
+    {% else %}
+      <li>{{ post.title }}</li>
+    {% endif %}
+
+  </div><!--//item-->
+  {% endfor %}
+
+</section><!--//section-->
+{% endif %}
