@@ -139,6 +139,13 @@ certificate:
         credential_id:
         credential_URL: https://www.youracclaim.com/badges/d1d54dcd-6147-4dd6-b89d-c3c82d744aaf
         organization_logo: "assets/images/microsoft-logo.png"
+      
+      - name: "Webinar: Pemanfaatan Teknologi AI Computer Vision Guna Menunjang Implementasi Protokol Kesehatan COVID-19 di Daerah"
+        issuing_organization: "by APEKSI bekerjasama dengan PT Nodeflux Teknologi Indonesia, PT Huawei Tech Investment dan PT Virtus Teknologi Indonesia"
+        issue_date: "Issued 08 Oktober 2020"
+        credential_id:
+        credential_URL: https://github.com/rizalespe/rizalespe.github.io/blob/master/assets/certificates/E-Sertifikat%20AI%20Vision%20Rizal%20Setya%20Perdana.pdf
+        organization_logo: "https://cdn-kisikisi.qerja.com/asset/images/logo/nodeflux-teknologi-indonesia-pt.jpg"
 
 
 
