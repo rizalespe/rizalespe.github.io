@@ -19,7 +19,7 @@
   {% for post in blog_posts.article %}
   <div class="item">
     {% if post.link %}
-      <li>({{ post.conference }}) <a target="_blank" href="{{ post.link }}">{{ post.title }}</a></li>
+      <li>({{ post.conference }}) <br/><a target="_blank" href="{{ post.link }}">{{ post.title }}</a></li>
     {% else %}
       <li>{{ post.title }}</li>
     {% endif %}
