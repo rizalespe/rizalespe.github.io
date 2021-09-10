@@ -1,5 +1,6 @@
 {% assign certificates = site.data.data.certificate %}
-{% if certificates %}
+
+{% for certificate in certificates %}
 <section class="section certificate-section">
 
   <h2 class="section-title">
@@ -55,4 +56,4 @@
   {% endfor %}
 
 </section><!--//section-->
-{% endif %}
+{% endfor %}
