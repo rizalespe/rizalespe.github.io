@@ -2,7 +2,7 @@
 
 {% if certificates %}
 <section class="section certificate-section">
-
+  
   <h2 class="section-title">
     <span class="fa-stack fa-xs">
       <i class="fas fa-certificate fa-stack-2x"></i>
@@ -10,7 +10,7 @@
     </span>
     {{ certificates.title }}
   </h2>
-
+  <a href="/licences_certifications.html"><u>View All</u></a>
   {% if certificates.intro %}
   <div class="intro">
       <p>{{ certificates.intro }}</p>
@@ -54,7 +54,5 @@
       </div><!--//item-->
     </div>
   {% endfor %}
-
-  <a href="/licences_certifications.html">View All</a>
 </section><!--//section-->
 {% endif %}
