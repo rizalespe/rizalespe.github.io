@@ -189,18 +189,10 @@ experiences:
 projects:
     title: Projects
     intro: >
-      You can list your side projects or open source libraries in this
-      section. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Vestibulum et ligula in nunc bibendum fringilla a eu lectus.
     assignments:
       - title: Pelayanan Imigrasi di Luar Negeri
         link: "http://reservasi-app.rizalespe.com/"
         tagline: "Sistem reservasi online untuk pelayanan keimigrasian."
-
-      - title: DevStudio
-        link: "#"
-        tagline: "A responsive website template designed to help web developers/designers market their services."
-
 
 publications:
     title: Publications
