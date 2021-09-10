@@ -17,7 +17,7 @@
   </div><!--//intro-->
   {% endif %}
 
-  {% for certificate in certificates.certificate %}
+  {% for certificate in certificates.certificate limit:3 %}
     <div class="certificate-lisence-item">
       <img src="{{ certificate.organization_logo }}" class="organization-logo" />
       <div class="item">
