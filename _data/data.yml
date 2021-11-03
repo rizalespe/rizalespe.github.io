@@ -80,6 +80,12 @@ certificate:
     title: Licenses & Certifications
     intro: >
     certificate:
+      - name: "ToT Microcredential Certification Data Science - Artificial Intelligence"
+        issuing_organization: "Direktorat Jendral Pendidikan Tinggi Kementrian Pendidikan dan Kebudayaan Republik Indonesia"
+        issue_date: "Issued Feb 2021 - No Expiration Date"
+        credential_id:
+        certificate_file: "assets/certificates/sertifikat_tot_microcredential_datascience_AI.pdf"
+        
       - name: "Microsoft Certified: Azure AI Fundamentals"
         issuing_organization: "by Microsoft"
         issue_date: "Issued Sep 2020 - No Expiration Date"
