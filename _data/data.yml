@@ -190,7 +190,7 @@ projects:
     intro: >
     assignments:
       - title: Pelayanan Imigrasi di Luar Negeri
-        link: "http://reservasi-app.rizalespe.com/"
+        link: "http://imigrasi.kbritokyo.jp/"
         tagline: "Sistem reservasi online untuk pelayanan keimigrasian."
 
 publications:
