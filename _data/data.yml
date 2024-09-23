@@ -13,7 +13,6 @@ sidebar:
 
     # Sidebar links
     email: rizalespe@ub.ac.id
-    email_alt: rizalespe@gmail
     google_scholar: 2o91uV4AAAAJ
     phone:
     website: rizalespe.com #do not add http://
@@ -22,7 +21,6 @@ sidebar:
     telegram: # add your nickname without '@' sign
     gitlab:
     bitbucket:
-    twitter: '@rizalespe'
     stack-overflow: # Number/Username, e.g. 123456/alandoe
     codewars:
     goodreads: # Number-Username, e.g. 123456-alandoe
