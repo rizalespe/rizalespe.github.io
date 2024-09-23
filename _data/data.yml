@@ -231,6 +231,61 @@ blog_posts:
         conference: "11-10-2020"
         
 
+
+talks:
+    title: Talks
+    intro: |
+      
+    talk:
+      - title: "Menyusun Extended Abstract yang Menarik dengan Pemanfaatan Artificial Intelligence (AI)"
+        event: "K-RISMA XII BOOTCAMP 2024"
+        date: "08/2024"
+      - title: "Mini Lecture: Clustering Theory and Application using Orange Data Mining"
+        event: "Program Special Course 2.0, International Relations Office (IRO)"
+        date: "08/2024" 
+      - title: "Artificial Intelligence & Machine Learning (For Everyday Use)"
+        event: "In-house Training: Grup Kebijakan Pengelolaan Uang Bank Indonesia"
+        date: "07/2024"
+      - title: "Pengenalan Kecerdasan Artifisial (AI) untuk Menunjang Produktivitas Pendidik"
+        event: "Pelatihan Implementasi AI dalam Menunjang Proses Belajar Mengajar bagi Dosen, Fakultas Teknologi Pertanian UB"
+        date: "06/2024"
+      - title: "Big Data Analytics: Arsitektur, Alat, dan Teknik Terkini"
+        event: "Webinar Nasional: Big Data Analytics-Mengubah Data Menjadi Keputusan Strategis"
+        date: "06/2024"
+      - title: "Implementasi Text Mining AI (Tanpa Koding)"
+        event: "Klinik Ilmiah"
+        date: "06/2024"
+      - title: "Persiapan LKS Artificial Intelligence (AI)"
+        event: "SMK Negeri 8 Malang"
+        date: "02/2024"
+      - title: "Pengenalan Data Mining Dasar untuk Penelitian Kesehatan"
+        event: "Klinik Ilmiah"
+        date: "02/2024"
+      - title: "Strategi Pengembangan AI dalam Bidang Kesehatan: Pendekatan Bidang Ilmu Keperawatan dan Gizi"
+        event: "Kelompok Kajian Metabolik Syndrome, Fakultas Ilmu Kesehatan (FIKES) UB"
+        date: 11/2023
+      - title: "AI-Driven Innovations in Food Service"
+        event: "Current Issue Of Food and Nutrition, Fakultas Ilmu Kesehatan (FIKES) UB"
+        date: "10/2023"
+      - title: "Hands-on Session: Data Analysis using AI Software"
+        event: "5th International Conference Brawijaya Dentistry (ICBD)"
+        date: "10/2023"
+      - title: "Implementasi Artficial Intelligence Sebagai Penunjang Pendidikan Mahasiswa di Era Digital"
+        event: Kelas Inovasi Fakultas Peternakan 2023
+        date: 09/2023
+      - title: "Mengenal Kecerdasan Artifisial (AI) dan Teknologinya"
+        event: "Webinar Seriues #3 Program Studi Teknik Informatika FILKOM UB"
+        date: 07/2023
+      - title: "Data Science: Pengelolaan Data Digital untuk Menunjang Ilmu Perpustakaan dan Informasi"
+        event: "Program Studi Perpustakaan dan Ilmu Informasi, Fakultas Sains dan Teknologi, UIN Maulana Malik Ibrahim"
+        date: 06/2023
+      - title: "Pemanfaatan Kecerdasan Buatan (AI) untuk Proses Belajar Mengajar"
+        event: "Workshop Workshop Pemanfaatan Aplikasi AI di SMKN 4 Malang"
+        date: "05/2023"
+      - title: "Use Data To Tell The Future: Analyze, Model, and Interpret Data"
+        event: "Hology Academy (5.0): Data Science"
+        date: 12/2022
+
 skills:
     title: Skills &amp; Proficiency
 
