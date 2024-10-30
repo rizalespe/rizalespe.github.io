@@ -21,14 +21,15 @@ jobs:
         run: pdflatex -interaction=nonstopmode -output-directory=. cv.tex
 
       - name: Move PDF to GitHub Pages Directory
-        run: mv cv.pdf ./docs/cv.pdf  # Adjust path if needed based on your GitHub Pages config
+        run: mv cv.pdf ./docs/cv.pdf  # Adjust path if needed
 
-      - name: Commit and push generated PDF
+      - name: Commit and pull/push generated PDF
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
-          git add docs/cv.pdf  # Adjust path if needed
-          git commit -m 'Update CV PDF for GitHub Pages'
-          git push
+          git add docs/cv.pdf
+          git commit -m 'Automated PDF generation from LaTeX'
+          git pull --rebase origin master  # Pull changes from the remote
+          git push origin master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
