@@ -8,7 +8,7 @@ title: UTS Praktikum HPC — Optimalisasi Sistem Prediksi Anomali Maritim Indone
 
 > **Tipe:** Take-Home Exam  
 > **Durasi:** 7 hari (sesuai jadwal yang ditetapkan dosen)  
-> **Infrastruktur:** VM Individual (4-core) + Shared CUDA Server  
+> **Infrastruktur:** Komputer pribadi masing-masing mahasiswa  
 > **Target Waktu Eksekusi Sistem:** < 15 menit (real-time requirement)
 
 ---
@@ -33,13 +33,7 @@ Anda ditugaskan sebagai **Spesialis HPC** untuk mengoptimasi tiga modul utama da
 
 ## File Kode yang Disediakan
 
-Unduh seluruh starter code dari repositori:
-
-```
-git clone https://github.com/rizalespe/hpc-mid-test-starter
-```
-
-Atau unduh masing-masing file:
+Unduh masing-masing starter code berikut:
 - [`wave_stats.c`](code/wave_stats.c) — Modul OpenMP (Bagian 1)
 - [`signal_filter.c`](code/signal_filter.c) — Modul SIMD (Bagian 2)
 - [`wave_propagation.cu`](code/wave_propagation.cu) — Modul CUDA (Bagian 3)
@@ -60,21 +54,24 @@ Lihat [template laporan](template_laporan) untuk panduan lengkap.
 
 ---
 
-## Infrastruktur & Akses
+## Infrastruktur & Kompilasi
 
-### VM Individual (Bagian 1 & 2)
+Gunakan komputer pribadi masing-masing untuk mengerjakan soal ini. Pastikan tools berikut sudah terinstal:
+
+### Bagian 1 & 2 (OpenMP & SIMD)
 ```bash
-# Spesifikasi: 4-core CPU, 8GB RAM
-# Akses via SSH (koordinasi dengan asisten dosen)
+# Pastikan GCC terinstal dengan dukungan OpenMP
 gcc -O2 -fopenmp -fopt-info-vec wave_stats.c -o wave_stats
 ```
 
-### Shared CUDA Server (Bagian 3)
+### Bagian 3 (CUDA)
 ```bash
-# Gunakan akun yang telah diberikan
+# Pastikan NVIDIA CUDA Toolkit terinstal
 nvcc -O2 wave_propagation.cu -o wave_propagation
 nvprof ./wave_propagation
 ```
+
+> **Catatan:** Jika komputer Anda tidak memiliki GPU NVIDIA, gunakan [Google Colab](https://colab.research.google.com/) dengan runtime GPU untuk mengerjakan Bagian 3.
 
 ---
 

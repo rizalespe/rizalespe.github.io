@@ -281,7 +281,7 @@ Implementasikan fungsi ini dan bandingkan timeline eksekusi dengan `nvprof`.
 2. Penjelasan matematis kesalahan global thread index
 3. Kode lengkap semua versi perbaikan (index fix + warp divergence fix + transfer optimization)
 4. Output `nvprof` dari kode optimal (tunjukkan improvement)
-5. Tabel perbandingan performa dengan data nyata dari CUDA server
+5. Tabel perbandingan performa dengan data nyata dari komputer/environment Anda
 6. Analisis: apakah bottleneck berhasil dieliminasi? Apa bottleneck berikutnya?
 
 ---

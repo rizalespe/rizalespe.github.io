@@ -161,7 +161,7 @@ Ukur perbedaan waktu antara versi *unaligned* dan *aligned* dan sajikan dalam ta
 
 ### Soal 2.3 — Benchmarking & Analisis (8 poin)
 
-Lakukan eksperimen komprehensif dan isi tabel berikut dengan data nyata dari VM Anda:
+Lakukan eksperimen komprehensif dan isi tabel berikut dengan data nyata dari komputer Anda:
 
 | Versi | Flag Kompilasi | Divektorisasi? | Waktu (detik) | Speedup |
 |-------|----------------|----------------|---------------|---------|

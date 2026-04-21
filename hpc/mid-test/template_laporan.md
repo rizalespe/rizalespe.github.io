@@ -24,8 +24,8 @@ title: Template Laporan UTS
 | **NIM** | [NIM Anda] |
 | **Program Studi** | [Prodi Anda] |
 | **Tanggal Pengumpulan** | [DD/MM/YYYY] |
-| **Spesifikasi VM** | [Jumlah core, RAM, OS] |
-| **CUDA Server** | [Nama/spesifikasi GPU yang digunakan] |
+| **Spesifikasi Komputer** | [CPU, jumlah core, RAM, OS] |
+| **GPU (jika ada)** | [Nama/spesifikasi GPU yang digunakan] |
 
 ---
 
@@ -80,7 +80,7 @@ Run 5: Rata-rata = [nilai]
 
 ### 1.3 Evaluasi Kinerja — Scheduling
 
-**Spesifikasi VM:** [isi spesifikasi]  
+**Spesifikasi Komputer:** [isi spesifikasi]  
 **OMP_NUM_THREADS:** [isi jumlah thread]
 
 | Strategi Scheduling | Waktu (detik) | Speedup vs Serial | Efisiensi (%) |

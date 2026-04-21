@@ -3,7 +3,7 @@ name: Compile LaTeX to PDF and Deploy to GitHub Pages
 on:
   push:
     paths:
-      - '**/*.tex'  # Triggers when any .tex file is updated
+      - 'cv.tex'  # Only triggers when cv.tex is updated
   workflow_dispatch:  # Optional, allows manual triggering from GitHub Actions tab
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
         run: pdflatex -interaction=nonstopmode -output-directory=. cv.tex
 
       - name: Move PDF to GitHub Pages Directory
-        run: mv cv.pdf ./docs/cv.pdf  # Adjust path if needed
+        run: mkdir -p ./docs && mv cv.pdf ./docs/cv.pdf
 
       - name: Commit and pull/push generated PDF
         run: |

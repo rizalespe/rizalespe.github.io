@@ -152,7 +152,7 @@ dimana $p$ adalah jumlah thread yang digunakan.
 
 1. Screenshot/output terminal menunjukkan inkonsistensi pada kode awal
 2. Kode lengkap versi perbaikan dengan komentar penjelasan
-3. Tabel hasil eksperimen scheduling (dengan data nyata dari VM Anda)
+3. Tabel hasil eksperimen scheduling (dengan data nyata dari komputer Anda)
 4. Grafik perbandingan waktu eksekusi (bar chart atau line chart)
 5. Analisis singkat trade-off antara overhead scheduling dan load balancing
 
