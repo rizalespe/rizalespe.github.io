@@ -7,8 +7,8 @@ title: UTS Praktikum HPC — Optimalisasi Sistem Prediksi Anomali Maritim Indone
 ## "Optimalisasi Sistem Prediksi Anomali Maritim Indonesia"
 
 > **Tipe:** Take-Home Exam  
-> **Durasi:** 7 hari 
-> **Infrastruktur:** Komputer pribadi masing-masing mahasiswa 
+> **Durasi:** 7 hari   
+
 ---
 
 ## Latar Belakang
