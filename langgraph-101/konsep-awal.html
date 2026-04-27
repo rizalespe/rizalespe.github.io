@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LangGraph 101 — Belajar dari Nol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e28;
+    --surface: #1e2330;
+    --surface2: #252b3a;
+    --border: #2e3548;
+    --border2: #3d4560;
+    --text: #e8eaf0;
+    --text2: #9ba3be;
+    --text3: #636b8a;
+    --accent: #5b8af0;
+    --accent2: #7c5de8;
+    --green: #3ecf8e;
+    --orange: #f5a623;
+    --red: #f06090;
+    --yellow: #f5d742;
+    --teal: #38bdf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,15,20,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text); }
+  .nav-links {
+    display: flex; gap: 8px; margin-left: auto; list-style: none;
+  }
+  .nav-links a {
+    color: var(--text2); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    padding: 6px 12px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+  .nav-badge {
+    background: var(--accent); color: white;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 99px;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 32px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 40%, rgba(91,138,240,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 70% 60%, rgba(124,93,232,0.10) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.25;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(91,138,240,0.12);
+    border: 1px solid rgba(91,138,240,0.3);
+    border-radius: 99px; padding: 6px 16px;
+    font-size: 12px; font-weight: 600;
+    color: var(--accent); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .hero h1 .hl { color: var(--accent); }
+  .hero h1 .hl2 { color: var(--green); }
+  .hero-sub {
+    font-size: 18px; color: var(--text2);
+    font-weight: 300; line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white;
+    padding: 13px 28px; border-radius: 10px;
+    text-decoration: none; font-weight: 600; font-size: 15px;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 0 0 0 rgba(91,138,240,0.5);
+  }
+  .btn-primary:hover {
+    background: #6b96f5; transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(91,138,240,0.35);
+  }
+  .btn-ghost {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border2);
+    padding: 13px 28px; border-radius: 10px;
+    text-decoration: none; font-weight: 500; font-size: 15px;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost:hover { background: var(--surface2); transform: translateY(-2px); }
+
+  /* HERO ILLUSTRATION */
+  .hero-visual { position: relative; }
+  .graph-viz {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .graph-title {
+    font-size: 11px; font-weight: 600; color: var(--text3);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .graph-nodes {
+    position: relative; height: 280px;
+  }
+  .gnode {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px;
+  }
+  .gnode-circle {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    border: 2px solid;
+    position: relative;
+  }
+  .gnode-circle::after {
+    content: '';
+    position: absolute; inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid;
+    opacity: 0.2;
+    animation: ring-pulse 2s ease-in-out infinite;
+  }
+  @keyframes ring-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.1); opacity: 0.05; }
+  }
+  .gnode-label {
+    font-size: 11px; font-weight: 600; color: var(--text2);
+    text-align: center; white-space: nowrap;
+  }
+  .n-start { top: 110px; left: 10px; }
+  .n-start .gnode-circle { background: rgba(62,207,142,0.15); border-color: var(--green); color: var(--green); }
+  .n-start .gnode-circle::after { border-color: var(--green); }
+  .n-think { top: 20px; left: 100px; }
+  .n-think .gnode-circle { background: rgba(91,138,240,0.15); border-color: var(--accent); color: var(--accent); }
+  .n-think .gnode-circle::after { border-color: var(--accent); animation-delay: 0.5s; }
+  .n-tool { top: 110px; left: 185px; }
+  .n-tool .gnode-circle { background: rgba(245,166,35,0.15); border-color: var(--orange); color: var(--orange); }
+  .n-tool .gnode-circle::after { border-color: var(--orange); animation-delay: 1s; }
+  .n-check { top: 200px; left: 100px; }
+  .n-check .gnode-circle { background: rgba(124,93,232,0.15); border-color: var(--accent2); color: var(--accent2); }
+  .n-check .gnode-circle::after { border-color: var(--accent2); animation-delay: 1.5s; }
+  .n-end { top: 110px; left: 275px; }
+  .n-end .gnode-circle { background: rgba(240,96,144,0.15); border-color: var(--red); color: var(--red); }
+  .n-end .gnode-circle::after { border-color: var(--red); animation-delay: 0.8s; }
+  svg.edges {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; overflow: visible;
+  }
+  .edge { stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; animation: dash 3s linear infinite; }
+  @keyframes dash { to { stroke-dashoffset: -20; } }
+
+  /* SECTION BASICS */
+  section { padding: 80px 32px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h2.section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 800; line-height: 1.15;
+    letter-spacing: -0.02em; margin-bottom: 16px;
+  }
+  .section-desc {
+    color: var(--text2); font-size: 17px; font-weight: 300;
+    max-width: 600px; margin-bottom: 48px;
+  }
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ANALOGY SECTION */
+  .analogy-section { background: var(--bg2); }
+  .analogy-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .analogy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .analogy-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+  .analogy-card.c1::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .analogy-card.c2::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
+  .analogy-card.c3::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+  .analogy-card.c4::before { background: linear-gradient(90deg, var(--red), var(--orange)); }
+  .analogy-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+  .analogy-emoji { font-size: 36px; margin-bottom: 14px; }
+  .analogy-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .analogy-compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-top: 14px;
+  }
+  .compare-box {
+    background: var(--bg3); border-radius: 8px; padding: 10px 12px;
+    font-size: 12px; line-height: 1.5;
+  }
+  .compare-box .label {
+    font-weight: 700; font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .compare-box.old .label { color: var(--text3); }
+  .compare-box.new .label { color: var(--accent); }
+
+  /* CONCEPTS */
+  .concepts-section { background: var(--bg); }
+  .concepts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .concept-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    transition: border-color 0.2s;
+  }
+  .concept-block:hover { border-color: var(--border2); }
+  .concept-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px; font-weight: 800;
+    color: var(--border2); line-height: 1;
+    margin-bottom: 12px;
+  }
+  .concept-icon { font-size: 28px; margin-bottom: 12px; }
+  .concept-block h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700; margin-bottom: 10px;
+  }
+  .concept-block p { color: var(--text2); font-size: 14.5px; line-height: 1.7; }
+  .concept-block .tag {
+    display: inline-block; margin-top: 14px;
+    background: rgba(91,138,240,0.12);
+    border: 1px solid rgba(91,138,240,0.25);
+    color: var(--accent); font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 99px;
+  }
+  .concept-visual {
+    margin-top: 16px;
+    background: var(--bg3); border-radius: 10px; padding: 16px;
+  }
+  .flow-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; flex-wrap: wrap;
+  }
+  .flow-box {
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 6px; padding: 5px 10px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+  }
+  .flow-arrow { color: var(--text3); font-size: 14px; }
+  .flow-arrow.loop { color: var(--orange); }
+
+  /* STATE VISUAL */
+  .state-boxes {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .state-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px;
+  }
+  .state-key {
+    font-family: 'DM Mono', monospace;
+    color: var(--accent); font-size: 11px;
+    min-width: 80px;
+  }
+  .state-val {
+    font-family: 'DM Mono', monospace;
+    color: var(--green); font-size: 11px;
+    background: rgba(62,207,142,0.08);
+    border-radius: 4px; padding: 2px 8px;
+  }
+
+  /* CODE SECTION */
+  .code-section { background: var(--bg2); }
+  .code-tabs {
+    display: flex; gap: 4px; margin-bottom: 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .code-tab {
+    padding: 10px 20px; font-size: 13px; font-weight: 500;
+    color: var(--text3); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+    background: none; border-top: none; border-left: none; border-right: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .code-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .code-tab:hover:not(.active) { color: var(--text2); }
+  .code-panel { display: none; }
+  .code-panel.active { display: block; }
+  .code-wrapper {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+  .code-header {
+    background: var(--surface); padding: 10px 18px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-dots { display: flex; gap: 6px; }
+  .code-dot { width: 11px; height: 11px; border-radius: 50%; }
+  .code-dot:nth-child(1) { background: #ff5f57; }
+  .code-dot:nth-child(2) { background: #febc2e; }
+  .code-dot:nth-child(3) { background: #28c840; }
+  .code-filename {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    color: var(--text3); margin-left: 4px;
+  }
+  pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; line-height: 1.7;
+    padding: 24px 28px; overflow-x: auto;
+    color: var(--text2);
+  }
+  .kw { color: #c792ea; }
+  .fn { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .cm { color: #546e7a; font-style: italic; }
+  .tp { color: var(--teal); }
+  .nm { color: var(--orange); }
+  .op { color: var(--text2); }
+
+  /* CODE EXPLANATION */
+  .code-explain {
+    margin-top: 20px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .explain-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+  }
+  .explain-box .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; background: var(--accent);
+    border-radius: 50%; font-size: 11px; font-weight: 700; color: white;
+    margin-bottom: 8px;
+  }
+  .explain-box h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .explain-box p { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+  /* FLOW SECTION */
+  .flow-section { background: var(--bg); }
+  .flow-diagram {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px; overflow-x: auto;
+  }
+  .flow-steps {
+    display: flex; align-items: flex-start;
+    gap: 0; position: relative; min-width: 600px;
+  }
+  .flow-step {
+    flex: 1; text-align: center; position: relative;
+  }
+  .flow-step-circle {
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin: 0 auto 12px;
+    border: 2px solid;
+    position: relative; z-index: 1;
+  }
+  .flow-step-line {
+    position: absolute;
+    top: 29px; left: calc(50% + 30px); right: calc(-50% + 30px);
+    height: 2px;
+    z-index: 0;
+  }
+  .flow-step:last-child .flow-step-line { display: none; }
+  .flow-step-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700; margin-bottom: 6px;
+  }
+  .flow-step-desc { font-size: 11.5px; color: var(--text3); line-height: 1.5; max-width: 100px; margin: 0 auto; }
+  .fs1 .flow-step-circle { background: rgba(62,207,142,0.1); border-color: var(--green); color: var(--green); }
+  .fs1 .flow-step-line { background: linear-gradient(90deg, var(--green), var(--accent)); }
+  .fs2 .flow-step-circle { background: rgba(91,138,240,0.1); border-color: var(--accent); color: var(--accent); }
+  .fs2 .flow-step-line { background: linear-gradient(90deg, var(--accent), var(--orange)); }
+  .fs3 .flow-step-circle { background: rgba(245,166,35,0.1); border-color: var(--orange); color: var(--orange); }
+  .fs3 .flow-step-line { background: linear-gradient(90deg, var(--orange), var(--accent2)); }
+  .fs4 .flow-step-circle { background: rgba(124,93,232,0.1); border-color: var(--accent2); color: var(--accent2); }
+  .fs4 .flow-step-line { background: linear-gradient(90deg, var(--accent2), var(--red)); }
+  .fs5 .flow-step-circle { background: rgba(240,96,144,0.1); border-color: var(--red); color: var(--red); }
+
+  /* MISSION SECTION */
+  .mission-section { background: var(--bg2); }
+  .mission-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .mission-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    transition: all 0.3s;
+  }
+  .mission-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+  .mission-header {
+    padding: 20px 24px 0;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .mission-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 99px;
+    flex-shrink: 0;
+  }
+  .badge-beginner { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.3); }
+  .badge-intermediate { background: rgba(245,166,35,0.12); color: var(--orange); border: 1px solid rgba(245,166,35,0.3); }
+  .badge-advanced { background: rgba(240,96,144,0.12); color: var(--red); border: 1px solid rgba(240,96,144,0.3); }
+  .mission-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px; font-weight: 800; color: var(--border2);
+    line-height: 1; flex-shrink: 0;
+  }
+  .mission-body { padding: 14px 24px 24px; }
+  .mission-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .mission-desc {
+    color: var(--text2); font-size: 13.5px; line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .mission-tasks { list-style: none; margin-bottom: 18px; }
+  .mission-tasks li {
+    font-size: 13px; color: var(--text2);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .mission-tasks li:last-child { border-bottom: none; }
+  .mission-tasks li::before {
+    content: '▹'; color: var(--accent);
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .mission-footer {
+    padding: 14px 24px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .mission-meta { display: flex; gap: 12px; }
+  .mission-tag {
+    font-size: 11px; color: var(--text3);
+    background: var(--bg2); border: 1px solid var(--border);
+    padding: 3px 9px; border-radius: 99px;
+  }
+  .btn-mission {
+    background: var(--accent); color: white;
+    font-size: 12px; font-weight: 600;
+    padding: 7px 16px; border-radius: 7px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-mission:hover { background: #6b96f5; transform: translateY(-1px); }
+
+  /* TIPS SECTION */
+  .tips-section { background: var(--bg); }
+  .tips-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .tip-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .tip-icon {
+    font-size: 24px; flex-shrink: 0; margin-top: 2px;
+  }
+  .tip-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+  .tip-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* GLOSSARY */
+  .glossary-section { background: var(--bg2); }
+  .glossary-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .gloss-item {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .gloss-term {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; font-weight: 500; color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .gloss-def { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .gloss-analogy {
+    margin-top: 6px; font-size: 12px; color: var(--text3);
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 40px 32px; text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  footer p { color: var(--text3); font-size: 13px; }
+  footer a { color: var(--text2); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 200; transition: width 0.1s;
+  }
+
+  /* INLINE CODE */
+  code {
+    font-family: 'DM Mono', monospace;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 6px; font-size: 0.9em;
+    color: var(--teal);
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: rgba(91,138,240,0.08);
+    border: 1px solid rgba(91,138,240,0.25);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px; margin: 20px 0;
+    font-size: 14px; color: var(--text2); line-height: 1.65;
+  }
+  .callout.warning {
+    background: rgba(245,166,35,0.08);
+    border-color: rgba(245,166,35,0.25);
+    border-left-color: var(--orange);
+  }
+  .callout strong { color: var(--text); }
+
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .concepts-grid { grid-template-columns: 1fr; }
+    .code-explain { grid-template-columns: 1fr; }
+    nav { padding: 12px 16px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Lang<span>Graph</span></a>
+  <span class="nav-badge">101</span>
+  <ul class="nav-links">
+    <li><a href="#analogi">Analogi</a></li>
+    <li><a href="#konsep">Konsep</a></li>
+    <li><a href="#kode">Kode</a></li>
+    <li><a href="#misi">Misi</a></li>
+    <li><a href="#glosarium">Glosarium</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Workshop LangGraph · Dari Nol</div>
+      <h1>
+        Bikin AI yang<br>
+        <span class="hl">bisa berpikir</span><br>
+        <span class="hl2">berulang-ulang</span>
+      </h1>
+      <p class="hero-sub">
+        LangGraph bukan sekedar chatbot biasa. Ini cara membuat AI yang bisa <strong>mikir, pakai alat, cek hasilnya, lalu mikir lagi</strong> — seperti manusia menyelesaikan masalah nyata.
+      </p>
+      <div class="hero-ctas">
+        <a href="#analogi" class="btn-primary">Mulai Belajar →</a>
+        <a href="#misi" class="btn-ghost">Lihat Misi 🎯</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="graph-viz">
+        <div class="graph-title">ALUR KERJA LANGGRAPH</div>
+        <div class="graph-nodes">
+          <div class="gnode n-start"><div class="gnode-circle">▶</div><div class="gnode-label">START</div></div>
+          <div class="gnode n-think"><div class="gnode-circle">🧠</div><div class="gnode-label">Berpikir</div></div>
+          <div class="gnode n-tool"><div class="gnode-circle">🔧</div><div class="gnode-label">Pakai Alat</div></div>
+          <div class="gnode n-check"><div class="gnode-circle">✓</div><div class="gnode-label">Cek Lagi</div></div>
+          <div class="gnode n-end"><div class="gnode-circle">✨</div><div class="gnode-label">Jawaban</div></div>
+          <svg class="edges" viewBox="0 0 340 300">
+            <!-- start → think -->
+            <path class="edge" d="M 52,136 Q 90,60 116,60" stroke="#5b8af0"/>
+            <!-- think → tool -->
+            <path class="edge" d="M 152,60 Q 185,60 211,136" stroke="#f5a623"/>
+            <!-- tool → check -->
+            <path class="edge" d="M 211,162 Q 185,220 152,220" stroke="#7c5de8"/>
+            <!-- check → think (loop) -->
+            <path class="edge" d="M 116,220 Q 80,180 116,100" stroke="#f5a623" stroke-dasharray="3 4"/>
+            <!-- tool → end -->
+            <path class="edge" d="M 237,136 Q 270,120 301,136" stroke="#f06090"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ANALOGI SECTION -->
+<section class="analogy-section" id="analogi">
+  <div class="container">
+    <div class="section-tag">Sebelum Mulai</div>
+    <h2 class="section-title fade-up">Supaya mudah dipahami,<br>kita pakai analogi dulu</h2>
+    <p class="section-desc fade-up">LangGraph mungkin terdengar teknis. Tapi konsepnya mirip hal-hal yang kamu temui sehari-hari.</p>
+
+    <div class="analogy-cards">
+      <div class="analogy-card c1 fade-up">
+        <div class="analogy-emoji">🏭</div>
+        <div class="analogy-title">LangGraph seperti Pabrik Resep</div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.65">Bayangkan pabrik makanan: ada stasiun kerja (nodes), ada ban berjalan yang menghubungkan (edges), dan ada jadwal kapan harus pindah stasiun (kondisi).</p>
+        <div class="analogy-compare">
+          <div class="compare-box old">
+            <div class="label">ChatGPT Biasa</div>
+            Tanya → Jawab. Selesai. Satu kali.
+          </div>
+          <div class="compare-box new">
+            <div class="label">LangGraph</div>
+            Tanya → Pikir → Cek → Cari Info → Pikir Lagi → Jawab
+          </div>
+        </div>
+      </div>
+
+      <div class="analogy-card c2 fade-up">
+        <div class="analogy-emoji">🎮</div>
+        <div class="analogy-title">Seperti Karakter Game RPG</div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.65">Di game RPG, karakter punya <strong style="color:var(--text)">inventory</strong> (state), bisa <strong style="color:var(--text)">pakai skill</strong> (tools), dan punya alur <strong style="color:var(--text)">quest</strong> yang bercabang (conditional edges).</p>
+        <div class="analogy-compare">
+          <div class="compare-box old">
+            <div class="label">Tanpa LangGraph</div>
+            AI hanya jawab. Tidak ingat. Tidak punya "inventory".
+          </div>
+          <div class="compare-box new">
+            <div class="label">Dengan LangGraph</div>
+            AI punya memori, alat, dan alur kerja yang bisa berulang.
+          </div>
+        </div>
+      </div>
+
+      <div class="analogy-card c3 fade-up">
+        <div class="analogy-emoji">🍳</div>
+        <div class="analogy-title">Seperti Memasak dengan Chef</div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.65">Chef punya <strong style="color:var(--text)">mise en place</strong> (state yang disiapkan), langkah-langkah terstruktur (graph), dan bisa <strong style="color:var(--text)">koreksi rasa</strong> di tengah proses (loop).</p>
+        <div class="analogy-compare">
+          <div class="compare-box old">
+            <div class="label">AI Biasa</div>
+            Langsung tebak semua bahan dari satu instruksi.
+          </div>
+          <div class="compare-box new">
+            <div class="label">LangGraph</div>
+            Ikuti resep, cicipi, tambah bumbu jika perlu, hidangkan.
+          </div>
+        </div>
+      </div>
+
+      <div class="analogy-card c4 fade-up">
+        <div class="analogy-emoji">🕵️</div>
+        <div class="analogy-title">Seperti Detektif Memecahkan Kasus</div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.65">Detektif punya <strong style="color:var(--text)">catatan kasus</strong> (state), <strong style="color:var(--text)">investigasi</strong> berulang (loop), pakai <strong style="color:var(--text)">berbagai alat</strong> (tools), dan simpulkan ketika cukup bukti (kondisi stop).</p>
+        <div class="analogy-compare">
+          <div class="compare-box old">
+            <div class="label">Tanpa Loop</div>
+            Tebak pelaku dari satu clue. Selesai.
+          </div>
+          <div class="compare-box new">
+            <div class="label">Dengan Loop</div>
+            Kumpulkan bukti, analisis, cari lagi jika belum yakin.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- KONSEP SECTION -->
+<section class="concepts-section" id="konsep">
+  <div class="container">
+    <div class="section-tag">Konsep Inti</div>
+    <h2 class="section-title fade-up">4 Pilar LangGraph</h2>
+    <p class="section-desc fade-up">Semua yang perlu kamu pahami bisa dirangkum jadi empat konsep utama. Pahami ini, dan kamu sudah 80% jalan.</p>
+
+    <div class="concepts-grid">
+      <!-- NODE -->
+      <div class="concept-block fade-up">
+        <div class="concept-num">01</div>
+        <div class="concept-icon">📦</div>
+        <h3>Node — "Pos Kerja"</h3>
+        <p>Node adalah fungsi Python biasa yang punya satu tugas spesifik. Bayangkan pos kerja di pabrik: ada pos "analisis permintaan", pos "cari info di internet", pos "tulis jawaban". Setiap pos menerima bahan baku (state) dan menghasilkan output baru.</p>
+        <span class="tag">fungsi Python biasa</span>
+        <div class="concept-visual">
+          <div class="flow-row">
+            <div class="flow-box">state_masuk</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box" style="border-color:var(--accent);color:var(--accent)">def node_fn()</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">state_baru</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDGE -->
+      <div class="concept-block fade-up">
+        <div class="concept-num">02</div>
+        <div class="concept-icon">🔗</div>
+        <h3>Edge — "Jalan Penghubung"</h3>
+        <p>Edge adalah penghubung antar node. Ada dua jenis: <strong style="color:var(--text)">edge biasa</strong> (selalu lanjut ke node berikutnya) dan <strong style="color:var(--text)">conditional edge</strong> (memilih jalur berdasarkan kondisi — seperti persimpangan jalan).</p>
+        <span class="tag">koneksi & percabangan</span>
+        <div class="concept-visual">
+          <div class="flow-row" style="margin-bottom:8px">
+            <div class="flow-box">node_A</div>
+            <span class="flow-arrow">──always──→</span>
+            <div class="flow-box">node_B</div>
+          </div>
+          <div class="flow-row">
+            <div class="flow-box">node_A</div>
+            <span class="flow-arrow" style="color:var(--orange)">──if X──→</span>
+            <div class="flow-box" style="border-color:var(--orange)">node_C</div>
+            <span style="font-size:11px;color:var(--text3)">atau node_D</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE -->
+      <div class="concept-block fade-up">
+        <div class="concept-num">03</div>
+        <div class="concept-icon">🎒</div>
+        <h3>State — "Tas Perjalanan"</h3>
+        <p>State adalah tas yang dibawa dari node ke node. Isinya adalah semua informasi yang dibutuhkan sepanjang proses: pesan, hasil pencarian, hitungan iterasi, dll. Setiap node bisa menambah atau mengubah isi tas ini.</p>
+        <span class="tag">memori & konteks bersama</span>
+        <div class="concept-visual">
+          <div class="state-boxes">
+            <div class="state-row"><span class="state-key">messages:</span><span class="state-val">["Hitung 2+2"]</span></div>
+            <div class="state-row"><span class="state-key">hasil:</span><span class="state-val">4</span></div>
+            <div class="state-row"><span class="state-key">iterasi:</span><span class="state-val">2</span></div>
+            <div class="state-row"><span class="state-key">selesai:</span><span class="state-val">False</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRAPH -->
+      <div class="concept-block fade-up">
+        <div class="concept-num">04</div>
+        <div class="concept-icon">🗺️</div>
+        <h3>Graph — "Peta Keseluruhan"</h3>
+        <p>Graph adalah keseluruhan peta alur kerja yang menggabungkan semua node dan edge. Kamu define node-nya, sambungkan dengan edge, lalu compile — dan jadilah "otak" yang bisa dijalankan berulang kali dengan input berbeda.</p>
+        <span class="tag">orkestrasi penuh</span>
+        <div class="concept-visual">
+          <div class="flow-row" style="flex-wrap:wrap;gap:6px">
+            <div class="flow-box" style="border-color:var(--green);color:var(--green)">START</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">node1</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">node2</div>
+            <span class="flow-arrow loop">↩</span>
+            <div class="flow-box" style="border-color:var(--red);color:var(--red)">END</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout fade-up" style="margin-top:32px">
+      <strong>💡 Ingat Ini:</strong> LangGraph = Kumpulan Fungsi (nodes) + Penghubung (edges) + Memori Bersama (state) + Peta Alur (graph). Sesederhana itu!
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FLOW SECTION -->
+<section class="flow-section">
+  <div class="container">
+    <div class="section-tag">Cara Kerja</div>
+    <h2 class="section-title fade-up">Begini cara LangGraph bekerja</h2>
+    <p class="section-desc fade-up">Dari pertanyaan pengguna sampai jawaban final, ini tahapannya.</p>
+
+    <div class="flow-diagram fade-up">
+      <div class="flow-steps">
+        <div class="flow-step fs1">
+          <div class="flow-step-circle">💬</div>
+          <div class="flow-step-line"></div>
+          <div class="flow-step-name">Input</div>
+          <div class="flow-step-desc">Pengguna kirim pesan / pertanyaan</div>
+        </div>
+        <div class="flow-step fs2">
+          <div class="flow-step-circle">🧠</div>
+          <div class="flow-step-line"></div>
+          <div class="flow-step-name">Reasoning</div>
+          <div class="flow-step-desc">LLM berpikir, putuskan langkah berikutnya</div>
+        </div>
+        <div class="flow-step fs3">
+          <div class="flow-step-circle">🔧</div>
+          <div class="flow-step-line"></div>
+          <div class="flow-step-name">Tool Call</div>
+          <div class="flow-step-desc">Pakai alat: search, kalkulator, API, dll</div>
+        </div>
+        <div class="flow-step fs4">
+          <div class="flow-step-circle">🔄</div>
+          <div class="flow-step-line"></div>
+          <div class="flow-step-name">Evaluasi</div>
+          <div class="flow-step-desc">Sudah cukup? Lanjut atau loop lagi?</div>
+        </div>
+        <div class="flow-step fs5">
+          <div class="flow-step-circle">✨</div>
+          <div class="flow-step-name">Output</div>
+          <div class="flow-step-desc">Jawaban final dikirim ke pengguna</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning fade-up" style="margin-top:28px">
+      <strong>🔄 Kunci LangGraph:</strong> Langkah 2–4 bisa berulang berkali-kali sebelum sampai ke Output! Ini yang membuat LangGraph berbeda dari LLM biasa — ia bisa "berpikir dalam siklus" sampai masalah benar-benar terpecahkan.
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- KODE SECTION -->
+<section class="code-section" id="kode">
+  <div class="container">
+    <div class="section-tag">Hands-on Code</div>
+    <h2 class="section-title fade-up">Dari konsep ke kode nyata</h2>
+    <p class="section-desc fade-up">Kita mulai dari yang paling sederhana, lalu bertahap ke yang lebih kompleks. Semua kode bisa langsung kamu jalankan.</p>
+
+    <div class="fade-up">
+      <div class="code-tabs">
+        <button class="code-tab active" onclick="showTab('tab1', this)">1. Instalasi</button>
+        <button class="code-tab" onclick="showTab('tab2', this)">2. Graph Pertama</button>
+        <button class="code-tab" onclick="showTab('tab3', this)">3. State & Nodes</button>
+        <button class="code-tab" onclick="showTab('tab4', this)">4. Conditional Edge</button>
+        <button class="code-tab" onclick="showTab('tab5', this)">5. Agent + Tools</button>
+      </div>
+
+      <!-- TAB 1: Instalasi -->
+      <div class="code-panel active" id="tab1">
+        <div class="code-wrapper">
+          <div class="code-header">
+            <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+            <span class="code-filename">terminal</span>
+          </div>
+          <pre><span class="cm"># Install LangGraph dan dependencies</span>
+pip install langgraph langchain-core langchain-openai
+
+<span class="cm"># Jika pakai Anthropic Claude</span>
+pip install langchain-anthropic
+
+<span class="cm"># Cek versi</span>
+python -c <span class="str">"import langgraph; print(langgraph.__version__)"</span>
+
+<span class="cm"># Set API key (simpan di .env file - JANGAN hardcode!)</span>
+<span class="cm"># .env</span>
+OPENAI_API_KEY=sk-xxxxxxxxxxxxx
+<span class="cm"># atau</span>
+ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxx</pre>
+        </div>
+        <div class="code-explain">
+          <div class="explain-box">
+            <div class="num">1</div>
+            <h4>langgraph</h4>
+            <p>Library utama untuk membuat stateful graph. Ini inti dari semua yang akan kita bangun.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">2</div>
+            <h4>langchain-openai / anthropic</h4>
+            <p>Koneksi ke model AI (GPT-4, Claude, dll). LangGraph tidak terikat satu provider.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">3</div>
+            <h4>API Key di .env</h4>
+            <p>Selalu simpan API key di file .env yang masuk .gitignore. Jangan pernah hardcode!</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">4</div>
+            <h4>Virtual Environment</h4>
+            <p>Sebaiknya gunakan <code>python -m venv venv</code> sebelum install agar tidak konflik dependency.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Graph Pertama -->
+      <div class="code-panel" id="tab2">
+        <div class="code-wrapper">
+          <div class="code-header">
+            <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+            <span class="code-filename">graph_pertama.py</span>
+          </div>
+          <pre><span class="kw">from</span> <span class="tp">langgraph.graph</span> <span class="kw">import</span> <span class="fn">StateGraph</span>, <span class="nm">END</span>
+<span class="kw">from</span> <span class="tp">typing</span> <span class="kw">import</span> <span class="tp">TypedDict</span>
+
+<span class="cm"># 1. Definisikan "tas" (State) yang dibawa antar node</span>
+<span class="kw">class</span> <span class="fn">TasPesanku</span>(<span class="tp">TypedDict</span>):
+    pesan: <span class="tp">str</span>
+    hasil: <span class="tp">str</span>
+
+<span class="cm"># 2. Buat node (fungsi kerja)</span>
+<span class="kw">def</span> <span class="fn">node_sapa</span>(state: <span class="fn">TasPesanku</span>):
+    <span class="cm"># Ambil pesan, proses, kembalikan update state</span>
+    nama = state[<span class="str">"pesan"</span>]
+    <span class="kw">return</span> {<span class="str">"hasil"</span>: <span class="str">f"Halo, {nama}! Selamat belajar LangGraph! 🎉"</span>}
+
+<span class="cm"># 3. Buat graph & tambahkan node</span>
+builder = <span class="fn">StateGraph</span>(<span class="fn">TasPesanku</span>)
+builder.<span class="fn">add_node</span>(<span class="str">"sapa"</span>, node_sapa)
+
+<span class="cm"># 4. Sambungkan START → node → END</span>
+builder.<span class="fn">set_entry_point</span>(<span class="str">"sapa"</span>)   <span class="cm"># mulai dari sini</span>
+builder.<span class="fn">add_edge</span>(<span class="str">"sapa"</span>, <span class="nm">END</span>)       <span class="cm"># lanjut ke END</span>
+
+<span class="cm"># 5. Compile & jalankan!</span>
+graph = builder.<span class="fn">compile</span>()
+hasil = graph.<span class="fn">invoke</span>({<span class="str">"pesan"</span>: <span class="str">"Budi"</span>, <span class="str">"hasil"</span>: <span class="str">""</span>})
+
+<span class="fn">print</span>(hasil[<span class="str">"hasil"</span>])
+<span class="cm"># Output: Halo, Budi! Selamat belajar LangGraph! 🎉</span></pre>
+        </div>
+        <div class="code-explain">
+          <div class="explain-box">
+            <div class="num">1</div>
+            <h4>TypedDict sebagai State</h4>
+            <p>State adalah dictionary bertipe. LangGraph pakai ini untuk tahu field apa saja yang ada di "tas".</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">2</div>
+            <h4>Node = Fungsi Biasa</h4>
+            <p>Node hanyalah fungsi Python yang terima state dan return dictionary berisi field yang mau diupdate.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">3</div>
+            <h4>StateGraph Builder</h4>
+            <p>Builder adalah tempat kamu merakit graph: tambah node, sambungkan edge, lalu compile jadi graph yang bisa dijalankan.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">4</div>
+            <h4>invoke()</h4>
+            <p>Panggil graph dengan state awal. Hasilnya adalah state akhir setelah semua node selesai berjalan.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: State & Nodes -->
+      <div class="code-panel" id="tab3">
+        <div class="code-wrapper">
+          <div class="code-header">
+            <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+            <span class="code-filename">state_dan_nodes.py</span>
+          </div>
+          <pre><span class="kw">from</span> <span class="tp">langgraph.graph</span> <span class="kw">import</span> <span class="fn">StateGraph</span>, <span class="nm">END</span>
+<span class="kw">from</span> <span class="tp">typing</span> <span class="kw">import</span> <span class="tp">TypedDict</span>, <span class="tp">List</span>, <span class="tp">Annotated</span>
+<span class="kw">import</span> <span class="tp">operator</span>
+
+<span class="cm"># State dengan list yang bisa di-append (pakai Annotated + operator.add)</span>
+<span class="kw">class</span> <span class="fn">AngkaState</span>(<span class="tp">TypedDict</span>):
+    angka: <span class="tp">int</span>
+    riwayat: <span class="tp">Annotated</span>[<span class="tp">List</span>[<span class="tp">str</span>], operator.add]  <span class="cm"># auto-append!</span>
+    selesai: <span class="tp">bool</span>
+
+<span class="cm"># Node pertama: kalikan dengan 2</span>
+<span class="kw">def</span> <span class="fn">kali_dua</span>(state: <span class="fn">AngkaState</span>):
+    nilai_baru = state[<span class="str">"angka"</span>] * <span class="nm">2</span>
+    <span class="kw">return</span> {
+        <span class="str">"angka"</span>: nilai_baru,
+        <span class="str">"riwayat"</span>: [<span class="str">f"× 2 = {nilai_baru}"</span>]  <span class="cm"># akan di-append, bukan replace!</span>
+    }
+
+<span class="cm"># Node kedua: tambah 10</span>
+<span class="kw">def</span> <span class="fn">tambah_sepuluh</span>(state: <span class="fn">AngkaState</span>):
+    nilai_baru = state[<span class="str">"angka"</span>] + <span class="nm">10</span>
+    <span class="kw">return</span> {
+        <span class="str">"angka"</span>: nilai_baru,
+        <span class="str">"riwayat"</span>: [<span class="str">f"+ 10 = {nilai_baru}"</span>],
+        <span class="str">"selesai"</span>: <span class="kw">True</span>
+    }
+
+<span class="cm"># Rakit graph</span>
+builder = <span class="fn">StateGraph</span>(<span class="fn">AngkaState</span>)
+builder.<span class="fn">add_node</span>(<span class="str">"kali_dua"</span>, kali_dua)
+builder.<span class="fn">add_node</span>(<span class="str">"tambah_sepuluh"</span>, tambah_sepuluh)
+
+builder.<span class="fn">set_entry_point</span>(<span class="str">"kali_dua"</span>)
+builder.<span class="fn">add_edge</span>(<span class="str">"kali_dua"</span>, <span class="str">"tambah_sepuluh"</span>)
+builder.<span class="fn">add_edge</span>(<span class="str">"tambah_sepuluh"</span>, <span class="nm">END</span>)
+
+graph = builder.<span class="fn">compile</span>()
+state_akhir = graph.<span class="fn">invoke</span>({<span class="str">"angka"</span>: <span class="nm">5</span>, <span class="str">"riwayat"</span>: [<span class="str">"mulai: 5"</span>], <span class="str">"selesai"</span>: <span class="kw">False</span>})
+
+<span class="fn">print</span>(state_akhir[<span class="str">"angka"</span>])    <span class="cm"># 20</span>
+<span class="fn">print</span>(state_akhir[<span class="str">"riwayat"</span>])  <span class="cm"># ['mulai: 5', '× 2 = 10', '+ 10 = 20']</span></pre>
+        </div>
+        <div class="code-explain">
+          <div class="explain-box">
+            <div class="num">1</div>
+            <h4>Annotated + operator.add</h4>
+            <p>Saat kamu return list dari node, defaultnya <em>mengganti</em>. Dengan <code>Annotated[List, operator.add]</code>, ia akan <em>menambahkan</em> ke list yang ada.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">2</div>
+            <h4>Multi-node Pipeline</h4>
+            <p>Dua node berjalan berurutan. Node pertama mengubah state, node kedua meneruskan dari state yang sudah diubah.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">3</div>
+            <h4>State sebagai "audit trail"</h4>
+            <p>Field <code>riwayat</code> merekam setiap langkah. Ini berguna untuk debugging dan memahami apa yang terjadi di dalam graph.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">4</div>
+            <h4>State tidak di-reset</h4>
+            <p>Nilai dari node pertama tetap ada saat node kedua berjalan. Inilah "memori bersama" antar node.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Conditional Edge -->
+      <div class="code-panel" id="tab4">
+        <div class="code-wrapper">
+          <div class="code-header">
+            <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+            <span class="code-filename">conditional_edge.py</span>
+          </div>
+          <pre><span class="kw">from</span> <span class="tp">langgraph.graph</span> <span class="kw">import</span> <span class="fn">StateGraph</span>, <span class="nm">END</span>
+<span class="kw">from</span> <span class="tp">typing</span> <span class="kw">import</span> <span class="tp">TypedDict</span>
+
+<span class="kw">class</span> <span class="fn">HitungState</span>(<span class="tp">TypedDict</span>):
+    angka: <span class="tp">int</span>
+    iterasi: <span class="tp">int</span>
+    pesan: <span class="tp">str</span>
+
+<span class="cm"># Node: tambah terus sampai > 100</span>
+<span class="kw">def</span> <span class="fn">tambah_terus</span>(state: <span class="fn">HitungState</span>):
+    <span class="kw">return</span> {
+        <span class="str">"angka"</span>: state[<span class="str">"angka"</span>] + <span class="nm">17</span>,
+        <span class="str">"iterasi"</span>: state[<span class="str">"iterasi"</span>] + <span class="nm">1</span>
+    }
+
+<span class="cm"># 🔑 Fungsi kondisi: ini yang memutuskan "mau ke mana?"</span>
+<span class="kw">def</span> <span class="fn">cek_cukup</span>(state: <span class="fn">HitungState</span>) -> <span class="tp">str</span>:
+    <span class="kw">if</span> state[<span class="str">"angka"</span>] > <span class="nm">100</span>:
+        <span class="kw">return</span> <span class="str">"selesai"</span>   <span class="cm"># → node "selesai"</span>
+    <span class="kw">else</span>:
+        <span class="kw">return</span> <span class="str">"lanjut"</span>    <span class="cm"># → balik ke "tambah_terus" (LOOP!)</span>
+
+<span class="cm"># Node penutup</span>
+<span class="kw">def</span> <span class="fn">node_selesai</span>(state: <span class="fn">HitungState</span>):
+    <span class="kw">return</span> {<span class="str">"pesan"</span>: <span class="str">f"Selesai! Nilai {state['angka']} setelah {state['iterasi']} iterasi"</span>}
+
+<span class="cm"># Rakit</span>
+builder = <span class="fn">StateGraph</span>(<span class="fn">HitungState</span>)
+builder.<span class="fn">add_node</span>(<span class="str">"tambah_terus"</span>, tambah_terus)
+builder.<span class="fn">add_node</span>(<span class="str">"selesai"</span>, node_selesai)
+
+builder.<span class="fn">set_entry_point</span>(<span class="str">"tambah_terus"</span>)
+
+<span class="cm"># add_conditional_edges: dari node mana, fungsi kondisi, peta hasil</span>
+builder.<span class="fn">add_conditional_edges</span>(
+    <span class="str">"tambah_terus"</span>,   <span class="cm"># dari node ini</span>
+    cek_cukup,         <span class="cm"># jalankan fungsi ini</span>
+    {                  <span class="cm"># map: hasil fungsi → node tujuan</span>
+        <span class="str">"selesai"</span>: <span class="str">"selesai"</span>,
+        <span class="str">"lanjut"</span>: <span class="str">"tambah_terus"</span>   <span class="cm"># LOOP ke diri sendiri!</span>
+    }
+)
+builder.<span class="fn">add_edge</span>(<span class="str">"selesai"</span>, <span class="nm">END</span>)
+
+graph = builder.<span class="fn">compile</span>()
+hasil = graph.<span class="fn">invoke</span>({<span class="str">"angka"</span>: <span class="nm">0</span>, <span class="str">"iterasi"</span>: <span class="nm">0</span>, <span class="str">"pesan"</span>: <span class="str">""</span>})
+<span class="fn">print</span>(hasil[<span class="str">"pesan"</span>])
+<span class="cm"># Output: Selesai! Nilai 102 setelah 6 iterasi</span></pre>
+        </div>
+        <div class="code-explain">
+          <div class="explain-box">
+            <div class="num">1</div>
+            <h4>Conditional Edge = Persimpangan</h4>
+            <p>Fungsi kondisi mengembalikan string, dan string itu di-map ke node tujuan. Seperti lampu hijau/merah di persimpangan.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">2</div>
+            <h4>Loop = Kembali ke diri sendiri</h4>
+            <p>Ketika edge kembali ke node yang sama, terjadi loop. Ini inti kekuatan LangGraph: bisa iterasi sampai kondisi terpenuhi.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">3</div>
+            <h4>Cegah infinite loop</h4>
+            <p>Selalu pastikan ada kondisi yang akan menghentikan loop. Gunakan counter iterasi sebagai <em>safety net</em>.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">4</div>
+            <h4>Pola ReAct</h4>
+            <p>Think → Act → Observe → Think lagi. Conditional edge yang loop inilah yang memungkinkan pola agent ReAct.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: Agent + Tools -->
+      <div class="code-panel" id="tab5">
+        <div class="code-wrapper">
+          <div class="code-header">
+            <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+            <span class="code-filename">agent_dengan_tools.py</span>
+          </div>
+          <pre><span class="kw">from</span> <span class="tp">langchain_openai</span> <span class="kw">import</span> <span class="fn">ChatOpenAI</span>
+<span class="kw">from</span> <span class="tp">langchain_core.tools</span> <span class="kw">import</span> tool
+<span class="kw">from</span> <span class="tp">langgraph.graph</span> <span class="kw">import</span> <span class="fn">StateGraph</span>, <span class="nm">END</span>
+<span class="kw">from</span> <span class="tp">langgraph.prebuilt</span> <span class="kw">import</span> <span class="fn">ToolNode</span>
+<span class="kw">from</span> <span class="tp">langchain_core.messages</span> <span class="kw">import</span> <span class="fn">HumanMessage</span>
+<span class="kw">from</span> <span class="tp">typing</span> <span class="kw">import</span> <span class="tp">TypedDict</span>, <span class="tp">Annotated</span>, <span class="tp">List</span>
+<span class="kw">import</span> <span class="tp">operator</span>
+
+<span class="cm"># Definisi tools (alat yang bisa dipakai agent)</span>
+<span class="nm">@tool</span>
+<span class="kw">def</span> <span class="fn">kalkulator</span>(ekspresi: <span class="tp">str</span>) -> <span class="tp">str</span>:
+    <span class="str">"""Hitung ekspresi matematika. Contoh: '2 + 3 * 4'"""</span>
+    <span class="kw">try</span>:
+        <span class="kw">return</span> <span class="tp">str</span>(<span class="fn">eval</span>(ekspresi))
+    <span class="kw">except</span>:
+        <span class="kw">return</span> <span class="str">"Error: ekspresi tidak valid"</span>
+
+<span class="nm">@tool</span>
+<span class="kw">def</span> <span class="fn">cek_ganjil_genap</span>(angka: <span class="tp">int</span>) -> <span class="tp">str</span>:
+    <span class="str">"""Cek apakah angka ganjil atau genap"""</span>
+    <span class="kw">return</span> <span class="str">"genap"</span> <span class="kw">if</span> angka % <span class="nm">2</span> == <span class="nm">0</span> <span class="kw">else</span> <span class="str">"ganjil"</span>
+
+tools = [kalkulator, cek_ganjil_genap]
+
+<span class="cm"># LLM yang tahu cara pakai tools</span>
+llm = <span class="fn">ChatOpenAI</span>(model=<span class="str">"gpt-4o-mini"</span>)
+llm_with_tools = llm.<span class="fn">bind_tools</span>(tools)
+
+<span class="cm"># State pakai Messages (standar untuk agent)</span>
+<span class="kw">class</span> <span class="fn">AgentState</span>(<span class="tp">TypedDict</span>):
+    messages: <span class="tp">Annotated</span>[<span class="tp">List</span>, operator.add]
+
+<span class="cm"># Node agent: LLM memutuskan apa yang harus dilakukan</span>
+<span class="kw">def</span> <span class="fn">agent</span>(state: <span class="fn">AgentState</span>):
+    respons = llm_with_tools.<span class="fn">invoke</span>(state[<span class="str">"messages"</span>])
+    <span class="kw">return</span> {<span class="str">"messages"</span>: [respons]}
+
+<span class="cm"># Kondisi: lanjut ke tools atau selesai?</span>
+<span class="kw">def</span> <span class="fn">harus_pakai_tool</span>(state: <span class="fn">AgentState</span>) -> <span class="tp">str</span>:
+    last_msg = state[<span class="str">"messages"</span>][-<span class="nm">1</span>]
+    <span class="kw">if</span> <span class="fn">hasattr</span>(last_msg, <span class="str">"tool_calls"</span>) <span class="kw">and</span> last_msg.tool_calls:
+        <span class="kw">return</span> <span class="str">"pakai_tool"</span>
+    <span class="kw">return</span> <span class="str">"selesai"</span>
+
+<span class="cm"># Rakit graph</span>
+builder = <span class="fn">StateGraph</span>(<span class="fn">AgentState</span>)
+builder.<span class="fn">add_node</span>(<span class="str">"agent"</span>, agent)
+builder.<span class="fn">add_node</span>(<span class="str">"tools"</span>, <span class="fn">ToolNode</span>(tools))  <span class="cm"># prebuilt!</span>
+
+builder.<span class="fn">set_entry_point</span>(<span class="str">"agent"</span>)
+builder.<span class="fn">add_conditional_edges</span>(<span class="str">"agent"</span>, harus_pakai_tool,
+    {<span class="str">"pakai_tool"</span>: <span class="str">"tools"</span>, <span class="str">"selesai"</span>: <span class="nm">END</span>})
+builder.<span class="fn">add_edge</span>(<span class="str">"tools"</span>, <span class="str">"agent"</span>)  <span class="cm"># setelah pakai tool, balik ke agent</span>
+
+graph = builder.<span class="fn">compile</span>()
+hasil = graph.<span class="fn">invoke</span>({
+    <span class="str">"messages"</span>: [<span class="fn">HumanMessage</span>(<span class="str">"Hitung 15 * 7, lalu cek apakah hasilnya ganjil atau genap"</span>)]
+})
+<span class="fn">print</span>(hasil[<span class="str">"messages"</span>][-<span class="nm">1</span>].content)
+<span class="cm"># Agent akan pakai kalkulator, lalu cek_ganjil_genap, lalu jawab</span></pre>
+        </div>
+        <div class="code-explain">
+          <div class="explain-box">
+            <div class="num">1</div>
+            <h4>@tool decorator</h4>
+            <p>Ubah fungsi Python biasa jadi "alat" yang bisa digunakan LLM. Docstring-nya penting — itu yang dibaca LLM untuk tahu kapan memakai alat ini.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">2</div>
+            <h4>bind_tools()</h4>
+            <p>Hubungkan tools ke LLM. Sekarang LLM tahu ada alat apa saja yang tersedia dan bisa meminta untuk menggunakannya.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">3</div>
+            <h4>ToolNode (prebuilt)</div>
+            <p>LangGraph sudah menyediakan ToolNode siap pakai. Ia otomatis mengeksekusi tool yang diminta LLM dan mengembalikan hasilnya.</p>
+          </div>
+          <div class="explain-box">
+            <div class="num">4</div>
+            <h4>Pola ReAct Loop</h4>
+            <p>agent → (jika perlu tool) → tools → agent → (jika perlu tool lagi) → tools → ... → END. Ini pola standar semua AI agent!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- MISSION SECTION -->
+<section class="mission-section" id="misi">
+  <div class="container">
+    <div class="section-tag">Workshop Challenges</div>
+    <h2 class="section-title fade-up">🎯 Mission Cards</h2>
+    <p class="section-desc fade-up">Selesaikan misi-misi ini untuk memperkuat pemahaman kamu. Mulai dari yang paling mudah!</p>
+
+    <div class="mission-grid">
+      <!-- MISSION 1 -->
+      <div class="mission-card fade-up">
+        <div class="mission-header">
+          <span class="mission-num">01</span>
+          <div>
+            <span class="mission-badge badge-beginner">🟢 Beginner</span>
+          </div>
+        </div>
+        <div class="mission-body">
+          <h3 class="mission-title">Halo, Graph!</h3>
+          <p class="mission-desc">Buat graph paling sederhana yang menerima nama dan menyapa. Pastikan kamu paham alur dari START sampai END.</p>
+          <ul class="mission-tasks">
+            <li>Buat TypedDict dengan field <code>nama</code> dan <code>sapaan</code></li>
+            <li>Buat satu node yang membuat kalimat sapaan</li>
+            <li>Sambungkan START → node → END</li>
+            <li>Jalankan dengan beberapa nama berbeda</li>
+          </ul>
+        </div>
+        <div class="mission-footer">
+          <div class="mission-meta">
+            <span class="mission-tag">~15 menit</span>
+            <span class="mission-tag">Tab 2</span>
+          </div>
+          <a href="#kode" class="btn-mission">Mulai →</a>
+        </div>
+      </div>
+
+      <!-- MISSION 2 -->
+      <div class="mission-card fade-up">
+        <div class="mission-header">
+          <span class="mission-num">02</span>
+          <div>
+            <span class="mission-badge badge-beginner">🟢 Beginner</span>
+          </div>
+        </div>
+        <div class="mission-body">
+          <h3 class="mission-title">Pipeline 3 Langkah</h3>
+          <p class="mission-desc">Buat pipeline transformasi teks: input teks mentah → format snake_case → tambah timestamp. Tiga node berurutan.</p>
+          <ul class="mission-tasks">
+            <li>Node 1: ubah teks ke huruf kecil semua</li>
+            <li>Node 2: ganti spasi dengan underscore</li>
+            <li>Node 3: tambahkan prefix timestamp</li>
+            <li>Simpan riwayat setiap langkah di state</li>
+          </ul>
+        </div>
+        <div class="mission-footer">
+          <div class="mission-meta">
+            <span class="mission-tag">~20 menit</span>
+            <span class="mission-tag">Tab 3</span>
+          </div>
+          <a href="#kode" class="btn-mission">Mulai →</a>
+        </div>
+      </div>
+
+      <!-- MISSION 3 -->
+      <div class="mission-card fade-up">
+        <div class="mission-header">
+          <span class="mission-num">03</span>
+          <div>
+            <span class="mission-badge badge-intermediate">🟡 Intermediate</span>
+          </div>
+        </div>
+        <div class="mission-body">
+          <h3 class="mission-title">Kuis Pingpong</h3>
+          <p class="mission-desc">Buat game kuis sederhana. Graph terus bertanya sampai pemain menjawab benar 3 kali (gunakan loop + conditional edge).</p>
+          <ul class="mission-tasks">
+            <li>State menyimpan skor benar dan total pertanyaan</li>
+            <li>Node mengajukan pertanyaan & cek jawaban</li>
+            <li>Conditional edge: benar &lt; 3 → loop, benar = 3 → selesai</li>
+            <li>Tampilkan ringkasan di akhir: X benar dari Y pertanyaan</li>
+          </ul>
+        </div>
+        <div class="mission-footer">
+          <div class="mission-meta">
+            <span class="mission-tag">~30 menit</span>
+            <span class="mission-tag">Tab 4</span>
+          </div>
+          <a href="#kode" class="btn-mission">Mulai →</a>
+        </div>
+      </div>
+
+      <!-- MISSION 4 -->
+      <div class="mission-card fade-up">
+        <div class="mission-header">
+          <span class="mission-num">04</span>
+          <div>
+            <span class="mission-badge badge-intermediate">🟡 Intermediate</span>
+          </div>
+        </div>
+        <div class="mission-body">
+          <h3 class="mission-title">Classifier Router</h3>
+          <p class="mission-desc">Buat graph yang menerima teks dan mengirimkan ke node berbeda tergantung kategorinya (positif/negatif/netral).</p>
+          <ul class="mission-tasks">
+            <li>Node classifier: deteksi sentimen teks (bisa hardcode atau pakai LLM)</li>
+            <li>3 node handler: positif, negatif, netral</li>
+            <li>Conditional edge dari classifier ke masing-masing handler</li>
+            <li>Setiap handler beri respons yang berbeda</li>
+          </ul>
+        </div>
+        <div class="mission-footer">
+          <div class="mission-meta">
+            <span class="mission-tag">~35 menit</span>
+            <span class="mission-tag">Tab 4</span>
+          </div>
+          <a href="#kode" class="btn-mission">Mulai →</a>
+        </div>
+      </div>
+
+      <!-- MISSION 5 -->
+      <div class="mission-card fade-up">
+        <div class="mission-header">
+          <span class="mission-num">05</span>
+          <div>
+            <span class="mission-badge badge-intermediate">🟡 Intermediate</span>
+          </div>
+        </div>
+        <div class="mission-body">
+          <h3 class="mission-title">Calculator Agent</h3>
+          <p class="mission-desc">Buat agent yang bisa menjawab soal matematika menggunakan tool kalkulator. Agent harus bisa handle multi-step calculation.</p>
+          <ul class="mission-tasks">
+            <li>Buat tool: kalkulator, konversi satuan, cek bilangan prima</li>
+            <li>Gunakan LLM dengan bind_tools()</li>
+            <li>Implementasi pola ReAct loop (agent ↔ tools)</li>
+            <li>Test: "Hitung luas lingkaran dengan jari-jari 7, lalu cek apakah hasilnya prima"</li>
+          </ul>
+        </div>
+        <div class="mission-footer">
+          <div class="mission-meta">
+            <span class="mission-tag">~45 menit</span>
+            <span class="mission-tag">Tab 5</span>
+          </div>
+          <a href="#kode" class="btn-mission">Mulai →</a>
+        </div>
+      </div>
+
+      <!-- MISSION 6 -->
+      <div class="mission-card fade-up">
+        <div class="mission-header">
+          <span class="mission-num">06</span>
+          <div>
+            <span class="mission-badge badge-advanced">🔴 Advanced</span>
+          </div>
+        </div>
+        <div class="mission-body">
+          <h3 class="mission-title">Research Mini-Agent</h3>
+          <p class="mission-desc">Buat agent riset yang bisa menerima topik, browsing web (atau simulasi), merangkum, dan menghasilkan laporan singkat.</p>
+          <ul class="mission-tasks">
+            <li>Tool: search_web (simulasi dengan dummy data boleh)</li>
+            <li>Tool: summarize_text menggunakan LLM</li>
+            <li>Agent loop: cari info → rangkum → cek cukup? → cari lagi jika tidak</li>
+            <li>Output: laporan terstruktur dengan sumber</li>
+            <li>Bonus: tambahkan max_iterations sebagai safety net</li>
+          </ul>
+        </div>
+        <div class="mission-footer">
+          <div class="mission-meta">
+            <span class="mission-tag">~60 menit</span>
+            <span class="mission-tag">Semua Tab</span>
+          </div>
+          <a href="#kode" class="btn-mission">Mulai →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TIPS SECTION -->
+<section class="tips-section">
+  <div class="container">
+    <div class="section-tag">Pro Tips</div>
+    <h2 class="section-title fade-up">Hal penting yang sering terlupakan</h2>
+    <div class="tips-grid">
+      <div class="tip-card fade-up">
+        <span class="tip-icon">🛡️</span>
+        <div>
+          <h4>Selalu ada kondisi stop di loop</h4>
+          <p>Setiap loop harus punya exit condition. Tambahkan counter <code>max_iterations</code> sebagai safety net agar loop tidak jalan selamanya.</p>
+        </div>
+      </div>
+      <div class="tip-card fade-up">
+        <span class="tip-icon">📝</span>
+        <div>
+          <h4>Docstring tool itu krusial</h4>
+          <p>LLM membaca docstring untuk tahu kapan dan bagaimana pakai tool. Buat docstring yang jelas: apa fungsinya, kapan dipakai, contoh inputnya.</p>
+        </div>
+      </div>
+      <div class="tip-card fade-up">
+        <span class="tip-icon">🔍</span>
+        <div>
+          <h4>Visualisasikan graph kamu</h4>
+          <p>Gunakan <code>graph.get_graph().draw_mermaid_png()</code> untuk melihat diagram graph kamu. Sangat membantu untuk debugging alur!</p>
+        </div>
+      </div>
+      <div class="tip-card fade-up">
+        <span class="tip-icon">🗂️</span>
+        <div>
+          <h4>State harus serializable</h4>
+          <p>Isi state harus bisa di-serialize (JSON-compatible) jika kamu pakai checkpointer untuk menyimpan state ke database.</p>
+        </div>
+      </div>
+      <div class="tip-card fade-up">
+        <span class="tip-icon">⚡</span>
+        <div>
+          <h4>Gunakan prebuilt jika bisa</h4>
+          <p>LangGraph punya <code>ToolNode</code>, <code>create_react_agent</code>, dan lainnya. Mulai dari sini sebelum buat custom dari nol.</p>
+        </div>
+      </div>
+      <div class="tip-card fade-up">
+        <span class="tip-icon">🧪</span>
+        <div>
+          <h4>Test node secara individual</h4>
+          <p>Karena node hanyalah fungsi Python, kamu bisa test setiap node secara independen dengan memanggil langsung tanpa perlu compile graph.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- GLOSSARY -->
+<section class="glossary-section" id="glosarium">
+  <div class="container">
+    <div class="section-tag">Kamus Istilah</div>
+    <h2 class="section-title fade-up">Glosarium LangGraph</h2>
+    <p class="section-desc fade-up">Istilah-istilah yang akan sering kamu temui, dengan penjelasan simpel dan analogi sehari-hari.</p>
+
+    <div class="glossary-grid fade-up">
+      <div class="gloss-item">
+        <div class="gloss-term">Node</div>
+        <div class="gloss-def">Fungsi Python yang melakukan satu tugas spesifik dalam graph. Menerima state, mengembalikan state yang diupdate.</div>
+        <div class="gloss-analogy">🏭 Seperti: pos kerja di pabrik</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Edge</div>
+        <div class="gloss-def">Koneksi yang menghubungkan satu node ke node lainnya. Menentukan urutan eksekusi.</div>
+        <div class="gloss-analogy">🛣️ Seperti: jalan yang menghubungkan antar kota</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">State</div>
+        <div class="gloss-def">Data bersama yang dibawa dan dimodifikasi saat graph berjalan dari node ke node.</div>
+        <div class="gloss-analogy">🎒 Seperti: tas yang kamu bawa dan isi selama perjalanan</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Conditional Edge</div>
+        <div class="gloss-def">Edge yang memilih tujuan berdasarkan kondisi tertentu. Hasil fungsi kondisi menentukan node mana yang dipanggil.</div>
+        <div class="gloss-analogy">🚦 Seperti: persimpangan dengan rambu lalu lintas</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Graph</div>
+        <div class="gloss-def">Keseluruhan alur kerja yang terdiri dari node-node yang terhubung dengan edge. Setelah compile, bisa dijalankan.</div>
+        <div class="gloss-analogy">🗺️ Seperti: peta perjalanan lengkap dari A ke Z</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Tool</div>
+        <div class="gloss-def">Fungsi Python yang bisa dipanggil oleh LLM. Dibuat dengan @tool decorator dan docstring yang jelas.</div>
+        <div class="gloss-analogy">🔧 Seperti: peralatan dalam kotak perkakas mekanik</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Agent</div>
+        <div class="gloss-def">LLM yang diberi tools dan loop, sehingga bisa memutuskan sendiri langkah apa yang perlu diambil untuk menyelesaikan tugas.</div>
+        <div class="gloss-analogy">🕵️ Seperti: detektif yang investigasi mandiri</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">invoke()</div>
+        <div class="gloss-def">Metode untuk menjalankan graph secara sinkronus dengan state awal. Mengembalikan state akhir setelah semua node selesai.</div>
+        <div class="gloss-analogy">▶️ Seperti: tombol play yang menjalankan semuanya</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Checkpointer</div>
+        <div class="gloss-def">Komponen untuk menyimpan state ke storage (SQLite, Redis, dll) agar graph bisa dilanjutkan nanti atau di-debug.</div>
+        <div class="gloss-analogy">💾 Seperti: fitur save game di video game</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">ReAct Pattern</div>
+        <div class="gloss-def">Pola agent: Reason → Act → Observe → Reason lagi. Loop antara LLM (reasoning) dan tools (acting) sampai tugas selesai.</div>
+        <div class="gloss-analogy">🔄 Seperti: siklus PDCA dalam manajemen</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">TypedDict</div>
+        <div class="gloss-def">Cara mendefinisikan struktur state di Python dengan type hints. Membuat state lebih terstruktur dan mudah di-debug.</div>
+        <div class="gloss-analogy">📋 Seperti: formulir dengan kolom-kolom yang sudah ditentukan</div>
+      </div>
+      <div class="gloss-item">
+        <div class="gloss-term">Annotated + operator.add</div>
+        <div class="gloss-def">Cara membuat field di state yang di-append (bukan di-replace) saat node mengembalikan nilai baru.</div>
+        <div class="gloss-analogy">📜 Seperti: buku catatan yang selalu ditambahkan, tidak dihapus</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LangGraph 101</div>
+  <p style="margin-bottom:12px">Dibuat untuk workshop & belajar mandiri · <a href="https://rizalespe.github.io/langgraph-101">rizalespe.github.io/langgraph-101</a></p>
+  <p>Referensi: <a href="https://langchain-ai.github.io/langgraph/" target="_blank">Dokumentasi Resmi LangGraph</a> · <a href="https://github.com/langchain-ai/langgraph" target="_blank">GitHub LangGraph</a></p>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (scrolled / total) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Code tabs
+  function showTab(id, btn) {
+    document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

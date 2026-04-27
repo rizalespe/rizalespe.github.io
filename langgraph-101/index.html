@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LangGraph 101 — Belajar dari Nol</title>
+<meta name="description" content="Bahan belajar LangGraph berbahasa Indonesia untuk pemula. Pahami konsep, langsung praktik, dan bangun agent pertamamu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfaf3;
+    --bg2: #f6efe1;
+    --surface: #ffffff;
+    --surface-soft: #fcf8ee;
+    --border: #ebe3cf;
+    --border-strong: #d8ceb1;
+    --text: #1f1c16;
+    --text-2: #5b5648;
+    --text-3: #8a8473;
+
+    --primary: #ff6b3d;
+    --primary-deep: #e85420;
+    --primary-soft: #ffe2d4;
+
+    --mint: #2bb3a3;
+    --mint-deep: #178f81;
+    --mint-soft: #d8f3ee;
+
+    --violet: #8b6cf6;
+    --violet-soft: #ece4ff;
+
+    --gold: #f5b73c;
+    --gold-soft: #fff0cf;
+
+    --rose: #ef5d8a;
+    --rose-soft: #ffd9e3;
+
+    --sky: #4ea3e6;
+    --sky-soft: #d6ebfa;
+
+    --code-bg: #1c1a16;
+    --code-text: #f1ead7;
+    --code-comment: #9a9279;
+    --code-keyword: #ff8a5a;
+    --code-string: #9bd8a4;
+    --code-fn: #f5d97a;
+    --code-class: #b8a5ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 16.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--primary); color: white; }
+
+  a { color: var(--primary-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 250, 243, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .nav-logo .dot {
+    display: inline-block; width: 9px; height: 9px;
+    background: var(--primary); border-radius: 50%;
+    margin-right: 8px; vertical-align: middle;
+  }
+  .nav-links {
+    display: flex; gap: 4px; margin-left: auto;
+    list-style: none; flex-wrap: wrap;
+  }
+  .nav-links a {
+    color: var(--text-2); font-size: 13.5px; font-weight: 500;
+    padding: 6px 12px; border-radius: 8px;
+    transition: all 0.18s ease;
+  }
+  .nav-links a:hover {
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  main { display: block; }
+  section { padding: 72px 28px; }
+  .container { max-width: 920px; margin: 0 auto; }
+  .container-wide { max-width: 1080px; margin: 0 auto; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--primary-deep);
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: ''; width: 22px; height: 2px;
+    background: var(--primary); border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  h2.section-title {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+  .section-lead {
+    font-size: 18px; color: var(--text-2);
+    max-width: 680px; margin-bottom: 40px;
+    font-weight: 300; line-height: 1.65;
+  }
+  .section-lead strong { color: var(--text); font-weight: 500; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 90px 28px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 85% 10%, var(--gold-soft) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 60% at 5% 90%, var(--mint-soft) 0%, transparent 55%);
+    z-index: 0;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 99px; padding: 7px 16px 7px 8px;
+    font-size: 13px; font-weight: 500;
+    color: var(--text-2);
+    margin-bottom: 26px;
+    box-shadow: 0 2px 10px rgba(31, 28, 22, 0.04);
+  }
+  .hero-pill .badge {
+    display: inline-block;
+    background: var(--primary); color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 99px;
+    letter-spacing: 0.08em;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800;
+    margin-bottom: 22px;
+    max-width: 880px;
+  }
+  .hero h1 .hl { color: var(--primary); }
+  .hero h1 .hl2 {
+    background: linear-gradient(120deg, var(--mint-deep), var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.lead {
+    font-size: 19px; color: var(--text-2);
+    font-weight: 300; line-height: 1.65;
+    max-width: 640px; margin-bottom: 32px;
+  }
+  .hero p.lead strong { color: var(--text); font-weight: 500; }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 24px;
+    border-radius: 12px;
+    font-weight: 600; font-size: 15px;
+    transition: all 0.18s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--primary); color: white;
+    box-shadow: 0 6px 20px rgba(255, 107, 61, 0.25);
+  }
+  .btn-primary:hover {
+    background: var(--primary-deep);
+    transform: translateY(-2px);
+    text-decoration: none;
+    box-shadow: 0 10px 28px rgba(255, 107, 61, 0.35);
+  }
+  .btn-ghost {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+  .btn-ghost:hover {
+    background: var(--surface-soft);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* ---------- TUJUAN (OUTCOMES) ---------- */
+  .tujuan {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .tujuan-grid {
+    display: grid; gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-top: 12px;
+  }
+  .tujuan-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 22px 20px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .tujuan-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(31, 28, 22, 0.06);
+  }
+  .tujuan-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .tujuan-card h3 {
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .tujuan-card p {
+    font-size: 14.5px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+
+  .audience {
+    margin-top: 40px;
+    padding: 22px 24px;
+    background: var(--mint-soft);
+    border-radius: 14px;
+    border: 1px solid #b9e3da;
+    display: flex; gap: 18px; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .audience .label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--mint-deep);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    min-width: 130px; padding-top: 2px;
+  }
+  .audience p { font-size: 15px; color: var(--text-2); flex: 1; }
+  .audience strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- GLOSARIUM ---------- */
+  .glosarium { background: var(--bg2); }
+  .glos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .glos-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    transition: all 0.18s ease;
+  }
+  .glos-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .glos-term {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .glos-term .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--text);
+  }
+  .glos-term .tag {
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 99px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .tag-core { background: var(--primary-soft); color: var(--primary-deep); }
+  .tag-flow { background: var(--violet-soft); color: #5a3eb8; }
+  .tag-extra { background: var(--sky-soft); color: #2776b8; }
+
+  .glos-analogy {
+    font-size: 13.5px; font-style: italic;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .glos-def {
+    font-size: 14.5px; color: var(--text-2);
+    line-height: 1.6;
+  }
+
+  /* ---------- BAB ---------- */
+  .bab {
+    border-top: 1px solid var(--border);
+  }
+  .bab:nth-of-type(even) { background: var(--bg2); }
+
+  .bab-header { margin-bottom: 32px; }
+  .bab-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 0.16em;
+    color: var(--primary);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .bab h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+  .bab h2 .hl { color: var(--primary); }
+  .bab .bab-lead {
+    font-size: 17.5px; color: var(--text-2);
+    font-weight: 300; line-height: 1.7;
+    max-width: 720px;
+  }
+  .bab .bab-lead strong { color: var(--text); font-weight: 500; }
+
+  /* OUTCOME BOX — the "you'll be able to..." */
+  .outcome {
+    background: linear-gradient(135deg, var(--mint-soft) 0%, #e6f6f1 100%);
+    border: 1px solid #b9e3da;
+    border-radius: 16px;
+    padding: 24px 26px;
+    margin: 28px 0 32px;
+    position: relative;
+  }
+  .outcome::before {
+    content: 'KAMU AKAN BISA';
+    position: absolute;
+    top: -10px; left: 22px;
+    background: var(--mint-deep);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 4px 11px; border-radius: 99px;
+  }
+  .outcome ul {
+    list-style: none;
+    margin-top: 6px;
+  }
+  .outcome ul li {
+    position: relative;
+    padding-left: 28px;
+    margin: 8px 0;
+    font-size: 15.5px;
+    color: var(--text);
+  }
+  .outcome ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 16px; height: 16px;
+    background: var(--mint-deep);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px var(--mint-soft);
+  }
+  .outcome ul li strong { font-weight: 600; }
+
+  /* PROSE inside chapter */
+  .prose p {
+    font-size: 16.5px;
+    color: var(--text-2);
+    margin: 14px 0;
+    max-width: 720px;
+  }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .prose .term {
+    font-weight: 600; color: var(--primary-deep);
+    background: var(--primary-soft);
+    padding: 1px 8px; border-radius: 6px;
+    font-size: 0.94em;
+  }
+  .prose h3 {
+    font-size: 22px; font-weight: 700;
+    margin: 30px 0 10px;
+  }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 14px;
+    margin: 22px 0;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.65;
+    box-shadow: 0 14px 32px rgba(31, 28, 22, 0.12);
+  }
+  .code-head {
+    display: flex; align-items: center;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    color: #c8c0a8;
+  }
+  .code-head .dots { display: flex; gap: 6px; margin-right: 14px; }
+  .code-head .dots span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+  }
+  .code-head .dots span:nth-child(1) { background: #ff6157; }
+  .code-head .dots span:nth-child(2) { background: #ffbe2f; }
+  .code-head .dots span:nth-child(3) { background: #28c840; }
+  .code-head .name { font-weight: 500; }
+  .code-head .copy {
+    margin-left: auto;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--code-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 500;
+    padding: 4px 10px; border-radius: 6px;
+    cursor: pointer; transition: all 0.18s;
+  }
+  .code-head .copy:hover { background: rgba(255,255,255,0.14); }
+  .code-head .copy.copied { background: var(--mint); border-color: var(--mint); }
+  .code-block pre {
+    margin: 0;
+    padding: 18px 22px 20px;
+    overflow-x: auto;
+  }
+  .code-block code { font-family: inherit; }
+  .tk-kw { color: var(--code-keyword); }
+  .tk-str { color: var(--code-string); }
+  .tk-fn { color: var(--code-fn); }
+  .tk-cls { color: var(--code-class); }
+  .tk-co { color: var(--code-comment); font-style: italic; }
+  .tk-num { color: #f0aa6a; }
+
+  .output-block {
+    margin: 14px 0 22px;
+    border: 1px dashed var(--border-strong);
+    border-radius: 12px;
+    padding: 14px 18px;
+    background: var(--surface-soft);
+  }
+  .output-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--text-3); text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+  }
+  .output-block pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+
+  /* MISSION CARD */
+  .mission {
+    margin: 36px 0 8px;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    position: relative;
+    box-shadow: 0 14px 36px rgba(255, 107, 61, 0.10);
+  }
+  .mission-tag {
+    position: absolute;
+    top: -14px; left: 24px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 99px;
+    box-shadow: 0 6px 14px rgba(255, 107, 61, 0.25);
+  }
+  .mission-tag::before {
+    content: ''; width: 8px; height: 8px;
+    background: white; border-radius: 50%;
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .mission h3 {
+    font-size: 22px; font-weight: 700;
+    margin-top: 6px; margin-bottom: 10px;
+  }
+  .mission p { font-size: 15.5px; color: var(--text-2); margin: 8px 0; }
+  .mission p strong { color: var(--text); }
+  .mission-meta {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .meta-pill {
+    font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 99px;
+    background: var(--bg2);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+  }
+  .meta-pill.lvl-1 { background: var(--mint-soft); color: var(--mint-deep); border-color: #b9e3da; }
+  .meta-pill.lvl-2 { background: var(--gold-soft); color: #a87a1d; border-color: #f0d896; }
+  .meta-pill.lvl-3 { background: var(--rose-soft); color: #b03a64; border-color: #f5b9c9; }
+
+  .bonus {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: var(--gold-soft);
+    border-radius: 10px;
+    border-left: 3px solid var(--gold);
+  }
+  .bonus .label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: #a87a1d;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .bonus p { font-size: 14.5px; color: var(--text-2); margin: 0; }
+
+  details.hint {
+    margin-top: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0;
+    background: var(--surface-soft);
+  }
+  details.hint summary {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px; font-weight: 600;
+    color: var(--text-2);
+    list-style: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  details.hint summary::-webkit-details-marker { display: none; }
+  details.hint summary::before {
+    content: '+';
+    width: 20px; height: 20px;
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; line-height: 1;
+    color: var(--text);
+    transition: transform 0.2s;
+  }
+  details.hint[open] summary::before { content: '−'; }
+  details.hint .hint-body {
+    padding: 0 16px 14px;
+    font-size: 14.5px;
+    color: var(--text-2);
+  }
+
+  /* CALLOUT (catatan) */
+  .callout {
+    margin: 22px 0;
+    padding: 18px 20px;
+    border-radius: 12px;
+    background: var(--violet-soft);
+    border-left: 3px solid var(--violet);
+    font-size: 15px;
+    color: var(--text);
+  }
+  .callout .lbl {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: #5a3eb8;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 4px;
+  }
+  .callout p { margin: 0; color: var(--text-2); font-size: 15px; }
+  .callout strong { color: var(--text); }
+
+  /* ---------- SELANJUTNYA ---------- */
+  .next {
+    background: var(--text);
+    color: white;
+  }
+  .next h2 { color: white; }
+  .next .section-lead { color: rgba(255,255,255,0.78); }
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .next-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 22px;
+    transition: all 0.18s;
+  }
+  .next-card:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-3px);
+  }
+  .next-card h3 { color: white; font-size: 18px; margin-bottom: 8px; }
+  .next-card p { font-size: 14.5px; color: rgba(255,255,255,0.7); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding: 28px 28px 36px;
+    text-align: center;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    color: var(--text-3);
+    font-size: 13.5px;
+  }
+  footer a { color: var(--primary-deep); }
+
+  /* ---------- ANIM ---------- */
+  .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 700px) {
+    nav { padding: 12px 16px; gap: 10px; }
+    .nav-links { gap: 0; }
+    .nav-links a { padding: 5px 8px; font-size: 12.5px; }
+    section { padding: 56px 18px; }
+    .hero { padding: 60px 18px 50px; }
+    .mission { padding: 26px 20px 22px; }
+    .outcome { padding: 22px 20px; }
+    .code-block { font-size: 13px; }
+    .code-block pre { padding: 16px 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo"><span class="dot"></span>LangGraph 101</a>
+  <ul class="nav-links">
+    <li><a href="#tujuan">Tujuan</a></li>
+    <li><a href="#kamus">Kamus</a></li>
+    <li><a href="#bab1">Node</a></li>
+    <li><a href="#bab2">Edge</a></li>
+    <li><a href="#bab3">State</a></li>
+    <li><a href="#bab4">Graph</a></li>
+    <li><a href="#bab5">Cabang</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-pill">
+      <span class="badge">101</span>
+      <span>Bahan belajar berbahasa Indonesia · ramah pemula</span>
+    </div>
+    <h1>
+      Belajar <span class="hl">LangGraph</span><br>
+      dari nol, sampai bisa <span class="hl2">bikin agent sendiri</span>.
+    </h1>
+    <p class="lead">
+      Halaman ini ngajak kamu pelan-pelan, <strong>satu konsep per bab</strong>, dengan kode super pendek yang langsung bisa dijalankan.
+      Setiap bab kasih tau apa yang akan kamu bisa, lalu ada satu misi kecil supaya pemahamannya nempel.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#tujuan">Mulai dari tujuan <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#kamus">Lihat kamus istilah</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TUJUAN BELAJAR ============ -->
+<section class="tujuan" id="tujuan">
+  <div class="container">
+    <div class="eyebrow fade-up">Apa yang kamu dapat</div>
+    <h2 class="section-title fade-up">Setelah baca halaman ini, kamu akan bisa…</h2>
+    <p class="section-lead fade-up">Empat hal konkret. Bukan sekadar "tau", tapi benar-benar bisa nulis kodenya dari awal.</p>
+
+    <div class="tujuan-grid">
+      <div class="tujuan-card fade-up">
+        <div class="num">01</div>
+        <h3>Menjelaskan 4 konsep inti</h3>
+        <p>Node, Edge, State, dan Graph — kamu bisa terangin ulang ke teman pakai bahasa sendiri.</p>
+      </div>
+      <div class="tujuan-card fade-up">
+        <div class="num">02</div>
+        <h3>Bikin graph pertamamu</h3>
+        <p>Sebuah pipeline mini yang nerima input, proses 1–2 langkah, lalu ngeluarin output.</p>
+      </div>
+      <div class="tujuan-card fade-up">
+        <div class="num">03</div>
+        <h3>Pakai state buat berbagi data</h3>
+        <p>Paham gimana data dioper antar node, dan kapan field di-update vs ditambah.</p>
+      </div>
+      <div class="tujuan-card fade-up">
+        <div class="num">04</div>
+        <h3>Bikin alur bercabang</h3>
+        <p>Pakai conditional edge supaya graph kamu bisa milih jalur sesuai isi state-nya.</p>
+      </div>
+    </div>
+
+    <div class="audience fade-up">
+      <div class="label">Cocok untuk</div>
+      <p>
+        <strong>Mahasiswa</strong> yang lagi belajar AI / NLP, <strong>developer</strong> yang baru kenal LangChain/LangGraph,
+        atau <strong>siapa pun</strong> yang penasaran gimana cara kerja agent di balik layar.
+        Modal awal: paham dasar Python (fungsi, dictionary, type hint sedikit-sedikit).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KAMUS ============ -->
+<section class="glosarium" id="kamus">
+  <div class="container-wide">
+    <div class="eyebrow fade-up">Sebelum mulai</div>
+    <h2 class="section-title fade-up">Kamus istilah, biar nggak bingung</h2>
+    <p class="section-lead fade-up">Skim aja dulu — nggak perlu hapal. Setiap istilah punya analogi sehari-hari biar gampang nyantol.</p>
+
+    <div class="glos-grid">
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">Node</span><span class="tag tag-core">Inti</span></div>
+        <div class="glos-analogy">Analogi: pos kerja di pabrik</div>
+        <div class="glos-def">Sebuah fungsi yang nerima state, ngerjain sesuatu, lalu balikin perubahan untuk state.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">Edge</span><span class="tag tag-core">Inti</span></div>
+        <div class="glos-analogy">Analogi: jalur antar pos</div>
+        <div class="glos-def">Penghubung yang nentuin: setelah node A selesai, lanjut ke node mana?</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">State</span><span class="tag tag-core">Inti</span></div>
+        <div class="glos-analogy">Analogi: tas perjalanan bersama</div>
+        <div class="glos-def">Tempat penyimpanan data yang dipakai bareng oleh semua node sepanjang graph berjalan.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">Graph</span><span class="tag tag-core">Inti</span></div>
+        <div class="glos-analogy">Analogi: peta keseluruhan</div>
+        <div class="glos-def">Kumpulan node + edge + state yang dirakit jadi satu alur kerja siap dijalankan.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">START / END</span><span class="tag tag-flow">Alur</span></div>
+        <div class="glos-analogy">Analogi: gerbang masuk &amp; keluar</div>
+        <div class="glos-def">Dua titik bawaan LangGraph yang nandain di mana graph mulai dan selesai.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">Conditional Edge</span><span class="tag tag-flow">Alur</span></div>
+        <div class="glos-analogy">Analogi: simpang jalan</div>
+        <div class="glos-def">Edge yang tujuannya ditentukan oleh fungsi — bisa ngelempar ke node berbeda tergantung isi state.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">compile()</span><span class="tag tag-flow">Alur</span></div>
+        <div class="glos-analogy">Analogi: nyetak peta jadi rute</div>
+        <div class="glos-def">Tahap akhir nge-rakit graph: dari "rancangan" jadi objek graph yang siap dipanggil.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">invoke()</span><span class="tag tag-flow">Alur</span></div>
+        <div class="glos-analogy">Analogi: tekan tombol "jalan"</div>
+        <div class="glos-def">Cara kita ngejalanin graph dengan state awal sebagai input, lalu nerima state akhir sebagai output.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">LLM</span><span class="tag tag-extra">Pendamping</span></div>
+        <div class="glos-analogy">Analogi: rekan kerja yang pintar bahasa</div>
+        <div class="glos-def">Large Language Model (mis. GPT, Claude). Sering dipanggil di dalam node buat tugas berbahasa.</div>
+      </div>
+      <div class="glos-card fade-up">
+        <div class="glos-term"><span class="name">Tool</span><span class="tag tag-extra">Pendamping</span></div>
+        <div class="glos-analogy">Analogi: perkakas tambahan</div>
+        <div class="glos-def">Fungsi eksternal (pencarian, kalkulator, API) yang bisa dipakai oleh node atau LLM saat butuh.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAB 1 — NODE ============ -->
+<section class="bab" id="bab1">
+  <div class="container">
+    <div class="bab-header fade-up">
+      <span class="bab-num">Bab 01</span>
+      <h2><span class="hl">Node</span> — pos kerja kecil</h2>
+      <p class="bab-lead">Yang paling mengejutkan dari LangGraph: <strong>node itu cuma fungsi Python biasa</strong>. Nerima state, balikin dictionary perubahan. Itu doang.</p>
+    </div>
+
+    <div class="outcome fade-up">
+      <ul>
+        <li>Bisa <strong>nulis fungsi node</strong> sederhana yang nerima state dan balikin perubahannya.</li>
+        <li>Tau <strong>aturan main</strong> output node: dictionary, bukan nilai mentah.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <p>Bayangin node sebagai <span class="term">satu pos kerja</span> di sebuah pabrik kecil. Pos ini nerima paket (state), ngerjain satu hal spesifik, lalu nyerahin paket ke pos berikutnya dengan beberapa info yang udah diupdate.</p>
+      <p>Aturannya cuma satu: <strong>node selalu balikin dictionary</strong>. Isinya field-field yang mau di-update di state. Field yang nggak disentuh nggak akan berubah.</p>
+    </div>
+
+    <div class="code-block fade-up">
+      <div class="code-head">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="name">node_pertama.py</span>
+        <button class="copy" onclick="copyCode(this)">Copy</button>
+      </div>
+<pre><code><span class="tk-co"># Sebuah node = fungsi yang nerima state, balikin dict perubahan</span>
+<span class="tk-kw">def</span> <span class="tk-fn">sapa</span>(state):
+    nama = state[<span class="tk-str">"nama"</span>]
+    <span class="tk-kw">return</span> {<span class="tk-str">"pesan"</span>: <span class="tk-str">f"Halo, {nama}!"</span>}
+
+<span class="tk-co"># Coba panggil manual dulu — belum perlu graph</span>
+hasil = sapa({<span class="tk-str">"nama"</span>: <span class="tk-str">"Rizal"</span>})
+<span class="tk-fn">print</span>(hasil)
+<span class="tk-co"># {'pesan': 'Halo, Rizal!'}</span></code></pre>
+    </div>
+
+    <div class="callout fade-up">
+      <div class="lbl">Yang sering bikin bingung</div>
+      <p>Node <strong>nggak ngembaliin state lengkap</strong> — cuma bagian yang berubah. LangGraph yang bakal ngegabungin perubahan itu ke state utama. Anggap kayak nyerahin nota perubahan, bukan ngeprint ulang seluruh database.</p>
+    </div>
+
+    <div class="mission fade-up">
+      <div class="mission-tag">Misi 01</div>
+      <div class="mission-meta">
+        <span class="meta-pill lvl-1">Level 1 · Mudah</span>
+        <span class="meta-pill">~5 menit</span>
+      </div>
+      <h3>Bikin node "sapa_formal"</h3>
+      <p>Modifikasi fungsi <span class="term">sapa</span> di atas jadi <strong>sapa_formal</strong> yang menyapa pakai gaya formal: <em>"Selamat pagi, Bapak/Ibu &lt;nama&gt;. Semoga harimu menyenangkan."</em></p>
+      <p><strong>Coba</strong> panggil manual dengan input <code>{"nama": "Sari"}</code> dan pastikan outputnya benar.</p>
+
+      <div class="bonus">
+        <div class="label">Bonus</div>
+        <p>Tambahkan field baru di output: <code>"panjang_pesan"</code> berisi jumlah karakter pesan. Berarti satu node bisa balikin <em>lebih dari satu</em> field perubahan.</p>
+      </div>
+
+      <details class="hint">
+        <summary>Petunjuk kalau mentok</summary>
+        <div class="hint-body">
+          Bentuk dasarnya tetap sama: <code>def sapa_formal(state):</code> lalu ambil <code>state["nama"]</code>, susun string formalnya, dan return dictionary dengan key <code>"pesan"</code>. Buat bonus, tambah satu key lagi: <code>"panjang_pesan": len(pesan)</code>.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAB 2 — EDGE ============ -->
+<section class="bab" id="bab2">
+  <div class="container">
+    <div class="bab-header fade-up">
+      <span class="bab-num">Bab 02</span>
+      <h2><span class="hl">Edge</span> — penghubung antar pos</h2>
+      <p class="bab-lead">Setelah satu node selesai, lanjut ke mana? <strong>Edge</strong>-lah yang mengatur. Di bab ini kamu mulai merangkai dua node jadi satu alur.</p>
+    </div>
+
+    <div class="outcome fade-up">
+      <ul>
+        <li>Bisa <strong>menghubungkan dua node</strong> berurutan pakai <code>add_edge</code>.</li>
+        <li>Paham peran <code>START</code> dan <code>END</code> sebagai gerbang masuk dan keluar.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <p>Kalau di bab 1 kita cuma bikin "pos", di sini kita bikin <span class="term">jalannya</span>. Edge nentuin urutan kerja: A dulu, baru B; lalu B selesai, keluar.</p>
+      <p>LangGraph nyediain dua node spesial: <code>START</code> (titik masuk) dan <code>END</code> (titik keluar). Tugas kita cuma nyambung-nyambungin.</p>
+    </div>
+
+    <div class="code-block fade-up">
+      <div class="code-head">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="name">dua_node.py</span>
+        <button class="copy" onclick="copyCode(this)">Copy</button>
+      </div>
+<pre><code><span class="tk-kw">from</span> langgraph.graph <span class="tk-kw">import</span> StateGraph, START, END
+<span class="tk-kw">from</span> typing <span class="tk-kw">import</span> TypedDict
+
+<span class="tk-kw">class</span> <span class="tk-cls">State</span>(TypedDict):
+    nama: <span class="tk-cls">str</span>
+    pesan: <span class="tk-cls">str</span>
+
+<span class="tk-kw">def</span> <span class="tk-fn">sapa</span>(state):
+    <span class="tk-kw">return</span> {<span class="tk-str">"pesan"</span>: <span class="tk-str">f"Halo, {state['nama']}!"</span>}
+
+<span class="tk-kw">def</span> <span class="tk-fn">tutup</span>(state):
+    <span class="tk-kw">return</span> {<span class="tk-str">"pesan"</span>: state[<span class="tk-str">"pesan"</span>] + <span class="tk-str">" Sampai jumpa."</span>}
+
+<span class="tk-co"># Rangkai graph</span>
+builder = <span class="tk-cls">StateGraph</span>(State)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"sapa"</span>, sapa)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"tutup"</span>, tutup)
+builder.<span class="tk-fn">add_edge</span>(START, <span class="tk-str">"sapa"</span>)     <span class="tk-co"># mulai → sapa</span>
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"sapa"</span>, <span class="tk-str">"tutup"</span>)   <span class="tk-co"># sapa → tutup</span>
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"tutup"</span>, END)     <span class="tk-co"># tutup → selesai</span>
+
+graph = builder.<span class="tk-fn">compile</span>()
+<span class="tk-fn">print</span>(graph.<span class="tk-fn">invoke</span>({<span class="tk-str">"nama"</span>: <span class="tk-str">"Sari"</span>}))</code></pre>
+    </div>
+
+    <div class="output-block fade-up">
+      <div class="output-label">Output</div>
+      <pre>{'nama': 'Sari', 'pesan': 'Halo, Sari! Sampai jumpa.'}</pre>
+    </div>
+
+    <div class="mission fade-up">
+      <div class="mission-tag">Misi 02</div>
+      <div class="mission-meta">
+        <span class="meta-pill lvl-1">Level 1 · Mudah</span>
+        <span class="meta-pill">~10 menit</span>
+      </div>
+      <h3>Tambah node "tanggal_hari_ini"</h3>
+      <p>Sisipkan satu node baru di antara <span class="term">sapa</span> dan <span class="term">tutup</span> bernama <strong>tanggal_hari_ini</strong> yang menambahkan tanggal ke pesan.</p>
+      <p>Hasil akhirnya kira-kira: <em>"Halo, Sari! Hari ini 27 April 2026. Sampai jumpa."</em></p>
+
+      <div class="bonus">
+        <div class="label">Bonus</div>
+        <p>Coba ubah urutannya: <code>tanggal_hari_ini → sapa → tutup</code>. Apa yang terjadi sama hasil pesannya? Kenapa?</p>
+      </div>
+
+      <details class="hint">
+        <summary>Petunjuk kalau mentok</summary>
+        <div class="hint-body">
+          Pakai <code>from datetime import date</code>, lalu <code>date.today().strftime("%d %B %Y")</code>. Jangan lupa: tambahin <code>add_node</code>-nya, lalu update <code>add_edge</code> supaya jalurnya jadi <code>START → sapa → tanggal_hari_ini → tutup → END</code>.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAB 3 — STATE ============ -->
+<section class="bab" id="bab3">
+  <div class="container">
+    <div class="bab-header fade-up">
+      <span class="bab-num">Bab 03</span>
+      <h2><span class="hl">State</span> — tas perjalanan bersama</h2>
+      <p class="bab-lead">Node-node nggak saling kirim pesan langsung. Mereka <strong>baca dan tulis ke state yang sama</strong>. Paham state = paham 60% LangGraph.</p>
+    </div>
+
+    <div class="outcome fade-up">
+      <ul>
+        <li>Bisa <strong>mendesain skema state</strong> sendiri pakai <code>TypedDict</code>.</li>
+        <li>Bisa <strong>baca dari state</strong> di satu node dan <strong>nge-update field</strong> di node lain.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <p>State itu kayak <span class="term">tas perjalanan bersama</span>. Setiap node bisa buka tas, ambil yang dibutuhkan, masukin barang baru, lalu lanjutin perjalanan. Semua node lihat tas yang sama.</p>
+      <p>Skema state didefinisikan sekali di awal. LangGraph pakai itu buat ngecek field apa aja yang valid dan gimana cara nge-mergenya.</p>
+    </div>
+
+    <div class="code-block fade-up">
+      <div class="code-head">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="name">state_main.py</span>
+        <button class="copy" onclick="copyCode(this)">Copy</button>
+      </div>
+<pre><code><span class="tk-kw">from</span> langgraph.graph <span class="tk-kw">import</span> StateGraph, START, END
+<span class="tk-kw">from</span> typing <span class="tk-kw">import</span> TypedDict
+
+<span class="tk-kw">class</span> <span class="tk-cls">State</span>(TypedDict):
+    kalimat: <span class="tk-cls">str</span>
+    jumlah_kata: <span class="tk-cls">int</span>
+    huruf_kapital: <span class="tk-cls">str</span>
+
+<span class="tk-kw">def</span> <span class="tk-fn">hitung_kata</span>(state):
+    n = <span class="tk-fn">len</span>(state[<span class="tk-str">"kalimat"</span>].<span class="tk-fn">split</span>())
+    <span class="tk-kw">return</span> {<span class="tk-str">"jumlah_kata"</span>: n}
+
+<span class="tk-kw">def</span> <span class="tk-fn">jadikan_kapital</span>(state):
+    <span class="tk-kw">return</span> {<span class="tk-str">"huruf_kapital"</span>: state[<span class="tk-str">"kalimat"</span>].<span class="tk-fn">upper</span>()}
+
+builder = <span class="tk-cls">StateGraph</span>(State)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"hitung"</span>, hitung_kata)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"kapital"</span>, jadikan_kapital)
+builder.<span class="tk-fn">add_edge</span>(START, <span class="tk-str">"hitung"</span>)
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"hitung"</span>, <span class="tk-str">"kapital"</span>)
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"kapital"</span>, END)
+
+graph = builder.<span class="tk-fn">compile</span>()
+hasil = graph.<span class="tk-fn">invoke</span>({<span class="tk-str">"kalimat"</span>: <span class="tk-str">"belajar langgraph itu seru"</span>})
+<span class="tk-fn">print</span>(hasil)</code></pre>
+    </div>
+
+    <div class="output-block fade-up">
+      <div class="output-label">Output</div>
+      <pre>{
+  'kalimat': 'belajar langgraph itu seru',
+  'jumlah_kata': 4,
+  'huruf_kapital': 'BELAJAR LANGGRAPH ITU SERU'
+}</pre>
+    </div>
+
+    <div class="callout fade-up">
+      <div class="lbl">Catatan</div>
+      <p>Field di state itu <strong>nggak wajib diisi semua di awal</strong>. <code>jumlah_kata</code> dan <code>huruf_kapital</code> bakal terisi otomatis seiring node-node berjalan. Itulah sebabnya state tumbuh sepanjang graph dijalankan.</p>
+    </div>
+
+    <div class="mission fade-up">
+      <div class="mission-tag">Misi 03</div>
+      <div class="mission-meta">
+        <span class="meta-pill lvl-2">Level 2 · Sedang</span>
+        <span class="meta-pill">~15 menit</span>
+      </div>
+      <h3>State buat ringkasan teks</h3>
+      <p>Bikin graph dengan state berisi: <code>teks</code>, <code>jumlah_kalimat</code>, <code>kalimat_pertama</code>, dan <code>ringkasan</code>.</p>
+      <p>Tiga node:</p>
+      <p style="padding-left:14px;">
+        1. <strong>pisah_kalimat</strong> — hitung jumlah kalimat (split dengan tanda titik) dan ambil yang pertama.<br>
+        2. <strong>buat_ringkasan</strong> — gabungkan jadi: <em>"Teks ini punya N kalimat. Kalimat pertama: ..."</em><br>
+        3. <strong>END</strong>
+      </p>
+      <p>Coba dengan input: <code>"LangGraph itu kerangka kerja agent. Ia memakai konsep graph. Belajarnya juga menyenangkan."</code></p>
+
+      <div class="bonus">
+        <div class="label">Bonus</div>
+        <p>Tambah field <code>kalimat_terpanjang</code> dan node yang ngisinya. Pikirin: node ini bergantung sama field apa? Apakah perlu dijalanin sebelum atau sesudah <strong>buat_ringkasan</strong>?</p>
+      </div>
+
+      <details class="hint">
+        <summary>Petunjuk kalau mentok</summary>
+        <div class="hint-body">
+          Buat <code>pisah_kalimat</code>: <code>kalimat = [k.strip() for k in state["teks"].split(".") if k.strip()]</code>, lalu return <code>{"jumlah_kalimat": len(kalimat), "kalimat_pertama": kalimat[0]}</code>. Untuk <code>buat_ringkasan</code>, tinggal pakai f-string yang baca dari kedua field tadi.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAB 4 — GRAPH ============ -->
+<section class="bab" id="bab4">
+  <div class="container">
+    <div class="bab-header fade-up">
+      <span class="bab-num">Bab 04</span>
+      <h2><span class="hl">Graph</span> — rangkaian utuh</h2>
+      <p class="bab-lead">Sekarang semua bahan udah ada. Saatnya merangkai <strong>graph lengkap</strong> dari nol — tiga langkah, dari input mentah jadi output siap pakai.</p>
+    </div>
+
+    <div class="outcome fade-up">
+      <ul>
+        <li>Bisa <strong>merancang pipeline 3+ langkah</strong> dari mulai mendesain state, nulis node, sampai compile.</li>
+        <li>Tau <strong>urutan tipikal</strong> bikin graph LangGraph: state → node → edge → compile → invoke.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <p>Pola yang akan kamu pakai berulang-ulang:</p>
+      <p style="padding-left:14px;">
+        <strong>1.</strong> Definisikan <span class="term">state</span> — apa aja field yang dipakai bareng?<br>
+        <strong>2.</strong> Tulis <span class="term">node</span> — fungsi-fungsi yang ngerjain langkah-langkahnya.<br>
+        <strong>3.</strong> Pasang <span class="term">edge</span> — jalur dari START sampai END.<br>
+        <strong>4.</strong> <span class="term">compile()</span>, lalu <span class="term">invoke()</span>.
+      </p>
+      <p>Berikut contoh pipeline pendek: nerima nama produk &amp; harga, normalisasi, tambah PPN, lalu format jadi label siap tempel.</p>
+    </div>
+
+    <div class="code-block fade-up">
+      <div class="code-head">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="name">label_produk.py</span>
+        <button class="copy" onclick="copyCode(this)">Copy</button>
+      </div>
+<pre><code><span class="tk-kw">from</span> langgraph.graph <span class="tk-kw">import</span> StateGraph, START, END
+<span class="tk-kw">from</span> typing <span class="tk-kw">import</span> TypedDict
+
+<span class="tk-kw">class</span> <span class="tk-cls">State</span>(TypedDict):
+    nama: <span class="tk-cls">str</span>
+    harga: <span class="tk-cls">int</span>
+    harga_final: <span class="tk-cls">int</span>
+    label: <span class="tk-cls">str</span>
+
+<span class="tk-kw">def</span> <span class="tk-fn">normalisasi</span>(state):
+    <span class="tk-kw">return</span> {<span class="tk-str">"nama"</span>: state[<span class="tk-str">"nama"</span>].<span class="tk-fn">strip</span>().<span class="tk-fn">title</span>()}
+
+<span class="tk-kw">def</span> <span class="tk-fn">tambah_ppn</span>(state):
+    final = <span class="tk-fn">int</span>(state[<span class="tk-str">"harga"</span>] * <span class="tk-num">1.11</span>)
+    <span class="tk-kw">return</span> {<span class="tk-str">"harga_final"</span>: final}
+
+<span class="tk-kw">def</span> <span class="tk-fn">buat_label</span>(state):
+    label = <span class="tk-str">f"{state['nama']} — Rp{state['harga_final']:,}"</span>
+    <span class="tk-kw">return</span> {<span class="tk-str">"label"</span>: label}
+
+builder = <span class="tk-cls">StateGraph</span>(State)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"normalisasi"</span>, normalisasi)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"ppn"</span>, tambah_ppn)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"label"</span>, buat_label)
+
+builder.<span class="tk-fn">add_edge</span>(START, <span class="tk-str">"normalisasi"</span>)
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"normalisasi"</span>, <span class="tk-str">"ppn"</span>)
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"ppn"</span>, <span class="tk-str">"label"</span>)
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"label"</span>, END)
+
+graph = builder.<span class="tk-fn">compile</span>()
+<span class="tk-fn">print</span>(graph.<span class="tk-fn">invoke</span>({<span class="tk-str">"nama"</span>: <span class="tk-str">"  kopi gula aren  "</span>, <span class="tk-str">"harga"</span>: <span class="tk-num">25000</span>}))</code></pre>
+    </div>
+
+    <div class="output-block fade-up">
+      <div class="output-label">Output</div>
+      <pre>{
+  'nama': 'Kopi Gula Aren',
+  'harga': 25000,
+  'harga_final': 27750,
+  'label': 'Kopi Gula Aren — Rp27,750'
+}</pre>
+    </div>
+
+    <div class="mission fade-up">
+      <div class="mission-tag">Misi 04</div>
+      <div class="mission-meta">
+        <span class="meta-pill lvl-2">Level 2 · Sedang</span>
+        <span class="meta-pill">~20 menit</span>
+      </div>
+      <h3>Pipeline review pengguna</h3>
+      <p>Bangun graph dari nol yang nerima review pengguna (string), lalu menghasilkan: <strong>jumlah kata</strong>, <strong>sentimen kasar</strong> (positif/negatif/netral berdasarkan kata kunci sederhana), dan <strong>ringkasan satu kalimat</strong>.</p>
+      <p><strong>Input:</strong> <code>{"review": "Produknya bagus banget, pengirimannya cepat juga."}</code></p>
+      <p><strong>Hasil yang diharapkan</strong> (kira-kira): jumlah kata terhitung, sentimen <em>positif</em>, ringkasan: <em>"Review 7 kata bersentimen positif."</em></p>
+
+      <div class="bonus">
+        <div class="label">Bonus</div>
+        <p>Tambah node <strong>highlight_kata_kunci</strong> yang ngambil kata-kata penting (mis. "bagus", "cepat", "buruk") dari review dan masukin ke field baru di state.</p>
+      </div>
+
+      <details class="hint">
+        <summary>Petunjuk kalau mentok</summary>
+        <div class="hint-body">
+          Buat sentimen sederhana: bikin dua list kata kunci positif dan negatif. Hitung berapa banyak yang muncul di review. Jika positif &gt; negatif → "positif", sebaliknya "negatif", sama → "netral". Untuk ringkasan, gunakan f-string yang baca <code>jumlah_kata</code> dan <code>sentimen</code> dari state.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAB 5 — CONDITIONAL ============ -->
+<section class="bab" id="bab5">
+  <div class="container">
+    <div class="bab-header fade-up">
+      <span class="bab-num">Bab 05</span>
+      <h2><span class="hl">Cabang</span> — graph yang bisa milih jalur</h2>
+      <p class="bab-lead">Sampai sini semua jalurnya lurus. Padahal kekuatan asli LangGraph muncul saat <strong>graph bisa nentuin sendiri</strong> mau ke mana — tergantung isi state.</p>
+    </div>
+
+    <div class="outcome fade-up">
+      <ul>
+        <li>Bisa nulis <strong>fungsi router</strong> yang baca state dan balikin nama node tujuan.</li>
+        <li>Bisa pakai <strong><code>add_conditional_edges</code></strong> buat bikin percabangan logika di graph.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <p>Cara kerjanya sederhana: kita nulis satu fungsi router yang nerima state dan balikin <em>label string</em>. Label itu dipetakan ke node tujuan lewat dictionary.</p>
+      <p>Contoh kasus: kita ngecek panjang teks. Kalau panjang, lempar ke node "ringkas". Kalau pendek, langsung ke node "selesai".</p>
+    </div>
+
+    <div class="code-block fade-up">
+      <div class="code-head">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span class="name">router.py</span>
+        <button class="copy" onclick="copyCode(this)">Copy</button>
+      </div>
+<pre><code><span class="tk-kw">from</span> langgraph.graph <span class="tk-kw">import</span> StateGraph, START, END
+<span class="tk-kw">from</span> typing <span class="tk-kw">import</span> TypedDict
+
+<span class="tk-kw">class</span> <span class="tk-cls">State</span>(TypedDict):
+    teks: <span class="tk-cls">str</span>
+    jumlah_kata: <span class="tk-cls">int</span>
+    output: <span class="tk-cls">str</span>
+
+<span class="tk-kw">def</span> <span class="tk-fn">hitung</span>(state):
+    <span class="tk-kw">return</span> {<span class="tk-str">"jumlah_kata"</span>: <span class="tk-fn">len</span>(state[<span class="tk-str">"teks"</span>].<span class="tk-fn">split</span>())}
+
+<span class="tk-kw">def</span> <span class="tk-fn">ringkas</span>(state):
+    potongan = <span class="tk-str">" "</span>.<span class="tk-fn">join</span>(state[<span class="tk-str">"teks"</span>].<span class="tk-fn">split</span>()[:<span class="tk-num">5</span>]) + <span class="tk-str">"..."</span>
+    <span class="tk-kw">return</span> {<span class="tk-str">"output"</span>: potongan}
+
+<span class="tk-kw">def</span> <span class="tk-fn">biarkan</span>(state):
+    <span class="tk-kw">return</span> {<span class="tk-str">"output"</span>: state[<span class="tk-str">"teks"</span>]}
+
+<span class="tk-co"># Fungsi router — balikin nama jalur, bukan node langsung</span>
+<span class="tk-kw">def</span> <span class="tk-fn">router</span>(state):
+    <span class="tk-kw">if</span> state[<span class="tk-str">"jumlah_kata"</span>] &gt; <span class="tk-num">10</span>:
+        <span class="tk-kw">return</span> <span class="tk-str">"panjang"</span>
+    <span class="tk-kw">return</span> <span class="tk-str">"pendek"</span>
+
+builder = <span class="tk-cls">StateGraph</span>(State)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"hitung"</span>, hitung)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"ringkas"</span>, ringkas)
+builder.<span class="tk-fn">add_node</span>(<span class="tk-str">"biarkan"</span>, biarkan)
+
+builder.<span class="tk-fn">add_edge</span>(START, <span class="tk-str">"hitung"</span>)
+builder.<span class="tk-fn">add_conditional_edges</span>(<span class="tk-str">"hitung"</span>, router, {
+    <span class="tk-str">"panjang"</span>: <span class="tk-str">"ringkas"</span>,
+    <span class="tk-str">"pendek"</span>: <span class="tk-str">"biarkan"</span>,
+})
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"ringkas"</span>, END)
+builder.<span class="tk-fn">add_edge</span>(<span class="tk-str">"biarkan"</span>, END)
+
+graph = builder.<span class="tk-fn">compile</span>()
+<span class="tk-fn">print</span>(graph.<span class="tk-fn">invoke</span>({<span class="tk-str">"teks"</span>: <span class="tk-str">"halo dunia"</span>}))
+<span class="tk-fn">print</span>(graph.<span class="tk-fn">invoke</span>({<span class="tk-str">"teks"</span>: <span class="tk-str">"ini adalah teks panjang yang berisi banyak kata supaya kena cabang ringkas"</span>}))</code></pre>
+    </div>
+
+    <div class="output-block fade-up">
+      <div class="output-label">Output</div>
+      <pre>{'teks': 'halo dunia', 'jumlah_kata': 2, 'output': 'halo dunia'}
+{'teks': 'ini adalah teks panjang...', 'jumlah_kata': 12, 'output': 'ini adalah teks panjang yang...'}</pre>
+    </div>
+
+    <div class="callout fade-up">
+      <div class="lbl">Pola yang sering muncul</div>
+      <p>Banyak kasus agent di dunia nyata cuma kombinasi pola ini berulang: <strong>klasifikasi → router → eksekusi spesifik</strong>. Kalau kamu udah nyaman sama bab 5, kamu udah punya pondasi buat bikin agent beneran.</p>
+    </div>
+
+    <div class="mission fade-up">
+      <div class="mission-tag">Misi 05</div>
+      <div class="mission-meta">
+        <span class="meta-pill lvl-3">Level 3 · Menantang</span>
+        <span class="meta-pill">~25 menit</span>
+      </div>
+      <h3>Klasifikasi pertanyaan pengguna</h3>
+      <p>Bangun graph yang nerima pertanyaan pengguna lalu mengarahkannya ke salah satu dari tiga jalur:</p>
+      <p style="padding-left:14px;">
+        <strong>jawab_fakta</strong> — kalau pertanyaan dimulai dengan "apa", "siapa", "kapan".<br>
+        <strong>jawab_opini</strong> — kalau pertanyaan dimulai dengan "menurut", "bagaimana".<br>
+        <strong>tolak_sopan</strong> — selain dua kategori di atas.
+      </p>
+      <p>Setiap jalur menghasilkan field <code>jawaban</code> yang berisi respons dummy yang sesuai (mis. <em>"Ini pertanyaan fakta — saya akan cari jawaban pasti."</em>).</p>
+
+      <div class="bonus">
+        <div class="label">Bonus</div>
+        <p>Pisahkan <strong>klasifikasi</strong> ke node sendiri yang ngisi field <code>kategori</code> di state. Lalu router hanya baca <code>state["kategori"]</code> tanpa logika tambahan. Pola "klasifikator → router" ini sering dipakai di production.</p>
+      </div>
+
+      <details class="hint">
+        <summary>Petunjuk kalau mentok</summary>
+        <div class="hint-body">
+          Untuk versi sederhana, fungsi router-nya bisa langsung lihat awalan kata pertanyaan: <code>q = state["pertanyaan"].lower()</code>, lalu rangkaian <code>if q.startswith(...)</code>. Untuk bonus, bikin node <code>klasifikasi</code> yang isinya logika <code>if/elif</code> tadi, dan return <code>{"kategori": "fakta"}</code> dst — lalu router cuma <code>return state["kategori"]</code>.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEXT STEPS ============ -->
+<section class="next">
+  <div class="container">
+    <div class="eyebrow fade-up" style="color: var(--gold);">Selanjutnya</div>
+    <h2 class="section-title fade-up">Sudah selesai 5 bab? Ini langkah berikutnya.</h2>
+    <p class="section-lead fade-up">Pondasinya udah kuat. Tinggal naik level pelan-pelan dengan topik-topik berikut — yang akan kita bahas di halaman lanjutan.</p>
+
+    <div class="next-grid">
+      <div class="next-card fade-up">
+        <h3>Integrasi LLM</h3>
+        <p>Panggil GPT/Claude di dalam node, dan amankan output-nya pakai schema parsing.</p>
+      </div>
+      <div class="next-card fade-up">
+        <h3>Tools &amp; ToolNode</h3>
+        <p>Bikin agent yang bisa pakai kalkulator, web search, atau API internal saat butuh.</p>
+      </div>
+      <div class="next-card fade-up">
+        <h3>Memory &amp; Checkpoint</h3>
+        <p>Simpan state antar pemanggilan supaya graph "ingat" percakapan sebelumnya.</p>
+      </div>
+      <div class="next-card fade-up">
+        <h3>Multi-agent</h3>
+        <p>Beberapa agent yang punya peran berbeda saling oper kerjaan dalam satu graph.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Dibuat oleh <a href="https://rizalespe.github.io">Rizal Setya Perdana</a> · LangGraph 101 ·
+  <a href="konsep-awal.html">versi konsep awal</a>
+</footer>
+
+<script>
+  // Fade-up on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  // Copy code
+  function copyCode(btn) {
+    const block = btn.closest('.code-block');
+    const code = block.querySelector('pre code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1400);
+    });
+  }
+</script>
+</body>
+</html>
