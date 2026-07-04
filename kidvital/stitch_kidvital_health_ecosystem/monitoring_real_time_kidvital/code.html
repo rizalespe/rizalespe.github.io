@@ -1,0 +1,272 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#105da7",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#dbe3ed",
+                    "outline-variant": "#c2c6d3",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#001c3a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "surface-dim": "#dcd9d9",
+                    "tertiary": "#765700",
+                    "on-tertiary-fixed": "#261a00",
+                    "surface-container-highest": "#e4e2e1",
+                    "secondary-fixed-dim": "#bfc7d1",
+                    "outline": "#727782",
+                    "primary-fixed": "#d4e3ff",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "tertiary-container": "#956e00",
+                    "on-secondary": "#ffffff",
+                    "background": "#fcf9f8",
+                    "tertiary-fixed-dim": "#f4bf44",
+                    "surface-tint": "#155fa9",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-bright": "#fcf9f8",
+                    "on-secondary-fixed": "#141c23",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#303030",
+                    "inverse-on-surface": "#f3f0f0",
+                    "secondary-container": "#dbe3ed",
+                    "on-background": "#1b1c1c",
+                    "inverse-primary": "#a5c8ff",
+                    "surface-container-low": "#f6f3f2",
+                    "tertiary-fixed": "#ffdf9f",
+                    "on-secondary-container": "#5d656e",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#424751",
+                    "surface-variant": "#e4e2e1",
+                    "primary-container": "#3776c1",
+                    "on-primary-fixed-variant": "#004785",
+                    "on-primary-container": "#fefcff",
+                    "surface": "#fcf9f8",
+                    "secondary": "#575f68",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "surface-container": "#f0eded",
+                    "on-secondary-fixed-variant": "#404850",
+                    "surface-container-high": "#eae7e7",
+                    "on-error": "#ffffff",
+                    "status-success": "#2E9E6D"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "unit": "8px",
+                    "stack-lg": "24px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "section-gap": "32px",
+                    "container-margin": "24px"
+            },
+            "fontFamily": {
+                    "kids-display": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Work Sans"],
+                    "label-md": ["Work Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Work Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-container {
+            mask-image: linear-gradient(to right, rgba(0,0,0,1) 80%, rgba(0,0,0,0));
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .live-indicator {
+            animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24 overflow-x-hidden font-kids-display">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-surface-dim shadow-sm flex justify-between items-center px-gutter h-16">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A warm, professional portrait of a young child named Aria with a soft clinical background, using a bright light-mode aesthetic with gentle shadows and soft focus. The composition is clean and trustworthy, reflecting the KidVital health brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-SV9nA_NnENm5H7wlSg2iQgK0tu9oR4TIFmWA1XFGrTRXFNzdt5TXCL6De8FPdyz2R57mHLCzBAVrPwz2JAhUM8vUb6PHbvH-v5lIhASpsJpEcilJ3i9x0Es2Yt1NkVKpF2tbsaHkirgoN6LCEoefYmFD94I96UwoPTIP9n3nObeKDYXxTiqHdDgjzZ24hzX_r3uhXTnxe-qo4D6n631ztgrnDAEj8ykqKMUvyqYIB4jUKzMRzvf56i9CXYNOMbTIeIqB7arg728">
+</div>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Live Monitoring: Aria</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors rounded-full active:scale-95 duration-100">notifications</button>
+</div>
+</header>
+<main class="px-container-margin py-section-gap max-w-xl mx-auto space-y-section-gap">
+<!-- Live Vital Hero Section -->
+<section class="flex flex-col items-center text-center space-y-stack-md">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<!-- Outer Ring -->
+<div class="absolute inset-0 rounded-full border-[6px] border-surface-container-highest"></div>
+<div class="absolute inset-0 rounded-full border-[6px] border-status-success border-t-transparent -rotate-45"></div>
+<div class="flex flex-col items-center">
+<span class="text-on-surface-variant font-label-md uppercase tracking-wider">SpO2</span>
+<span class="font-display-lg text-[64px] leading-none text-primary mb-1">98%</span>
+<div class="flex items-center gap-1.5 bg-status-success/10 text-status-success px-3 py-1 rounded-full live-indicator">
+<span class="w-2 h-2 rounded-full bg-status-success"></span>
+<span class="font-label-md">Normal</span>
+</div>
+</div>
+</div>
+<p class="text-on-surface-variant font-body-md">Last updated: 2 minutes ago</p>
+</section>
+<!-- Dynamic Chart Area -->
+<section class="bg-surface-container-lowest rounded-xl p-stack-md shadow-sm" style="border-radius: 8px;">
+<div class="flex justify-between items-end mb-stack-md">
+<div>
+<h2 class="font-headline-md text-on-surface">Trends</h2>
+<p class="text-on-surface-variant font-label-md">24 Hour Window</p>
+</div>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-label-md text-primary">
+<span class="w-2 h-2 rounded-full bg-primary"></span> SpO2
+                    </span>
+<span class="flex items-center gap-1 text-label-md text-tertiary">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Temp
+                    </span>
+</div>
+</div>
+<div class="h-40 w-full relative chart-container overflow-hidden">
+<!-- SVG Line Chart Mockup -->
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 100">
+<!-- Grid Lines -->
+<line class="text-outline-variant/30" stroke="currentColor" stroke-width="0.5" x1="0" x2="400" y1="20" y2="20"></line>
+<line class="text-outline-variant/30" stroke="currentColor" stroke-width="0.5" x1="0" x2="400" y1="50" y2="50"></line>
+<line class="text-outline-variant/30" stroke="currentColor" stroke-width="0.5" x1="0" x2="400" y1="80" y2="80"></line>
+<!-- SpO2 Line -->
+<path d="M0,30 Q50,25 100,28 T200,20 T300,25 T400,22" fill="none" stroke="#105da7" stroke-linecap="round" stroke-width="3"></path>
+<!-- Temp Line -->
+<path d="M0,60 Q50,65 100,62 T200,70 T300,63 T400,66" fill="none" stroke="#765700" stroke-dasharray="4" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="flex justify-between mt-2 text-[10px] text-on-surface-variant font-medium">
+<span class="">08:00</span>
+<span class="">12:00</span>
+<span class="">16:00</span>
+<span class="">20:00</span>
+<span class="">00:00</span>
+<span class="">04:00</span>
+</div>
+</div>
+</section>
+<!-- Grid Cards Section -->
+<section class="grid grid-cols-2 gap-stack-md">
+<!-- Temperature Card -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md shadow-sm border-l-4 border-status-success hover:bg-surface-container-low transition-colors active:scale-95 duration-100" style="border-radius: 8px;">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">thermometer</span>
+<span class="font-label-md text-on-surface-variant">Temp</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-on-surface">37</span>
+<span class="font-body-md text-on-surface-variant">°C</span>
+</div>
+<span class="text-status-success font-label-md flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-sm">check_circle</span> Normal
+                </span>
+</div>
+<!-- Pulse Card -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md shadow-sm border-l-4 border-status-success hover:bg-surface-container-low transition-colors active:scale-95 duration-100" style="border-radius: 8px;">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-md text-on-surface-variant">Pulse</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-on-surface">85</span>
+<span class="font-body-md text-on-surface-variant">BPM</span>
+</div>
+<span class="text-status-success font-label-md flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-sm">check_circle</span> Normal
+                </span>
+</div>
+</section>
+<!-- Hidden Alert Section Placeholder -->
+<div class="hidden" id="alert-container">
+<div class="bg-error-container p-stack-md rounded-xl flex items-start gap-stack-sm border border-error/20" style="border-radius: 8px;">
+<span class="material-symbols-outlined text-error mt-0.5">warning</span>
+<div>
+<h4 class="font-label-md text-on-error-container">Low Oxygen Alert</h4>
+<p class="font-body-md text-on-error-container">Aria's SpO2 level has dropped below 90%. Please check the device placement.</p>
+</div>
+</div>
+</div>
+<!-- Quick Actions / Support -->
+<section class="space-y-stack-sm">
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-label-md flex items-center justify-center gap-2 shadow-sm hover:opacity-90 active:scale-[0.98] transition-all" style="background-color: rgb(61, 123, 199); border-radius: 8px;">
+<span class="material-symbols-outlined">medical_services</span>
+                Consult Doctor
+            </button>
+<button class="w-full h-14 bg-secondary-container text-on-secondary-container rounded-xl font-label-md flex items-center justify-center gap-2 hover:bg-secondary-fixed-dim active:scale-[0.98] transition-all" style="border-radius: 8px;">
+<span class="material-symbols-outlined">share</span>
+                Share Data Report
+            </button>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface dark:bg-surface-container-lowest shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] flex justify-around items-center h-20 px-2 pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200" style="background-color: rgb(61, 123, 199); color: rgb(255, 255, 255);">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings_remote</span>
+<span class="font-label-md text-label-md">Pairing</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-md text-label-md">Consult</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction: Toggle Alert for demonstration
+        document.querySelector('.w-48.h-48').addEventListener('click', () => {
+            const alert = document.getElementById('alert-container');
+            alert.classList.toggle('hidden');
+            if(!alert.classList.contains('hidden')) {
+                alert.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Simulating data updates
+        setInterval(() => {
+            const bpmElement = document.querySelector('.grid div:nth-child(2) .font-headline-lg');
+            const currentBpm = parseInt(bpmElement.innerText);
+            const drift = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+            bpmElement.innerText = currentBpm + drift;
+        }, 3000);
+    </script>
+
+
+</body></html>

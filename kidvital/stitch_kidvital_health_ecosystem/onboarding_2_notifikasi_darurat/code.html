@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KidVital - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#765700",
+                      "on-tertiary-fixed": "#261a00",
+                      "surface-dim": "#dcd9d9",
+                      "surface-container-highest": "#e4e2e1",
+                      "secondary-fixed-dim": "#bfc7d1",
+                      "outline": "#727782",
+                      "primary": "#105da7",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#dbe3ed",
+                      "outline-variant": "#c2c6d3",
+                      "on-primary-fixed": "#001c3a",
+                      "error-container": "#ffdad6",
+                      "on-surface": "#1b1c1c",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-tint": "#155fa9",
+                      "surface-bright": "#fcf9f8",
+                      "on-tertiary-container": "#fffbff",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed": "#141c23",
+                      "primary-fixed": "#d4e3ff",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "tertiary-container": "#956e00",
+                      "tertiary-fixed-dim": "#f4bf44",
+                      "on-secondary": "#ffffff",
+                      "background": "#fcf9f8",
+                      "surface-container-low": "#f6f3f2",
+                      "tertiary-fixed": "#ffdf9f",
+                      "on-secondary-container": "#5d656e",
+                      "inverse-surface": "#303030",
+                      "inverse-on-surface": "#f3f0f0",
+                      "secondary-container": "#dbe3ed",
+                      "on-background": "#1b1c1c",
+                      "inverse-primary": "#a5c8ff",
+                      "primary-fixed-dim": "#a5c8ff",
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed-variant": "#404850",
+                      "surface-container": "#f0eded",
+                      "surface-container-high": "#eae7e7",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#424751",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#3776c1",
+                      "on-primary-fixed-variant": "#004785",
+                      "on-primary-container": "#fefcff",
+                      "surface-variant": "#e4e2e1",
+                      "surface": "#fcf9f8",
+                      "secondary": "#575f68"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "section-gap": "32px",
+                      "container-margin": "24px",
+                      "unit": "8px",
+                      "stack-lg": "24px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "kids-display": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Work Sans"
+                      ],
+                      "label-md": [
+                              "Work Sans"
+                      ],
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Work Sans"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "kids-display": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "display-lg": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface h-screen w-full flex flex-col md:items-center md:justify-center overflow-hidden">
+<!-- Main Mobile Container for Web View -->
+<main class="w-full h-full max-w-md bg-surface flex flex-col justify-between px-container-margin py-stack-lg relative shadow-none md:shadow-[0_8px_30px_rgb(0,0,0,0.05)] md:h-[850px] md:rounded-[2rem] md:border md:border-surface-variant overflow-hidden">
+<!-- Skip Button (Optional utility for onboarding) -->
+<div class="flex justify-end w-full pt-unit">
+<button class="text-on-surface-variant font-label-md text-label-md px-4 py-2 rounded-full hover:bg-surface-container-low transition-colors font-headline-md">
+                Lewati
+            </button>
+</div>
+<!-- Content Area -->
+<div class="flex-1 flex flex-col items-center justify-center w-full mt-section-gap mb-section-gap">
+<!-- Illustration Container -->
+<div class="w-full max-w-[280px] aspect-square mb-stack-lg fade-in-up relative flex items-center justify-center">
+<!-- Using an image placeholder with strict detailed data-alt for the generation pipeline -->
+<img class="w-full h-full object-contain drop-shadow-md rounded-[2rem]" data-alt="A modern, minimalist flat vector illustration designed for a healthcare app onboarding screen. The scene features a sleek smartphone displaying a prominent, soft-edged notification card indicating an emergency alert, using subtle red accents for urgency without inducing panic. Beside the phone, a simplified, friendly doctor icon wearing a stethoscope stands reassuringly. The overall aesthetic relies on professional blue tones, warm tactile softness, and generous whitespace, set against a very light warm gray background to ensure a calm, trustworthy clinical mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGdLvkeTxetqLw38pEy1y-Rea2m_IvK37ek-SprKyl4mHcjBcUemtIgiTkN-DkwrcPgvf1nVGxLRsU55nDykVi6O7rkoA2MYSQFS3Kmt8VgULuwK_xEfT4x0nYxNKLt1sPlJyQlDtFUpcuCdQKTE4wM8STWynDsnwbaE3BVGQ33tPoQ06Qan5-wN1YBSvdh48tcPmWlOwdhB30HxUJDoFc8dJ8R1VG0rCWmfFJQ9ypNaHIrCRtKnrwTTBAe4WZn-MNMCKTn2Kh1Fg">
+</div>
+<!-- Text Content -->
+<div class="flex flex-col items-center text-center gap-stack-md fade-in-up delay-100 max-w-[320px]">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+                    Siaga Kondisi Darurat
+                </h1>
+<p class="font-headline-md text-body-md text-on-surface-variant">
+                    Dapatkan notifikasi instan dan jalur cepat ke dokter spesialis saat data vital di luar batas normal.
+                </p>
+</div>
+</div>
+<!-- Bottom Controls -->
+<div class="w-full flex flex-col gap-stack-lg pb-unit fade-in-up delay-200">
+<!-- Pagination Indicator -->
+<div class="flex items-center justify-center gap-[6px]">
+<div class="w-2 h-2 rounded-full bg-surface-variant transition-all duration-300"></div>
+<!-- Active Dot -->
+<div class="w-6 h-2 rounded-full bg-[#3D7BC7] transition-all duration-300"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant transition-all duration-300"></div>
+</div>
+<!-- Primary Action Button -->
+<button class="w-full min-h-[48px] bg-[#3D7BC7] text-white font-label-md text-label-md rounded-lg flex items-center justify-center hover:opacity-90 active:scale-[0.98] transition-all duration-200 shadow-sm">
+                Lanjut
+            </button>
+</div>
+</main>
+
+
+</body></html>

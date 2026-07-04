@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KidVital — Respons Cepat untuk Kesehatan Anak Anda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F3EC;
+    --text:#2B2B2B;
+    --primary:#3D7BC7;
+    --primary-dark:#2E5F9E;
+    --secondary:#E8F0FA;
+    --yellow:#FFC94D;
+    --green:#6FCF97;
+    --sky:#56CCF2;
+    --danger:#E4572E;
+    --safe:#2E9E6D;
+    --card:#ffffff;
+    --border:rgba(43,43,43,0.08);
+    --radius:20px;
+    --shadow:0 8px 30px rgba(43,43,43,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1C1C1E;
+      --text:#F2F0EC;
+      --card:#26262a;
+      --secondary:#1f2f42;
+      --border:rgba(255,255,255,0.08);
+      --shadow:0 8px 30px rgba(0,0,0,0.35);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Work Sans', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-tap-highlight-color:transparent;
+  }
+  h1,h2,h3,.display{font-family:'Plus Jakarta Sans', sans-serif;}
+  h1,h2,h3{margin:0;letter-spacing:-0.02em;}
+  p{margin:0;}
+  section{
+    max-width:1100px;
+    margin:0 auto;
+    padding:96px 24px;
+  }
+  @media (max-width:640px){ section{padding:64px 20px;} }
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--secondary);color:var(--primary-dark);
+    padding:8px 16px;border-radius:999px;
+    font-size:13px;font-weight:600;
+    margin-bottom:24px;
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--safe);}
+
+  .section-title{font-size:clamp(24px,3.5vw,36px);font-weight:800;margin-bottom:12px;}
+  .section-sub{color:var(--text);opacity:0.65;max-width:640px;font-size:16px;margin-bottom:48px;}
+
+  .fade-in{
+    opacity:0;transform:translateY(24px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- Dot Nav ---------- */
+  .dotnav{
+    position:fixed;right:20px;top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:14px;z-index:100;
+  }
+  .dotnav a{
+    width:10px;height:10px;border-radius:50%;
+    background:rgba(61,123,199,0.25);
+    display:block;position:relative;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .dotnav a::after{
+    content:attr(data-label);
+    position:absolute;right:20px;top:50%;transform:translateY(-50%);
+    background:var(--card);color:var(--text);
+    padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;
+    white-space:nowrap;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+  }
+  .dotnav a:hover::after{opacity:1;}
+  .dotnav a.active{background:var(--primary);transform:scale(1.3);}
+  @media (max-width:900px){ .dotnav{display:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    padding:120px 24px 80px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(86,204,242,0.18), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(111,207,151,0.18), transparent 45%),
+      var(--bg);
+    position:relative;
+    max-width:none;
+  }
+  .hero .logo-mark{
+    display:inline-flex;align-items:center;gap:10px;
+    font-weight:800;font-size:18px;color:var(--primary-dark);
+    margin-bottom:28px;
+  }
+  .hero .logo-mark svg{width:34px;height:34px;}
+  .hero h1{
+    font-size:clamp(32px,6.5vw,64px);
+    font-weight:800;
+    max-width:900px;
+    margin-bottom:20px;
+  }
+  .hero h1 span{color:var(--primary);}
+  .hero p.tagline{
+    font-size:clamp(16px,2vw,20px);
+    max-width:560px;
+    opacity:0.75;
+    margin-bottom:36px;
+  }
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 28px;border-radius:14px;
+    font-weight:700;font-size:15px;
+    text-decoration:none;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--primary);color:#fff;box-shadow:0 10px 24px rgba(61,123,199,0.35);}
+  .btn-primary:hover{box-shadow:0 14px 30px rgba(61,123,199,0.45);}
+  .btn-ghost{background:transparent;color:var(--primary-dark);border-color:var(--primary);}
+  .scroll-hint{
+    position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    color:var(--text);opacity:0.45;font-size:12px;font-weight:600;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{ 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,8px);} }
+
+  /* ---------- Bento grid ---------- */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:800px){ .bento{grid-template-columns:1fr;} }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:28px;
+    box-shadow:var(--shadow);
+  }
+  .card .icon-badge{
+    width:48px;height:48px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--secondary);color:var(--primary-dark);
+    margin-bottom:18px;
+  }
+  .card .icon-badge svg{width:24px;height:24px;}
+  .card h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .card p{font-size:14.5px;opacity:0.72;}
+  .card.danger .icon-badge{background:#fdeae4;color:var(--danger);}
+
+  /* ---------- Pillars ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media (max-width:800px){ .pillars{grid-template-columns:1fr;} }
+  .pillar{
+    border-radius:var(--radius);
+    padding:32px 26px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  .pillar.p1{background:var(--secondary);}
+  .pillar.p2{background:var(--card);}
+  .pillar.p3{background:linear-gradient(160deg, #fff8e6, #fff);}
+  .pillar .num{
+    font-family:'Plus Jakarta Sans';font-weight:800;font-size:13px;
+    color:var(--primary-dark);opacity:0.6;margin-bottom:14px;
+    letter-spacing:0.05em;
+  }
+  .pillar h3{font-size:19px;font-weight:700;margin-bottom:10px;}
+  .pillar p{font-size:14.5px;opacity:0.75;}
+  .pillar .mascot-chip{
+    margin-top:16px;display:inline-flex;align-items:center;gap:6px;
+    background:var(--yellow);color:#4a3600;font-weight:700;font-size:12px;
+    padding:6px 12px;border-radius:999px;
+  }
+
+  /* ---------- How it works ---------- */
+  .flow{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+    counter-reset:step;
+  }
+  @media (max-width:800px){ .flow{grid-template-columns:1fr;} }
+  .flow .step{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:26px 20px;
+    box-shadow:var(--shadow);position:relative;
+  }
+  .flow .step .step-num{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--primary);color:#fff;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;font-family:'Plus Jakarta Sans';
+  }
+  .flow .step h4{font-size:15.5px;font-weight:700;margin-bottom:8px;}
+  .flow .step p{font-size:13.5px;opacity:0.7;}
+  .flow .arrow{
+    display:none;
+  }
+  @media (min-width:801px){
+    .flow{position:relative;}
+    .flow::before{
+      content:"";position:absolute;top:18px;left:12.5%;right:12.5%;height:2px;
+      background:repeating-linear-gradient(90deg, var(--primary) 0 8px, transparent 8px 14px);
+      opacity:0.35;z-index:0;
+    }
+  }
+
+  /* ---------- AI capabilities ---------- */
+  .ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px;}
+  @media (max-width:800px){ .ai-grid{grid-template-columns:1fr;} }
+  .ai-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);
+  }
+  .ai-card .tag{
+    display:inline-block;background:var(--secondary);color:var(--primary-dark);
+    font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;margin-bottom:14px;
+  }
+  .ai-card h3{font-size:16.5px;font-weight:700;margin-bottom:8px;}
+  .ai-card p{font-size:13.5px;opacity:0.72;}
+  .ethics-note{
+    display:flex;gap:14px;align-items:flex-start;
+    background:#fdeae4;border:1px solid rgba(228,87,46,0.25);
+    border-radius:16px;padding:20px 22px;
+  }
+  @media (prefers-color-scheme: dark){ .ethics-note{background:#3a241d;} }
+  .ethics-note svg{flex-shrink:0;width:24px;height:24px;color:var(--danger);margin-top:2px;}
+  .ethics-note p{font-size:14px;font-weight:600;}
+
+  /* ---------- Personas ---------- */
+  .personas{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media (max-width:900px){ .personas{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .personas{grid-template-columns:1fr;} }
+  .persona{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:26px 22px;box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .persona .avatar{
+    width:56px;height:56px;border-radius:50%;
+    margin:0 auto 16px;display:flex;align-items:center;justify-content:center;
+    background:var(--secondary);color:var(--primary-dark);
+  }
+  .persona h3{font-size:15.5px;font-weight:700;margin-bottom:8px;}
+  .persona p{font-size:13px;opacity:0.7;}
+
+  /* ---------- Team ---------- */
+  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:800px){ .team{grid-template-columns:1fr;} }
+  .team .card ul{margin:0;padding-left:18px;font-size:13.5px;opacity:0.75;}
+  .team .card ul li{margin-bottom:4px;}
+
+  /* ---------- CTA / Footer ---------- */
+  .cta-section{
+    background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius:28px;
+    padding:64px 40px;
+    text-align:center;
+    color:#fff;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  @media (max-width:640px){ .cta-section{padding:44px 24px;border-radius:20px;} }
+  .cta-section h2{font-size:clamp(24px,4vw,34px);font-weight:800;margin-bottom:14px;}
+  .cta-section p{opacity:0.9;max-width:520px;margin:0 auto 30px;}
+  .cta-section .btn-primary{background:#fff;color:var(--primary-dark);box-shadow:none;}
+  .cta-section .btn-ghost{border-color:rgba(255,255,255,0.6);color:#fff;}
+
+  footer{
+    text-align:center;padding:48px 24px 64px;
+    font-size:13px;opacity:0.55;
+  }
+  footer .contact-row{
+    display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:12px;
+    font-weight:600;
+  }
+</style>
+</head>
+<body>
+
+<nav class="dotnav" id="dotnav" aria-label="Navigasi bagian">
+  <a href="#hero" data-label="Beranda" class="active"></a>
+  <a href="#masalah" data-label="Masalah"></a>
+  <a href="#solusi" data-label="Solusi"></a>
+  <a href="#cara-kerja" data-label="Cara Kerja"></a>
+  <a href="#teknologi" data-label="Teknologi AI"></a>
+  <a href="#pengguna" data-label="Pengguna"></a>
+  <a href="#tim" data-label="Tim"></a>
+  <a href="#penutup" data-label="Kontak"></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="11" fill="#3D7BC7"/><path d="M12 6.5c-1.3 0-2.3 1-2.3 2.3 0 1.6 1.4 2.7 3.5 4.5.3.2.6.2.9 0 2.1-1.8 3.5-2.9 3.5-4.5 0-1.3-1-2.3-2.3-2.3-.8 0-1.5.4-1.9 1-0.4-.6-1.1-1-1.9-1z" fill="#fff"/><path d="M6.5 16.5c1.5-1 3.5-1.5 5.5-1.5s4 .5 5.5 1.5" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg>
+    KidVital
+  </div>
+  <span class="eyebrow"><span class="dot"></span>Konsep Produk — Tahap Riset &amp; Prototipe</span>
+  <h1>Respons Cepat untuk <span>Kesehatan Anak</span> Anda</h1>
+  <p class="tagline">Menghubungkan orang tua, dokter spesialis anak, dan rumah sakit dalam satu platform untuk memantau kondisi anak secara real-time, mendeteksi dini kondisi darurat, dan mengedukasi anak lewat gamifikasi bersama maskot Vito.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#solusi">Jelajahi Solusi</a>
+    <a class="btn btn-ghost" href="#penutup">Jadwalkan Diskusi</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll untuk lihat lebih lanjut</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- MASALAH -->
+<section id="masalah">
+  <div class="fade-in">
+    <h2 class="section-title">Masalah yang Kami Selesaikan</h2>
+    <p class="section-sub">Tiga tantangan nyata yang dihadapi keluarga dalam menjaga kesehatan anak sehari-hari.</p>
+  </div>
+  <div class="bento fade-in">
+    <div class="card danger">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Terlambat Menyadari Kondisi Darurat</h3>
+      <p>Orang tua sering baru sadar anak dalam kondisi genting karena tidak ada pemantauan berkelanjutan di rumah.</p>
+    </div>
+    <div class="card">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+      </div>
+      <h3>Data Kesehatan Tersebar</h3>
+      <p>Riwayat kesehatan anak berserakan di buku KIA, ingatan orang tua, dan rekam medis RS berbeda-beda — tidak terhubung ke dokter.</p>
+    </div>
+    <div class="card">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V9m6 9V5m-11 13h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Edukasi Kesehatan Membosankan</h3>
+      <p>Edukasi kesehatan untuk anak masih satu arah dan tidak melibatkan anak sebagai partisipan aktif.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUSI -->
+<section id="solusi">
+  <div class="fade-in">
+    <h2 class="section-title">Solusi Kami — 3 Pilar Utama</h2>
+    <p class="section-sub">KidVital dibangun di atas tiga pilar yang saling melengkapi, dari sensor di rumah hingga tindakan medis.</p>
+  </div>
+  <div class="pillars fade-in">
+    <div class="pillar p1">
+      <div class="num">PILAR 01</div>
+      <h3>Monitoring Real-Time via Bluetooth</h3>
+      <p>Integrasi dengan alat kesehatan rumahan (oksimeter, termometer) lewat Bluetooth LE (GATT profile), sehingga data suhu, saturasi oksigen, dan detak jantung anak otomatis masuk ke aplikasi tanpa input manual.</p>
+    </div>
+    <div class="pillar p2">
+      <div class="num">PILAR 02</div>
+      <h3>Deteksi Dini &amp; Jalur Cepat ke Tenaga Medis</h3>
+      <p>Sistem mendeteksi data vital di luar ambang batas normal sesuai usia, mengirim notifikasi dengan rekomendasi tindakan, dan opsi satu-tap konsultasi ke dokter/RS mitra. Dibantu asisten AI untuk triase awal.</p>
+    </div>
+    <div class="pillar p3">
+      <div class="num">PILAR 03</div>
+      <h3>Edukasi &amp; Gamifikasi lewat Maskot "Vito"</h3>
+      <p>Vito, rubah kecil ramah, memandu anak menyelesaikan misi kesehatan harian (minum air, cek suhu, latihan napas) dengan reward/badge — sekaligus indikator kepatuhan yang terlihat oleh dokter.</p>
+      <span class="mascot-chip">🦊 Ditemani Vito</span>
+    </div>
+  </div>
+</section>
+
+<!-- CARA KERJA -->
+<section id="cara-kerja">
+  <div class="fade-in">
+    <h2 class="section-title">Cara Kerja</h2>
+    <p class="section-sub">Empat langkah sederhana dari data sensor hingga tindakan medis yang tepat waktu.</p>
+  </div>
+  <div class="flow fade-in">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Alat Bluetooth Kirim Data</h4>
+      <p>Oksimeter &amp; termometer mengirim data vital anak secara otomatis ke aplikasi.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>AI Deteksi Anomali</h4>
+      <p>Sistem membandingkan data dengan ambang batas normal sesuai usia anak.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Notifikasi ke Orang Tua &amp; Dokter</h4>
+      <p>Peringatan terkirim beserta rekomendasi tindakan yang perlu dilakukan.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Tindakan Cepat via Chat/Konsultasi</h4>
+      <p>Orang tua dapat langsung konsultasi satu-tap ke dokter atau rumah sakit mitra.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEKNOLOGI AI -->
+<section id="teknologi">
+  <div class="fade-in">
+    <h2 class="section-title">Teknologi AI yang Digunakan</h2>
+    <p class="section-sub">Kombinasi model bahasa, vision, dan audio untuk membantu skrining awal — bukan menggantikan tenaga medis.</p>
+  </div>
+  <div class="ai-grid fade-in">
+    <div class="ai-card">
+      <span class="tag">LLM + RAG</span>
+      <h3>Chatbot Triase Gejala</h3>
+      <p>Menjangkarkan jawaban ke pedoman medis tervalidasi dan rule klinis dari dokter untuk membantu skrining awal gejala.</p>
+    </div>
+    <div class="ai-card">
+      <span class="tag">Vision AI</span>
+      <h3>Skrining Foto Ruam/Kulit</h3>
+      <p>Model fondasi/API pihak ketiga yang dirancang akurat lintas warna kulit, dengan opsi pemrosesan on-device untuk privasi.</p>
+    </div>
+    <div class="ai-card">
+      <span class="tag">Audio AI</span>
+      <h3>Skrining Suara Batuk/Napas</h3>
+      <p>Model klasifikasi audio yang cukup memakai mikrofon HP, tanpa memerlukan alat tambahan.</p>
+    </div>
+  </div>
+  <div class="ethics-note fade-in">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p>Seluruh fitur AI di atas adalah alat bantu skrining awal, bukan pengganti diagnosis dokter. Setiap kondisi yang memerlukan penanganan medis tetap diarahkan ke dokter atau rumah sakit mitra.</p>
+  </div>
+</section>
+
+<!-- PENGGUNA -->
+<section id="pengguna">
+  <div class="fade-in">
+    <h2 class="section-title">Dibangun untuk Semua Pihak</h2>
+    <p class="section-sub">Setiap peran punya kebutuhan yang berbeda — KidVital dirancang untuk melayani semuanya sekaligus.</p>
+  </div>
+  <div class="personas fade-in">
+    <div class="persona">
+      <div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 0114 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      <h3>Orang Tua (25–40 th)</h3>
+      <p>Rasa tenang, notifikasi jelas, dan tindakan cepat saat kondisi darurat.</p>
+    </div>
+    <div class="persona">
+      <div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 21c-4-2-8-5-8-10a8 8 0 0116 0c0 5-4 8-8 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Anak (4–10 th)</h3>
+      <p>Interaksi menyenangkan lewat maskot Vito dan misi kesehatan yang seru.</p>
+    </div>
+    <div class="persona">
+      <div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v6m0 0a3 3 0 013 3v9H9v-9a3 3 0 013-3zM8 21h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      <h3>Dokter Spesialis Anak</h3>
+      <p>Dashboard ringkas berisi data vital dan riwayat pasien secara real-time.</p>
+    </div>
+    <div class="persona">
+      <div class="avatar"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Rumah Sakit / Klinik</h3>
+      <p>Integrasi rekam medis, booking, dan potensi interoperabilitas dengan SATUSEHAT.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIM -->
+<section id="tim">
+  <div class="fade-in">
+    <h2 class="section-title">Tim di Balik Produk</h2>
+    <p class="section-sub">Kolaborasi lintas disiplin untuk memastikan produk aman secara klinis dan matang secara bisnis.</p>
+  </div>
+  <div class="team fade-in">
+    <div class="card">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3 6 6 1-4.5 4.5L17.5 20 12 17l-5.5 3 1-6.5L3 9l6-1 3-6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+      <h3>Dokter Spesialis Anak</h3>
+      <ul>
+        <li>Validasi konten medis</li>
+        <li>Keamanan klinis produk</li>
+        <li>Penetapan ambang batas vital</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M9.5 3.5l-6 6 6 6M14.5 3.5l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Tim IT &amp; AI</h3>
+      <ul>
+        <li>Pengembangan aplikasi</li>
+        <li>Integrasi Bluetooth</li>
+        <li>Pengembangan model AI</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M7 15l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Tim Bisnis</h3>
+      <ul>
+        <li>Strategi produk</li>
+        <li>Kemitraan rumah sakit</li>
+        <li>Model bisnis</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PENUTUP -->
+<section id="penutup">
+  <div class="cta-section fade-in">
+    <h2>Mari Wujudkan KidVital Bersama</h2>
+    <p>Kami sedang di tahap riset &amp; prototipe, terbuka untuk diskusi dengan tenaga medis, mitra rumah sakit, maupun investor yang ingin membangun masa depan kesehatan anak Indonesia.</p>
+    <div class="cta-row" style="justify-content:center;">
+      <a class="btn btn-primary" href="mailto:hello@kidvital.id">Jadwalkan Diskusi</a>
+      <a class="btn btn-ghost" href="#hero">Kembali ke Atas</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 KidVital — Konsep Produk. Seluruh data pada halaman ini bersifat ilustratif.</div>
+  <div class="contact-row">
+    <span>hello@kidvital.id</span>
+    <span>+62 812-0000-0000</span>
+    <span>Jakarta, Indonesia</span>
+  </div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => io.observe(el));
+
+  // Dot nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const dots = document.querySelectorAll('.dotnav a');
+  const sectionIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const active = document.querySelector('.dotnav a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(sec => sectionIO.observe(sec));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Tanya KidVital - AI Health Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f6f3f2",
+                    "secondary": "#575f68",
+                    "on-primary-fixed-variant": "#004785",
+                    "on-background": "#1b1c1c",
+                    "secondary-fixed-dim": "#bfc7d1",
+                    "inverse-primary": "#a5c8ff",
+                    "on-surface": "#1b1c1c",
+                    "surface-container-highest": "#e4e2e1",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#956e00",
+                    "on-primary-container": "#fefcff",
+                    "on-primary": "#ffffff",
+                    "outline": "#727782",
+                    "surface-variant": "#e4e2e1",
+                    "on-secondary-fixed-variant": "#404850",
+                    "error-container": "#ffdad6",
+                    "background": "#fcf9f8",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#dbe3ed",
+                    "surface-dim": "#dcd9d9",
+                    "on-surface-variant": "#424751",
+                    "surface-container": "#f0eded",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "secondary-fixed": "#dbe3ed",
+                    "primary": "#105da7",
+                    "tertiary-fixed-dim": "#f4bf44",
+                    "on-primary-fixed": "#001c3a",
+                    "surface-container-high": "#eae7e7",
+                    "on-secondary-fixed": "#141c23",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#fffbff",
+                    "tertiary": "#765700",
+                    "surface-bright": "#fcf9f8",
+                    "surface-tint": "#155fa9",
+                    "inverse-on-surface": "#f3f0f0",
+                    "primary-container": "#3776c1",
+                    "outline-variant": "#c2c6d3",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#5d656e",
+                    "inverse-surface": "#303030",
+                    "tertiary-fixed": "#ffdf9f",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "primary-fixed": "#d4e3ff",
+                    "surface": "#fcf9f8",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#261a00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "container-margin": "24px",
+                    "unit": "8px",
+                    "section-gap": "32px",
+                    "stack-md": "16px",
+                    "stack-lg": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Work Sans"],
+                    "label-md": ["Work Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Work Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "kids-display": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "kids-display": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .chat-bubble-ai {
+            border-bottom-left-radius: 4px;
+        }
+        .chat-bubble-user {
+            border-bottom-right-radius: 4px;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background font-headline-md text-on-surface min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="bg-surface sticky top-0 z-50 shadow-sm w-full h-16 flex items-center px-4 justify-between">
+<div class="flex items-center gap-3">
+<button aria-label="Back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]">smart_toy</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Tanya KidVital</h1>
+</div>
+</div>
+<div class="w-10 h-10 flex items-center justify-center rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A warm and professional close-up portrait of a caring female pediatrician with a gentle smile, wearing a clean white lab coat over a soft blue shirt. The background is a blurred, high-end pediatric clinic with soft lighting and pastel colors, evoking a sense of safety, trust, and modern healthcare excellence. The image maintains the KidVital Parent Mode aesthetic with high clarity and professional polish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhebcduh1Ys4N15lYTpOuSv_pHC4ib7WulT26F6vBXWv7PhfydKqJfhPG9I-7OUDZJBU_RD6Ub3_HvD3q3Ghzx6ZzxPirueoldf_Ow1OLnr_tGoU67TEa6wj2jkUHT8tCNngBDhRHnagbxnrBHnOHLSH_WocZwRAQ5ssod4KSao9fXZ8SZgjL5J-Vfv8Ldm3aFVzBHDo-6vLAkaGrrXeUG8SOxyKXe5i_fL6lxzhBneNPL2VsuyUZYZq0lC0DaYXTT7MqkjwK964c">
+</div>
+</header>
+<!-- Disclaimer Banner -->
+<section class="px-4 py-2 bg-secondary-container/30">
+<div class="bg-surface-container-low px-4 py-2 rounded-lg flex items-start gap-3 border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">info</span>
+<p class="text-label-md font-label-md text-on-surface-variant leading-tight">
+                Asisten ini membantu skrining awal, bukan pengganti dokter.
+            </p>
+</div>
+</section>
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-6 hide-scrollbar" id="chat-container">
+<!-- AI Welcome Message -->
+<div class="flex gap-3 max-w-[85%] animate-fade-in-up">
+<div class="w-10 h-10 shrink-0 rounded-full bg-primary flex items-center justify-center self-end shadow-sm">
+<span class="material-symbols-outlined text-white text-[20px]">stethoscope</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-[12px] font-semibold text-secondary ml-2">Tanya</span>
+<div class="bg-white p-4 rounded-lg chat-bubble-ai shadow-sm border border-surface-container">
+<p class="font-body-md text-on-surface leading-relaxed">
+                        Halo Ayah/Bunda! Saya Tanya KidVital. Ada yang bisa saya bantu terkait kesehatan <span class="font-bold text-primary">Kirana</span> hari ini?
+                    </p>
+</div>
+</div>
+</div>
+<!-- User Message Context -->
+<div class="flex flex-col items-end gap-1 max-w-[85%] self-end animate-fade-in-up" style="animation-delay: 200ms;">
+<span class="text-[12px] font-semibold text-secondary mr-2">Ayah Kirana</span>
+<div class="bg-primary-container p-4 rounded-lg chat-bubble-user shadow-sm">
+<p class="font-body-md text-on-primary-container">
+                    Halo Tanya, Kirana badannya agak hangat sejak tadi siang.
+                </p>
+</div>
+</div>
+<!-- AI Follow up -->
+<div class="flex gap-3 max-w-[85%] animate-fade-in-up" style="animation-delay: 400ms;">
+<div class="w-10 h-10 shrink-0 rounded-full bg-primary flex items-center justify-center self-end shadow-sm">
+<span class="material-symbols-outlined text-white text-[20px]">stethoscope</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-[12px] font-semibold text-secondary ml-2">Tanya</span>
+<div class="bg-white p-4 rounded-lg chat-bubble-ai shadow-sm border border-surface-container">
+<p class="font-body-md text-on-surface leading-relaxed">
+                        Terima kasih sudah menginformasikan. Apakah Ayah sudah mengukur suhunya menggunakan termometer? Selain badan hangat, apakah ada gejala lain seperti batuk atau ruam?
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Footer Section -->
+<footer class="bg-surface px-4 pt-4 pb-8 flex flex-col gap-4 shadow-[0_-8px_24px_rgba(0,0,0,0.03)]">
+<!-- Quick Replies -->
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+<button class="whitespace-nowrap px-4 py-2 bg-white border border-outline-variant rounded-lg text-label-md font-label-md text-primary hover:bg-primary-container hover:border-primary transition-all active:scale-95 duration-100 shadow-sm">
+                Anak demam
+            </button>
+<button class="whitespace-nowrap px-4 py-2 bg-white border border-outline-variant rounded-lg text-label-md font-label-md text-primary hover:bg-primary-container hover:border-primary transition-all active:scale-95 duration-100 shadow-sm">
+                Anak batuk
+            </button>
+<button class="whitespace-nowrap px-4 py-2 bg-white border border-outline-variant rounded-lg text-label-md font-label-md text-primary hover:bg-primary-container hover:border-primary transition-all active:scale-95 duration-100 shadow-sm">
+                Ruam kulit
+            </button>
+<button class="whitespace-nowrap px-4 py-2 bg-white border border-outline-variant rounded-lg text-label-md font-label-md text-primary hover:bg-primary-container hover:border-primary transition-all active:scale-95 duration-100 shadow-sm">
+                Jadwal vaksin
+            </button>
+</div>
+<!-- Input Field Container -->
+<div class="flex items-center gap-2 bg-surface-container-low rounded-lg p-1 border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<button class="w-10 h-10 shrink-0 flex items-center justify-center rounded-full text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-body-md py-2.5 placeholder:text-on-surface-variant/60 font-body-md" placeholder="Ketik pesan..." type="text">
+<button class="w-10 h-10 shrink-0 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary-container hover:text-on-primary-container transition-all active:scale-90 shadow-md">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</footer>
+<!-- Interactive script for demo purposes -->
+<script>
+        // Simple auto-scroll to bottom on load
+        window.onload = () => {
+            const container = document.getElementById('chat-container');
+            container.scrollTop = container.scrollHeight;
+        };
+
+        // Micro-interaction for input field focus
+        const input = document.querySelector('input');
+        const inputContainer = input.parentElement;
+        
+        input.addEventListener('focus', () => {
+            inputContainer.classList.add('shadow-md');
+        });
+        
+        input.addEventListener('blur', () => {
+            inputContainer.classList.remove('shadow-md');
+        });
+
+        // Keydown behavior
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && input.value.trim() !== '') {
+                // Mock send interaction
+                const text = input.value;
+                input.value = '';
+                const container = document.getElementById('chat-container');
+                
+                const userMsg = document.createElement('div');
+                userMsg.className = 'flex flex-col items-end gap-1 max-w-[85%] self-end animate-fade-in-up';
+                userMsg.innerHTML = `
+                    <span class="text-[12px] font-semibold text-secondary mr-2">Ayah Kirana</span>
+                    <div class="bg-primary-container p-4 rounded-3xl chat-bubble-user shadow-sm">
+                        <p class="font-body-md text-on-primary-container">${text}</p>
+                    </div>
+                `;
+                container.appendChild(userMsg);
+                container.scrollTop = container.scrollHeight;
+            }
+        });
+    </script>
+<style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+    </style>
+
+
+</body></html>

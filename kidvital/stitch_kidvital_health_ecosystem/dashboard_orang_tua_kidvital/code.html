@@ -1,0 +1,300 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KidVital - Parent Mode Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e4e2e1",
+                    "on-tertiary-fixed": "#261a00",
+                    "outline-variant": "#c2c6d3",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "on-tertiary-container": "#fffbff",
+                    "on-surface-variant": "#424751",
+                    "surface-variant": "#e4e2e1",
+                    "tertiary-fixed": "#ffdf9f",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#5d656e",
+                    "surface-container-high": "#eae7e7",
+                    "surface-bright": "#fcf9f8",
+                    "inverse-surface": "#303030",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#956e00",
+                    "secondary-container": "#dbe3ed",
+                    "tertiary": "#765700",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-low": "#f6f3f2",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#dcd9d9",
+                    "secondary": "#575f68",
+                    "primary-container": "#3776c1",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#a5c8ff",
+                    "secondary-fixed": "#dbe3ed",
+                    "on-surface": "#1b1c1c",
+                    "surface-container": "#f0eded",
+                    "on-background": "#1b1c1c",
+                    "surface": "#fcf9f8",
+                    "tertiary-fixed-dim": "#f4bf44",
+                    "on-primary-fixed-variant": "#004785",
+                    "secondary-fixed-dim": "#bfc7d1",
+                    "primary-fixed": "#d4e3ff",
+                    "on-primary-fixed": "#001c3a",
+                    "on-error": "#ffffff",
+                    "background": "#fcf9f8",
+                    "outline": "#727782",
+                    "inverse-on-surface": "#f3f0f0",
+                    "surface-tint": "#155fa9",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "on-secondary": "#ffffff",
+                    "primary": "#105da7",
+                    "on-secondary-fixed-variant": "#404850",
+                    "on-secondary-fixed": "#141c23",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "24px",
+                    "unit": "8px",
+                    "section-gap": "32px",
+                    "stack-sm": "8px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "stack-lg": "24px"
+            },
+            "fontFamily": {
+                    "kids-display": ["Plus Jakarta Sans"],
+                    "body-lg": ["Work Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Work Sans"],
+                    "body-md": ["Work Sans"],
+                    "display-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "kids-display": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        -webkit-tap-highlight-color: transparent;
+        background-color: #fcf9f8; /* Parent Background */
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .bento-large {
+        grid-column: span 2;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 font-kids-display">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-40 bg-surface dark:bg-surface-dim shadow-sm dark:shadow-none flex justify-between items-center px-container-margin py-unit h-16">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A warm, professional portrait of a young mother with kind eyes, softly lit in a clean modern domestic interior, representing the Parent Mode user profile in a high-end health application. The style is photography-based with a gentle, reassuring color palette of soft blues and creams." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHMHfjuAfonFXHjI-E_aw4Q_6Bj3kz3FLcN0x4QrIQinZufHbFUZ0Hrxz8dmkAqewhRP7aWaBUKGuBi7_pOzdw702CwGxkxxUD-zqsHGJjChP-hMSuu90wB23v9AFoYzkgfJRKwNuHyl74c4yNQdZESitvAnD9-fNIaaphrdeUmV_mcVdnrtY-x0xbHjBy_5OpnZo5tswf4PuONmWhRxg95SUBtqBMfWx76X6uEJXsVlQmzfDCQVjmn5-e8AE30Nw-ZVoNYuvdHKY">
+</div>
+<span class="font-display-lg text-headline-md text-primary dark:text-primary-fixed-dim">KidVital</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 duration-150 transition-transform" data-icon="notifications">notifications</button>
+</header>
+<main class="px-container-margin mt-stack-lg">
+<div class="bento-grid">
+<!-- Hero Card: Profile & Status -->
+<section class="bento-large relative overflow-hidden bg-surface-container-lowest dark:bg-surface-container shadow-[0_4px_20px_0_rgba(0,0,0,0.05)] rounded-xl p-stack-lg flex items-center justify-between border border-outline-variant/30">
+<div class="flex items-center gap-stack-lg">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden ring-4 ring-primary-container/10">
+<img class="w-full h-full object-cover" data-alt="A close-up high-quality photo of a happy 4-year-old girl named Aria with a joyful expression. The lighting is soft and natural, emphasizing a healthy glow. The background is a minimalist, warm-toned nursery, maintaining the professional yet domestic aesthetic of the medical app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmrzZpqqbXYjOyn3b7Os2jZqduI3AV1Y63g-KgEloRA1IrNQ-HCQbdPjMAy7FSAeqRrNz0Z_ZzroB8MdA8eX9AGDh7yb6KsapEmifuurC1c8thlne0MsLoM3gy9QmI9LoEiSUwEZKWC7cYOtTzC_ImkS1IqqTmZcfUzsaOXLT69bInyZT_g5LfKfbIJ0zRspE9Iic-eXS_LPJ8njD0IpiX1aLZuyy1S65DP3zgBv3vWqXQEQUdMv0Pp_tx-xo9f1htzg2GdQQ4-VI">
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Aria</h1>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#2E9E6D] animate-pulse"></span>
+<span class="font-label-md text-label-md text-[#2E9E6D] uppercase tracking-wider">Normal</span>
+</div>
+</div>
+</div>
+<div class="hidden sm:block">
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-md hover:opacity-90 active:scale-95 transition-all">Detail Profil</button>
+</div>
+<!-- Subtle background decorative element -->
+<div class="absolute -right-4 -bottom-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]" data-icon="child_care">child_care</span>
+</div>
+</section>
+<!-- Temperature Card -->
+<div class="bg-surface-container-low dark:bg-surface-container-high p-stack-md flex flex-col justify-between h-40 group hover:shadow-md transition-shadow rounded">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary-container/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="thermostat">thermostat</span>
+</div>
+<span class="material-symbols-outlined text-[#2E9E6D] text-sm" data-icon="trending_flat" style="transform: rotate(-45deg);">trending_flat</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface-variant">Suhu Tubuh</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">36.5°C</h2>
+</div>
+</div>
+<!-- SpO2 Card -->
+<div class="bg-surface-container-low dark:bg-surface-container-high p-stack-md flex flex-col justify-between h-40 group hover:shadow-md transition-shadow rounded">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-error-container/20 rounded-lg text-error">
+<span class="material-symbols-outlined" data-icon="monitor_heart" data-weight="fill" style="font-variation-settings: 'FILL' 1;">monitor_heart</span>
+</div>
+<div class="px-2 py-0.5 bg-surface-container-highest rounded text-[10px] font-bold">LIVE</div>
+</div>
+<div>
+<p class="font-label-md text-on-surface-variant">Saturasi Oksigen</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">98%</h2>
+</div>
+</div>
+<!-- Immunization Reminder -->
+<div class="bento-large bg-secondary-container/30 dark:bg-secondary-container/10 p-stack-md flex items-center gap-stack-md border-l-4 border-primary rounded">
+<div class="bg-primary text-on-primary w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="vaccines">vaccines</span>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-on-surface-variant">Imunisasi Terdekat</p>
+<h3 class="font-headline-md text-body-lg font-semibold text-on-surface">Polio - 12 Okt</h3>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</button>
+</div>
+<!-- Kids Mission Progress -->
+<div class="bento-large relative overflow-hidden bg-tertiary-container/10 dark:bg-tertiary-fixed/10 p-stack-md flex items-center justify-between group cursor-pointer border border-tertiary/20 rounded">
+<div class="z-10">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-tertiary" data-icon="stars" data-weight="fill" style="font-variation-settings: 'FILL' 1;">stars</span>
+<p class="font-label-md text-tertiary font-bold">Misi Sehat Aria</p>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">2/3 Misi Selesai</h3>
+<div class="w-full bg-surface-container-highest h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-tertiary h-full w-[66%] rounded-full"></div>
+</div>
+</div>
+<div class="z-10 hidden sm:block">
+<div class="bg-white p-3 rounded-2xl shadow-sm border border-tertiary/20 rounded">
+<p class="text-xs font-bold text-tertiary">Vito: "Hebat!"</p>
+</div>
+</div>
+<!-- Background Mascot Visual Hint -->
+<div class="absolute right-[-10px] bottom-[-20px] opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[100px]" data-icon="potted_plant">potted_plant</span>
+</div>
+</div>
+<!-- Detailed Metrics Row (Extra Context) -->
+<div class="bento-large mt-stack-sm">
+<h4 class="font-label-md text-on-surface-variant mb-unit px-2">Ringkasan Mingguan</h4>
+<div class="bg-surface-container-low p-stack-md flex justify-between text-center rounded">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Tidur</p>
+<p class="font-headline-md text-primary">8.5j</p>
+</div>
+<div class="w-px bg-outline-variant h-full"></div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Langkah</p>
+<p class="font-headline-md text-primary">4.2k</p>
+</div>
+<div class="w-px bg-outline-variant h-full"></div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Minum</p>
+<p class="font-headline-md text-primary">1.2L</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface-container dark:bg-surface-container-lowest rounded-t-xl shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)]">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 active:scale-90 duration-200 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-[10px]">Beranda</span>
+</a>
+<!-- History -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-full active:scale-90 duration-200 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-[10px]">Riwayat</span>
+</a>
+<!-- Device Pairing -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-full active:scale-90 duration-200 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_antenna">settings_input_antenna</span>
+<span class="font-label-md text-[10px]">Pairing</span>
+</a>
+<!-- Consultation -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-full active:scale-90 duration-200 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-md text-[10px]">Konsultasi</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all rounded-full active:scale-90 duration-200 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-[10px]">Profil</span>
+</a>
+</nav>
+<!-- Floating Quick Action (Optional Contextual FAB) -->
+<button class="fixed bottom-24 right-container-margin w-14 h-14 bg-primary text-on-primary shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40 rounded">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Reset states
+                document.querySelectorAll('nav a').forEach(item => {
+                    item.classList.remove('bg-primary-container', 'dark:bg-primary', 'text-on-primary-container', 'dark:text-on-primary');
+                    item.classList.add('text-on-secondary-container', 'dark:text-secondary-fixed-dim');
+                    const icon = item.querySelector('.material-symbols-outlined');
+                    if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+                });
+                
+                // Set active state
+                link.classList.add('bg-primary-container', 'dark:bg-primary', 'text-on-primary-container', 'dark:text-on-primary');
+                link.classList.remove('text-on-secondary-container', 'dark:text-secondary-fixed-dim');
+                const activeIcon = link.querySelector('.material-symbols-outlined');
+                if (activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+            });
+        });
+
+        // Theme Toggle micro-interaction (demonstrative)
+        const checkDarkMode = () => {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // document.documentElement.classList.add('dark');
+            }
+        };
+        checkDarkMode();
+    </script>
+
+
+</body></html>

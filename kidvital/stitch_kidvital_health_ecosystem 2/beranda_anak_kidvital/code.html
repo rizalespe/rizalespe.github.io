@@ -1,0 +1,303 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>KidVital - Vito's Playground</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#817663",
+                    "inverse-primary": "#f4bf44",
+                    "on-secondary-fixed": "#002110",
+                    "on-secondary-fixed-variant": "#005230",
+                    "secondary-fixed-dim": "#7adaa1",
+                    "primary-fixed-dim": "#f4bf44",
+                    "on-tertiary-container": "#006179",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f5f3f3",
+                    "surface-container": "#efeded",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#4f4635",
+                    "surface": "#fbf9f8",
+                    "on-secondary-container": "#007346",
+                    "on-surface": "#1b1c1c",
+                    "primary-container": "#ffc94d",
+                    "secondary": "#006d41",
+                    "on-tertiary-fixed-variant": "#004e61",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#006780",
+                    "inverse-on-surface": "#f2f0f0",
+                    "primary": "#795900",
+                    "tertiary-container": "#7eddff",
+                    "surface-tint": "#795900",
+                    "on-tertiary-fixed": "#001f28",
+                    "tertiary-fixed-dim": "#60d4fb",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#95f7bb",
+                    "surface-dim": "#dbd9d9",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#5c4300",
+                    "secondary-fixed": "#95f7bb",
+                    "surface-container-high": "#eae8e7",
+                    "inverse-surface": "#303030",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#b7eaff",
+                    "on-primary-container": "#735400",
+                    "surface-container-highest": "#e4e2e2",
+                    "background": "#fbf9f8",
+                    "surface-variant": "#e4e2e2",
+                    "on-primary-fixed": "#261a00",
+                    "on-background": "#1b1c1c",
+                    "outline-variant": "#d2c5af",
+                    "surface-bright": "#fbf9f8",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#ffdf9f",
+                    "brand-cream": "#FFF8EC",
+                    "brand-blue": "#56CCF2",
+                    "brand-green": "#6FCF97"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-md": "24px",
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "stack-sm": "12px",
+                    "margin-mobile": "24px",
+                    "stack-lg": "40px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-bold": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-sm": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #FFF8EC;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .block-shadow-blue {
+            box-shadow: 0 8px 0 0 #2D9CDB;
+        }
+        .block-shadow-yellow {
+            box-shadow: 0 8px 0 0 #D4A017;
+        }
+        .block-shadow-green {
+            box-shadow: 0 8px 0 0 #27AE60;
+        }
+        .block-shadow-white {
+            box-shadow: 0 8px 0 0 #E0D7C6;
+        }
+        .btn-active:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 0 currentColor;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 15px 15px 0 15px;
+            border-style: solid;
+            border-color: #ffffff transparent transparent transparent;
+        }
+        .squish-animation:active {
+            transform: scale(0.95);
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+    </style>
+<style>
+            @keyframes bounce-subtle {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            .animate-bounce-subtle {
+                animation: bounce-subtle 3s ease-in-out infinite;
+            }
+        </style></head>
+<body class="font-body-md text-on-background pb-32">
+<!-- Top AppBar -->
+<nav class="bg-background dark:bg-surface-dim border-b-2 border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-mobile h-20 fixed top-0 left-0 z-50 pt-safe">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full border-2 border-primary overflow-hidden bg-primary-container">
+<img alt="Vito profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLse5OjIRg1SQi6t6MFj_SnVhE_uPQiZq6Mm-VvjJlvA9jNYdxHQ8kJu8jjOd050q4dBAzyek5jYZUoljw7Lo7uzwyBQyYYztBwVQVVNAYQyLwRM2Ez5ijpI44RHznO_r_Q7gPNZoOwFyk_SEiiyXS4Pxbo2oyqWNPtRIBtCmFOxvWj6RH5C-dKY2C0FNmQJ2qhvFtkH8n2DnvmcGauNdFXp-96R7uz2qiC4HP6EwkSOL9_JC8I1BcRwlQ">
+</div>
+<span class="text-headline-sm font-headline-sm text-primary">Halo Sahabat!</span>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-lg bg-surface-container-high transition-colors hover:bg-surface-container-highest active:scale-95">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</nav>
+<main class="mt-24 px-margin-mobile max-w-lg mx-auto">
+<!-- Hero Section with Vito -->
+<section class="flex flex-col items-center mb-10 mt-8 relative">
+<!-- Speech Bubble -->
+<div class="relative bg-white border-4 border-outline-variant rounded-xl p-5 mb-10 speech-bubble block-shadow-white animate-bounce-subtle">
+<h2 class="text-headline-md font-headline-md text-primary text-center">
+                    Ayo selesaikan misi hari ini!
+                </h2>
+</div>
+<!-- Vito Illustration -->
+<div class="w-56 h-56 relative squish-animation">
+<img alt="Vito Mascot" class="w-full h-full object-contain drop-shadow-xl" src="https://lh3.googleusercontent.com/aida/AP1WRLse5OjIRg1SQi6t6MFj_SnVhE_uPQiZq6Mm-VvjJlvA9jNYdxHQ8kJu8jjOd050q4dBAzyek5jYZUoljw7Lo7uzwyBQyYYztBwVQVVNAYQyLwRM2Ez5ijpI44RHznO_r_Q7gPNZoOwFyk_SEiiyXS4Pxbo2oyqWNPtRIBtCmFOxvWj6RH5C-dKY2C0FNmQJ2qhvFtkH8n2DnvmcGauNdFXp-96R7uz2qiC4HP6EwkSOL9_JC8I1BcRwlQ">
+</div>
+</section>
+<!-- Daily Missions Header -->
+<div class="flex justify-between items-end mb-6">
+<h3 class="text-headline-md font-headline-md text-on-surface">Misi Hari Ini</h3>
+<span class="text-label-bold font-label-bold text-primary px-4 py-2 bg-primary-container rounded-full">1/3 Selesai</span>
+</div>
+<!-- Mission Cards -->
+<div class="space-y-gutter">
+<!-- Card 1: Minum Air -->
+<div class="bg-brand-blue border-4 border-[#2D9CDB] p-6 block-shadow-blue flex flex-col gap-4 relative overflow-hidden group hover:translate-y-[-2px] transition-transform rounded-xl">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="text-label-bold font-label-bold text-white opacity-90 uppercase tracking-wider">Kesehatan</span>
+<h4 class="text-headline-sm font-headline-sm text-white">Minum air 4 gelas</h4>
+</div>
+<div class="w-14 h-14 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="water_drop">water_drop</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-white font-bold">
+<span class="">Langkah: 2/4</span>
+<span class="">50%</span>
+</div>
+<div class="w-full h-6 bg-white/30 rounded-full overflow-hidden p-1">
+<div class="h-full bg-white rounded-full transition-all duration-700 ease-out" style="width: 50%"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: Cek Suhu -->
+<div class="bg-primary-container border-4 border-[#D4A017] p-6 block-shadow-yellow flex flex-col gap-4 relative group hover:translate-y-[-2px] transition-transform rounded-xl">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="text-label-bold font-label-bold opacity-80 uppercase tracking-wider text-primary">Harian</span>
+<h4 class="text-headline-sm font-headline-sm text-primary">Cek suhu badan</h4>
+</div>
+<div class="w-14 h-14 bg-on-primary-container/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-4xl" data-icon="thermometer">thermometer</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-on-primary-container font-bold">
+<span class="">Mulai sekarang!</span>
+<span class="">0%</span>
+</div>
+<div class="w-full h-6 bg-on-primary-container/10 rounded-full overflow-hidden p-1">
+<div class="h-full bg-white rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+</div>
+</div>
+</div>
+<!-- Card 3: Latihan Napas (Completed) -->
+<div class="bg-brand-green border-4 border-[#27AE60] p-6 block-shadow-green flex flex-col gap-4 relative group hover:translate-y-[-2px] transition-transform rounded-xl">
+<div class="absolute top-4 right-4 animate-pulse">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="text-label-bold font-label-bold text-white opacity-90 uppercase tracking-wider">Relaksasi</span>
+<h4 class="text-headline-sm font-headline-sm text-white">Latihan napas</h4>
+</div>
+<div class="w-14 h-14 bg-white/30 rounded-full flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="air">air</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-white font-bold">
+<span class="">Hebat! Sudah selesai</span>
+<span class="">100%</span>
+</div>
+<div class="w-full h-6 bg-white/30 rounded-full overflow-hidden p-1">
+<div class="h-full bg-white rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface-container-lowest dark:bg-surface-container-low border-t-4 border-outline-variant dark:border-outline shadow-[0_-4px_0_0_rgba(0,0,0,0.05)] rounded-t-lg">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-lg px-6 py-2 border-b-4 border-secondary translate-y-[-2px] transition-all" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-bold font-label-bold">Home</span>
+</a>
+<!-- Missions -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest transition-all rounded-lg active:translate-y-1" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="task_alt">task_alt</span>
+<span class="text-label-bold font-label-bold">Missions</span>
+</a>
+<!-- Rewards -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest transition-all rounded-lg active:translate-y-1" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="emoji_events">emoji_events</span>
+<span class="text-label-bold font-label-bold">Rewards</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest transition-all rounded-lg active:translate-y-1" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('a, button, .group').forEach(el => {
+            el.addEventListener('click', () => {
+                // Haptic feedback simulation
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+
+        // Floating animation for Vito
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce-subtle {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            .animate-bounce-subtle {
+                animation: bounce-subtle 3s ease-in-out infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+
+</body></html>

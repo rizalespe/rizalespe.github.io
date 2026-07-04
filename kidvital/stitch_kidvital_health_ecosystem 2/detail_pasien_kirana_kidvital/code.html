@@ -1,0 +1,343 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Detail Pasien - KidVital</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;family=Work+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#765700",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "surface": "#fcf9f8",
+                        "inverse-primary": "#a5c8ff",
+                        "tertiary-container": "#956e00",
+                        "secondary-container": "#dbe3ed",
+                        "secondary-fixed-dim": "#bfc7d1",
+                        "primary-container": "#3776c1",
+                        "surface-container-high": "#eae7e7",
+                        "secondary": "#575f68",
+                        "surface-bright": "#fcf9f8",
+                        "surface-container": "#f0eded",
+                        "on-tertiary-fixed": "#261a00",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001c3a",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#303030",
+                        "surface-tint": "#155fa9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#404850",
+                        "tertiary-fixed": "#ffdf9f",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary-fixed": "#dbe3ed",
+                        "on-secondary-fixed": "#141c23",
+                        "on-background": "#1b1c1c",
+                        "tertiary-fixed-dim": "#f4bf44",
+                        "primary-fixed-dim": "#a5c8ff",
+                        "primary": "#105da7",
+                        "on-tertiary-container": "#fffbff",
+                        "on-secondary-container": "#5d656e",
+                        "on-primary": "#ffffff",
+                        "background": "#fcf9f8",
+                        "on-primary-container": "#fefcff",
+                        "outline-variant": "#c2c6d3",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e4e2e1",
+                        "outline": "#727782",
+                        "surface-dim": "#dcd9d9",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-container-highest": "#e4e2e1",
+                        "on-primary-fixed-variant": "#004785",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-surface-variant": "#424751",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "unit": "8px",
+                        "section-gap": "32px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Work Sans"],
+                        "body-lg": ["Work Sans"],
+                        "kids-display": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "kids-display": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Work Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .chart-container { position: relative; height: 120px; width: 100%; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background-color: #105da7;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-sm flex justify-between items-center px-4 h-16">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<span class="font-display-lg text-headline-md text-primary font-extrabold tracking-tight">KidVital</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional medical profile picture of a female doctor in a white clinical coat, smiling warmly, with a soft-focus pediatric clinic background. The lighting is bright and clean, emphasizing a professional yet approachable healthcare environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSSWm24DXtTJ8AK7Y955FsG7FLteCpxTyJDrmJBOZhAxzNUXEPAAfyYx6WNZzmIopdrlf3Mg9NLxiISo7h655oEYFNUVZRdtiVDaqEnHnTuHQ5pjhIe_sudnVNXIR8RfKbVPIIo3LJ1q7zyjvM7e2sOuUUC1F9yL9kRjNrfEqaudlzXEMf7JIyx79fuy7MpXSlLX3sm-K9SCa1F1g0hhFyVq6yk4FK9SCDvUl3IFxwWmQCngHci8YE7ZO9NPhdM0qAXY99ZVmWsKM">
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-4 mt-6 space-y-6">
+<!-- Patient Profile Header -->
+<section class="bg-surface-container-lowest p-6 shadow-sm flex flex-col md:flex-row gap-6 items-start border border-outline-variant/30 rounded-lg">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
+<img alt="Kirana" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtbyZo_yhznhIP8devPC-fgSdkDxPQ_v-fl4MjjR2dXyIfYAX2Py8zEsiBhSiEMII36r9tlSIjz_fhgTw-z8rdvbhzINzL0BQK3z-WphN_FkiitHxzkNra7GEIhoG3Et5j8_S9d811-1I0Dph9d9_iaVQZkla9kvRIRWKMhHHqchW_-CumAsWTyk5s-NTgVi-JlbjiHKMSNznQl_zrfgbd9Cb8wqYG3Tg3TekAgKRABT4NJp17Z4L4zX1U">
+</div>
+<div class="flex-grow space-y-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Kirana</h1>
+<p class="font-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">child_care</span>
+                        5 Tahun • Perempuan • 18.5 kg
+                    </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="bg-error-container/40 p-3 rounded-xl border border-error/20">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-error text-[20px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-label-md text-on-error-container">Alergi &amp; Kondisi</span>
+</div>
+<p class="font-body-md text-on-error-container font-semibold">Alergi Kacang, Asma Ringan</p>
+</div>
+<div class="bg-primary-container/10 p-3 rounded-xl border border-primary/10">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">assignment_ind</span>
+<span class="font-label-md text-on-primary-fixed-variant">ID Pasien</span>
+</div>
+<p class="font-body-md text-on-primary-fixed-variant font-semibold">#KV-2024-0012</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Segmented Control (Tabs) -->
+<nav class="flex border-b border-outline-variant relative">
+<button class="flex-1 py-4 text-primary font-bold relative tab-active transition-all font-label-md text-label-md" style="color: rgb(61, 123, 199);">Riwayat Vital</button>
+<button class="flex-1 py-4 text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md">Riwayat Konsultasi</button>
+<button class="flex-1 py-4 text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md">Kepatuhan Misi</button>
+</nav>
+<!-- Active Tab Content: Riwayat Vital -->
+<div class="space-y-6">
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest p-5 border border-outline-variant/30 shadow-sm rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-on-surface-variant uppercase tracking-wider text-[11px]">SpO2 (Oksigen)</span>
+<span class="text-primary material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">air</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold text-on-surface">98</span>
+<span class="text-on-surface-variant font-label-md">%</span>
+</div>
+<div class="mt-3 flex items-center gap-1 text-green-600 font-label-md text-[12px]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Normal (95-100%)
+                    </div>
+</div>
+<div class="bg-surface-container-lowest p-5 border border-outline-variant/30 shadow-sm rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-on-surface-variant uppercase tracking-wider text-[11px]">Suhu Tubuh</span>
+<span class="text-tertiary material-symbols-outlined">thermostat</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold text-on-surface">36.7</span>
+<span class="text-on-surface-variant font-label-md">°C</span>
+</div>
+<div class="mt-3 flex items-center gap-1 text-green-600 font-label-md text-[12px]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Normal (36.1-37.2°C)
+                    </div>
+</div>
+<div class="bg-surface-container-lowest p-5 border border-outline-variant/30 shadow-sm rounded-lg">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-md text-on-surface-variant uppercase tracking-wider text-[11px]">Detak Jantung</span>
+<span class="text-error material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-bold text-on-surface">92</span>
+<span class="text-on-surface-variant font-label-md">BPM</span>
+</div>
+<div class="mt-3 flex items-center gap-1 text-green-600 font-label-md text-[12px]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Normal (80-120 BPM)
+                    </div>
+</div>
+</div>
+<!-- Bento Grid Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- SpO2 Chart -->
+<div class="bg-white p-6 shadow-sm border border-outline-variant/20 flex flex-col gap-4 rounded-lg">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-body-lg font-bold text-on-surface">Tren Oksigen (7 Hari)</h3>
+<span class="text-[12px] font-label-md text-on-surface-variant bg-surface-container px-2 py-1 rounded">Update: 5m lalu</span>
+</div>
+<div class="chart-container flex items-end justify-between gap-2 px-2 border-b border-outline-variant/30 pb-2">
+<div class="w-full bg-blue-50 relative h-full rounded-t-lg overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full bg-primary/20 h-4/5"></div> <!-- Range Indicator -->
+<svg class="absolute inset-0 h-full w-full preserve-3d" preserveAspectRatio="none" viewBox="0 0 400 100">
+<path d="M0,20 Q50,15 100,25 T200,20 T300,30 T400,22" fill="none" stroke="#105da7" stroke-width="3" style="stroke-dasharray: 410.35; stroke-dashoffset: 0; transition: stroke-dashoffset 2s ease-in-out;"></path>
+<circle cx="100" cy="25" fill="#105da7" r="4"></circle>
+<circle cx="200" cy="20" fill="#105da7" r="4"></circle>
+<circle cx="300" cy="30" fill="#105da7" r="4"></circle>
+</svg>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-on-surface-variant font-label-md">
+<span class="">Sen</span><span class="">Sel</span><span class="">Rab</span><span class="">Kam</span><span class="">Jum</span><span class="">Sab</span><span class="">Min</span>
+</div>
+</div>
+<!-- Temperature Chart -->
+<div class="bg-white p-6 shadow-sm border border-outline-variant/20 flex flex-col gap-4 rounded-lg">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-body-lg font-bold text-on-surface">Tren Suhu Tubuh</h3>
+<span class="text-[12px] font-label-md text-on-surface-variant bg-surface-container px-2 py-1 rounded">Real-time</span>
+</div>
+<div class="chart-container flex items-end justify-between gap-2 px-2 border-b border-outline-variant/30 pb-2">
+<div class="w-full bg-orange-50/50 relative h-full rounded-t-lg overflow-hidden">
+<div class="absolute bottom-1/4 left-0 w-full bg-tertiary/10 h-1/2"></div>
+<svg class="absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 400 100">
+<path d="M0,50 L50,48 L100,52 L150,45 L200,50 L250,55 L300,48 L350,51 L400,49" fill="none" stroke="#765700" stroke-width="2" style="stroke-dasharray: 401.804; stroke-dashoffset: 0; transition: stroke-dashoffset 2s ease-in-out;"></path>
+</svg>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-on-surface-variant font-label-md">
+<span class="">08:00</span><span class="">10:00</span><span class="">12:00</span><span class="">14:00</span><span class="">16:00</span><span class="">18:00</span><span class="">20:00</span>
+</div>
+</div>
+<!-- Mission Adherence (Behavioral) -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-6 border border-outline-variant/30 shadow-sm flex flex-col md:flex-row items-center gap-8 rounded-lg">
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="64" cy="64" fill="transparent" r="56" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary transition-all duration-1000" cx="64" cy="64" fill="transparent" r="56" stroke="currentColor" stroke-dasharray="351.85" stroke-dashoffset="52.77" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-2xl font-extrabold text-on-surface">85%</span>
+<span class="text-[10px] font-label-md text-on-surface-variant">MISI</span>
+</div>
+</div>
+<div class="flex-grow space-y-3">
+<div>
+<h3 class="font-headline-md text-body-lg font-bold text-on-surface">Kepatuhan Misi (Kids Mode)</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Kirana sangat aktif mengikuti misi "Minum Air" dan "Napas Dalam" hari ini.</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[12px] font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">water_drop</span> Hidrasi: 100%
+                            </span>
+<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[12px] font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">pill</span> Obat: 1/1
+                            </span>
+<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[12px] font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">self_improvement</span> Relaksasi: 60%
+                            </span>
+</div>
+</div>
+<div class="flex-shrink-0">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+<img class="w-14 h-14" data-alt="A small, friendly flat-style vector mascot of a fox named Vito, wearing a doctor's stethoscope, giving a thumbs up and winking. The style is playful and cartoonish, designed to reduce anxiety in children, using a primary palette of warm oranges and soft blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDol3ZwqNSVIzWv920627xfSs_Na7rFlmulYRyQAHshc2Bsdv9IkrrayrWWP-lS4aIEBKNGehQ8swHHz1PLOzfRLuUPDRLFKqQ1V2RVMiCfPzspwqC9A5p8JxBWD45UDQjHn22B7uhZwvYSFAJj2hAJa8mfFSBGkgMVudWVmUO2q-VkSF9DWnCPwW3BMRoswEkRQmsV9IS0XXrjurXdBbxuwhxB--gK0hWfLg7c4ze6cRfXINvy5NBB5wkyrPpnZ3NAHVLg3zf2Gn0">
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Action Bar -->
+<div class="fixed bottom-0 w-full p-4 bg-gradient-to-t from-background via-background to-transparent z-40">
+<button class="w-full max-w-lg mx-auto bg-primary text-on-primary h-14 flex items-center justify-center gap-3 shadow-lg hover:bg-primary-container hover:text-on-primary-container transition-all active:scale-95 duration-100 group rounded-lg" style="background-color: rgb(61, 123, 199); color: rgb(255, 255, 255);">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">videocam</span>
+<span class="font-label-md text-lg">Mulai Konsultasi Video</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar (Shell) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] flex justify-around items-center h-20 px-2 pb-safe md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-[12px]">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-[12px]">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">settings_remote</span>
+<span class="font-label-md text-[12px]">Pairing</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="font-label-md text-[12px]">Consult</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-[12px]">Profile</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions and subtle graph animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const charts = document.querySelectorAll('svg path');
+            charts.forEach(path => {
+                const length = path.getTotalLength();
+                path.style.strokeDasharray = length;
+                path.style.strokeDashoffset = length;
+                path.getBoundingClientRect(); // Trigger reflow
+                path.style.transition = 'stroke-dashoffset 2s ease-in-out';
+                path.style.strokeDashoffset = '0';
+            });
+        });
+    </script>
+
+
+</body></html>

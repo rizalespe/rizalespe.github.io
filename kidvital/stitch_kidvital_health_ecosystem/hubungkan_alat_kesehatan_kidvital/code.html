@@ -1,0 +1,277 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Hubungkan Alat - KidVital</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#105da7",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#dbe3ed",
+                    "outline-variant": "#c2c6d3",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#001c3a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "surface-dim": "#dcd9d9",
+                    "tertiary": "#765700",
+                    "on-tertiary-fixed": "#261a00",
+                    "surface-container-highest": "#e4e2e1",
+                    "secondary-fixed-dim": "#bfc7d1",
+                    "outline": "#727782",
+                    "primary-fixed": "#d4e3ff",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "tertiary-container": "#956e00",
+                    "on-secondary": "#ffffff",
+                    "background": "#fcf9f8",
+                    "tertiary-fixed-dim": "#f4bf44",
+                    "surface-tint": "#155fa9",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-bright": "#fcf9f8",
+                    "on-secondary-fixed": "#141c23",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#303030",
+                    "inverse-on-surface": "#f3f0f0",
+                    "secondary-container": "#dbe3ed",
+                    "on-background": "#1b1c1c",
+                    "inverse-primary": "#a5c8ff",
+                    "surface-container-low": "#f6f3f2",
+                    "tertiary-fixed": "#ffdf9f",
+                    "on-secondary-container": "#5d656e",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#424751",
+                    "surface-variant": "#e4e2e1",
+                    "primary-container": "#3776c1",
+                    "on-primary-fixed-variant": "#004785",
+                    "on-primary-container": "#fefcff",
+                    "surface": "#fcf9f8",
+                    "secondary": "#575f68",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "surface-container": "#f0eded",
+                    "on-secondary-fixed-variant": "#404850",
+                    "surface-container-high": "#eae7e7",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "unit": "8px",
+                    "stack-lg": "24px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "section-gap": "32px",
+                    "container-margin": "24px"
+            },
+            "fontFamily": {
+                    "kids-display": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Work Sans"],
+                    "label-md": ["Work Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Work Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        
+        .pulse-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #105da7;
+            opacity: 0;
+            animation: pulse 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .pulse-ring:nth-child(2) { animation-delay: 1s; }
+        .pulse-ring:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .scanner-beam {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg at 50% 50%, rgba(16, 93, 167, 0.1) 0deg, rgba(16, 93, 167, 0.4) 180deg, transparent 200deg);
+            border-radius: 50%;
+            animation: rotate-beam 4s linear infinite;
+        }
+
+        @keyframes rotate-beam {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-[#F7F3EC] text-[#2B2B2B] min-h-screen font-body-md selection:bg-primary selection:text-white font-kids-display">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-50 bg-surface/80 backdrop-blur-md shadow-sm flex justify-between items-center px-gutter h-16">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A warm, brightly lit professional studio portrait of a young child with a joyful expression, wearing a soft blue knitted sweater. The lighting is soft and even, highlighting healthy skin tones against a clean, minimal cream-colored background. High-resolution photography with shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdjeAQzhiGo5qXHTd5zUhrRiwtQz8lvMDAn4gtuA-KA-lojqGU1qpCXhLBSbHBg9305WrY73_uxoqMqO86anvmyUyLT-WLK5ou-eS_Deqvpwkgtgygu14DEcwq6d7dCLx6-qOizWXNtSiV-C9yC5vyP_lb62lzTRrd1JN1J4U9JJphGVtG2a2NO4SqNEYao3nUDwVqeDW2xIy679nJo2UY4phHYlpDXD1_zF3XvYMFik64gZ2GWfp0aTnsaHGmTWDFUMKMSwMPoB4">
+</div>
+<h1 class="font-headline-md text-headline-md text-primary font-kids-display">Hubungkan Alat</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="px-gutter pb-32 pt-8 max-w-2xl mx-auto">
+<!-- Animated Scanner Section -->
+<section class="flex flex-col items-center mb-section-gap relative overflow-hidden py-12">
+<div class="pulse-container w-64 h-64 mb-8">
+<div class="scanner-beam"></div>
+<div class="pulse-ring"></div>
+<div class="pulse-ring"></div>
+<div class="pulse-ring"></div>
+<!-- Center Icons -->
+<div class="relative z-10 flex items-center justify-center gap-4">
+<div class="bg-white p-4 rounded-2xl shadow-lg border-2 border-primary/10 transform -rotate-6">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="thermometer">thermometer</span>
+</div>
+<div class="bg-white p-4 rounded-2xl shadow-lg border-2 border-primary/10 transform rotate-6">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="vital_signs">vital_signs</span>
+</div>
+</div>
+</div>
+<div class="text-center space-y-2">
+<p class="font-headline-md text-primary animate-pulse">Mencari perangkat...</p>
+<p class="text-on-surface-variant font-body-md px-8">Pastikan Bluetooth Anda aktif dan perangkat dalam mode pairing.</p>
+</div>
+</section>
+<!-- Detected Devices (Bento Style) -->
+<section class="space-y-stack-md">
+<h2 class="font-label-md text-on-surface-variant uppercase tracking-wider px-2">Perangkat Terdeteksi</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Device 1 -->
+<div class="glass-card p-5 shadow-sm flex flex-col justify-between h-full group hover:shadow-md transition-all active:scale-[0.98] rounded-lg">
+<div class="flex items-start justify-between mb-4">
+<div class="p-3 bg-primary-fixed rounded-xl text-primary">
+<span class="material-symbols-outlined text-2xl" data-icon="device_thermostat">device_thermostat</span>
+</div>
+<span class="flex items-center gap-1 text-[12px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-100">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            Terdeteksi
+                        </span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] mb-1 font-kids-display">KidVital Thermometer BT-102</h3>
+<p class="text-on-surface-variant text-[14px] mb-4">Termometer Inframerah</p>
+<button class="w-full py-3 bg-[#3D7BC7] text-white font-label-md rounded-lg shadow-lg shadow-primary/20 hover:bg-primary-container active:scale-95 transition-all">
+                            Hubungkan
+                        </button>
+</div>
+</div>
+<!-- Device 2 -->
+<div class="glass-card p-5 shadow-sm flex flex-col justify-between h-full group hover:shadow-md transition-all active:scale-[0.98] rounded-lg">
+<div class="flex items-start justify-between mb-4">
+<div class="p-3 bg-secondary-fixed rounded-xl text-primary">
+<span class="material-symbols-outlined text-2xl" data-icon="pulse_alert">pulse_alert</span>
+</div>
+<span class="flex items-center gap-1 text-[12px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-100">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            Terdeteksi
+                        </span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] mb-1 font-kids-display">KidVital Oximeter Pro</h3>
+<p class="text-on-surface-variant text-[14px] mb-4">Pemantau Oksigen &amp; Nadi</p>
+<button class="w-full py-3 bg-[#3D7BC7] text-white font-label-md rounded-lg shadow-lg shadow-primary/20 hover:bg-primary-container active:scale-95 transition-all">
+                            Hubungkan
+                        </button>
+</div>
+</div>
+</div>
+<!-- Additional Help/Info -->
+<div class="mt-8 p-4 bg-tertiary-fixed/30 border border-tertiary-fixed flex gap-4 items-center rounded-lg">
+<span class="material-symbols-outlined text-tertiary" data-icon="help_center">help_center</span>
+<p class="text-on-tertiary-fixed-variant text-[14px]">Perangkat tidak muncul? Tekan tombol daya pada alat selama 5 detik hingga lampu indikator berkedip.</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] h-20 px-2 pb-safe flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#3D7BC7] text-white rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings_remote">settings_remote</span>
+<span class="font-label-md text-label-md font-bold">Pairing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-label-md text-label-md">Consult</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200 p-2 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interactions for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent.trim() === 'Hubungkan') {
+                    const originalText = this.textContent;
+                    const originalBg = this.className;
+                    this.textContent = 'Menghubungkan...';
+                    this.disabled = true;
+                    this.classList.add('opacity-70', 'cursor-not-allowed');
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Berhasil Terhubung';
+                        this.className = this.className.replace('bg-primary', 'bg-green-600');
+                        this.classList.remove('opacity-70');
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

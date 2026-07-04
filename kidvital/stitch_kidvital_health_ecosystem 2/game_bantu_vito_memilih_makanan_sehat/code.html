@@ -1,0 +1,320 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Bantu Vito Pilih Makanan Sehat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#ffdf9f",
+                        "outline-variant": "#d2c5af",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fbf9f8",
+                        "on-background": "#1b1c1c",
+                        "on-primary-fixed": "#261a00",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-primary-container": "#735400",
+                        "background": "#FFF8EC",
+                        "surface-variant": "#e4e2e2",
+                        "tertiary-fixed": "#b7eaff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#303030",
+                        "surface-container-high": "#eae8e7",
+                        "secondary-fixed": "#95f7bb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#5c4300",
+                        "surface-dim": "#dbd9d9",
+                        "secondary-container": "#95f7bb",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#60d4fb",
+                        "tertiary-container": "#7eddff",
+                        "surface-tint": "#795900",
+                        "on-tertiary-fixed": "#001f28",
+                        "primary": "#795900",
+                        "tertiary": "#006780",
+                        "inverse-on-surface": "#f2f0f0",
+                        "secondary": "#006d41",
+                        "primary-container": "#ffc94d",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary-fixed-variant": "#004e61",
+                        "on-secondary": "#ffffff",
+                        "surface": "#fbf9f8",
+                        "on-secondary-container": "#007346",
+                        "on-surface-variant": "#4f4635",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#efeded",
+                        "surface-container-low": "#f5f3f3",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#006179",
+                        "secondary-fixed-dim": "#7adaa1",
+                        "primary-fixed-dim": "#f4bf44",
+                        "on-secondary-fixed-variant": "#005230",
+                        "on-secondary-fixed": "#002110",
+                        "outline": "#817663",
+                        "inverse-primary": "#f4bf44",
+                        "game-blue": "#56CCF2",
+                        "game-green": "#6FCF97"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "stack-lg": "40px",
+                        "margin-mobile": "24px",
+                        "stack-sm": "12px",
+                        "margin-desktop": "64px",
+                        "stack-md": "24px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-bold": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                        "headline-sm": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                        "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .block-shadow-primary {
+            box-shadow: 0 6px 0 0 #D1A500;
+        }
+        .block-shadow-primary:active {
+            box-shadow: 0 0px 0 0 #D1A500;
+            transform: translateY(6px);
+        }
+        .block-shadow-card {
+            box-shadow: 0 8px 0 0 rgba(0,0,0,0.1);
+        }
+        .block-shadow-card:active {
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);
+            transform: translateY(6px);
+        }
+        .star-animate {
+            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes pop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .floating-fox {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffdf9f;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen flex flex-col overflow-x-hidden select-none">
+<!-- Top App Bar (Custom for Game) -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-16 md:h-20 bg-background sticky top-0 z-50">
+<button class="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-lg bg-surface-container-lowest border-2 border-outline-variant block-shadow-card transition-all shrink-0" onclick="window.history.back()">
+<span class="material-symbols-outlined text-primary font-bold">home</span>
+</button>
+<div class="flex items-center gap-2 bg-[#FFC94D] px-3 md:px-4 py-1.5 md:py-2 rounded-full border-2 border-primary block-shadow-primary shrink-0">
+<div class="flex items-center gap-1" id="star-container">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-headline-sm text-on-primary-container ml-2" id="score-text">3</span>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center p-gutter relative max-w-4xl mx-auto w-full pb-10">
+<h1 class="font-display-lg-mobile text-2xl md:text-4xl text-primary text-center mt-2 mb-stack-sm md:mb-stack-md leading-tight">Bantu Vito Pilih Makanan Sehat</h1>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full">
+<!-- Vito + Plate Area -->
+<div class="flex flex-col items-center gap-4 w-full">
+<!-- Vito Area -->
+<div class="relative w-28 md:w-64 flex flex-col items-center mt-10 md:mt-0">
+<div class="absolute -top-14 left-1/2 -translate-x-1/2 bg-surface-container-lowest p-3 rounded-xl border-2 border-outline-variant block-shadow-card w-44 text-center">
+<p class="font-label-bold text-on-surface-variant text-sm">Vito lapar, yuk isi piringnya!</p>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-surface-container-lowest border-r-2 border-b-2 border-outline-variant rotate-45"></div>
+</div>
+<img class="w-full h-auto floating-fox" data-alt="A friendly and cheerful cartoon fox mascot named Vito with large expressive eyes, a cute orange coat, and a blue bandana, standing in a playful pose suitable for a children's mobile game. The character is rendered in a flat, high-contrast illustration style with bold outlines and vibrant colors that fit a playful digital playground aesthetic." src="https://lh3.googleusercontent.com/aida/AP1WRLse5OjIRg1SQi6t6MFj_SnVhE_uPQiZq6Mm-VvjJlvA9jNYdxHQ8kJu8jjOd050q4dBAzyek5jYZUoljw7Lo7uzwyBQyYYztBwVQVVNAYQyLwRM2Ez5ijpI44RHznO_r_Q7gPNZoOwFyk_SEiiyXS4Pxbo2oyqWNPtRIBtCmFOxvWj6RH5C-dKY2C0FNmQJ2qhvFtkH8n2DnvmcGauNdFXp-96R7uz2qiC4HP6EwkSOL9_JC8I1BcRwlQ">
+</div>
+<!-- Target Area: Piring Vito -->
+<div class="relative w-48 h-48 md:w-80 md:h-80 bg-white rounded-full border-8 flex items-center justify-center shadow-inner overflow-hidden border-[#6FCF97]" id="plate-target">
+<!-- Inner plate details -->
+<div class="absolute inset-4 border-4 border-dashed border-blue-100 rounded-full"></div>
+<div class="relative z-10 w-full h-full flex flex-wrap items-center justify-center content-center p-6 gap-2" id="plate-content">
+<p class="font-headline-sm text-outline-variant text-center opacity-50 text-sm md:text-base" id="empty-plate-text">Piring Vito</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Food Choices Drawer -->
+<div class="mt-stack-md md:mt-stack-lg w-full">
+<div class="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-3 md:gap-gutter">
+<!-- Apple -->
+<button class="food-card flex flex-col items-center bg-white p-3 md:p-4 border-2 block-shadow-card w-full md:w-32 transition-transform hover:scale-105 active:scale-95 rounded-full border-game-blue" onclick="addFood('apple', true, this)">
+<div class="w-12 h-12 md:w-16 md:h-16 mb-1 md:mb-2 bg-red-100 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl md:text-4xl text-red-500" style="font-variation-settings: 'FILL' 1;">nutrition</span>
+</div>
+<span class="font-label-bold text-on-surface font-bold text-xs md:text-sm">Apel</span>
+</button>
+<!-- Broccoli -->
+<button class="food-card flex flex-col items-center bg-white p-3 md:p-4 border-2 block-shadow-card w-full md:w-32 transition-transform hover:scale-105 active:scale-95 rounded-full border-game-blue" onclick="addFood('broccoli', true, this)">
+<div class="w-12 h-12 md:w-16 md:h-16 mb-1 md:mb-2 bg-green-100 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl md:text-4xl text-green-600" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<span class="font-label-bold text-on-surface font-bold text-xs md:text-sm">Brokoli</span>
+</button>
+<!-- Carrot -->
+<button class="food-card flex flex-col items-center bg-white p-3 md:p-4 border-2 block-shadow-card w-full md:w-32 transition-transform hover:scale-105 active:scale-95 rounded-full border-game-blue" onclick="addFood('carrot', true, this)">
+<div class="w-12 h-12 md:w-16 md:h-16 mb-1 md:mb-2 bg-orange-100 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl md:text-4xl text-orange-500" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<span class="font-label-bold text-on-surface font-bold text-xs md:text-sm">Wortel</span>
+</button>
+<!-- Milk -->
+<button class="food-card flex flex-col items-center bg-white p-3 md:p-4 border-2 block-shadow-card w-full md:w-32 transition-transform hover:scale-105 active:scale-95 rounded-full border-game-blue" onclick="addFood('milk', true, this)">
+<div class="w-12 h-12 md:w-16 md:h-16 mb-1 md:mb-2 bg-blue-100 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl md:text-4xl text-blue-500" style="font-variation-settings: 'FILL' 1;">water_full</span>
+</div>
+<span class="font-label-bold text-on-surface font-bold text-xs md:text-sm">Susu</span>
+</button>
+<!-- Fried Chicken (Unhealthy choice) -->
+<button class="food-card flex flex-col items-center bg-white p-3 md:p-4 border-2 block-shadow-card w-full md:w-32 transition-transform hover:scale-105 active:scale-95 rounded-full border-game-blue" onclick="addFood('chicken', false, this)">
+<div class="w-12 h-12 md:w-16 md:h-16 mb-1 md:mb-2 bg-yellow-100 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl md:text-4xl text-yellow-700" style="font-variation-settings: 'FILL' 1;">lunch_dining</span>
+</div>
+<span class="font-label-bold text-on-surface font-bold text-xs md:text-sm">Ayam Goreng</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        let score = 3;
+        const scoreText = document.getElementById('score-text');
+        const plateContent = document.getElementById('plate-content');
+        const emptyPlateText = document.getElementById('empty-plate-text');
+        const starContainer = document.getElementById('star-container');
+
+        const foodIcons = {
+            apple: { icon: 'nutrition', color: 'text-red-500' },
+            broccoli: { icon: 'eco', color: 'text-green-600' },
+            carrot: { icon: 'restaurant', color: 'text-orange-500' },
+            milk: { icon: 'water_full', color: 'text-blue-500' },
+            chicken: { icon: 'lunch_dining', color: 'text-yellow-700' }
+        };
+
+        function addFood(type, isHealthy, element) {
+            if (isHealthy) {
+                // Remove empty text
+                if (emptyPlateText) emptyPlateText.style.display = 'none';
+
+                // Add food to plate
+                const foodItem = document.createElement('div');
+                foodItem.className = 'w-16 h-16 bg-surface-container-low rounded-full flex items-center justify-center star-animate border-2 border-outline-variant';
+                foodItem.innerHTML = `<span class="material-symbols-outlined text-3xl ${foodIcons[type].color}" style="font-variation-settings: 'FILL' 1;">${foodIcons[type].icon}</span>`;
+                plateContent.appendChild(foodItem);
+
+                // Update Score
+                score++;
+                scoreText.innerText = score;
+
+                // Star Animation in counter
+                const newStar = document.createElement('span');
+                newStar.className = 'material-symbols-outlined text-primary star-animate';
+                newStar.style.fontVariationSettings = "'FILL' 1";
+                newStar.innerText = 'star';
+                starContainer.appendChild(newStar);
+                
+                // Cleanup star
+                setTimeout(() => {
+                    if (starContainer.children.length > 5) {
+                        starContainer.removeChild(starContainer.children[0]);
+                    }
+                }, 500);
+
+                // Confetti effect
+                createConfetti(element);
+                
+                // Audio placeholder (haptic feedback)
+                if (window.navigator.vibrate) window.navigator.vibrate(50);
+            } else {
+                // Shake effect for wrong item
+                element.classList.add('bg-error-container', 'border-error');
+                setTimeout(() => {
+                    element.classList.remove('bg-error-container', 'border-error');
+                }, 500);
+            }
+        }
+
+        function createConfetti(element) {
+            const rect = element.getBoundingClientRect();
+            for (let i = 0; i < 8; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = (rect.left + rect.width / 2) + 'px';
+                confetti.style.top = (rect.top + rect.height / 2) + 'px';
+                confetti.style.backgroundColor = ['#FFC94D', '#6FCF97', '#56CCF2', '#ba1a1a'][Math.floor(Math.random() * 4)];
+                document.body.appendChild(confetti);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 5 + Math.random() * 10;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+
+                let posX = rect.left + rect.width / 2;
+                let posY = rect.top + rect.height / 2;
+                let opacity = 1;
+
+                const animate = () => {
+                    posX += vx;
+                    posY += vy;
+                    opacity -= 0.02;
+                    confetti.style.left = posX + 'px';
+                    confetti.style.top = posY + 'px';
+                    confetti.style.opacity = opacity;
+
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        confetti.remove();
+                    }
+                };
+                requestAnimationFrame(animate);
+            }
+        }
+    </script>
+
+
+</body></html>

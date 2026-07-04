@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KidVital - Login</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fcf9f8",
+                        "on-secondary": "#ffffff",
+                        "outline": "#727782",
+                        "background": "#fcf9f8",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#404850",
+                        "surface-container-low": "#f6f3f2",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#141c23",
+                        "surface-tint": "#155fa9",
+                        "on-primary-fixed-variant": "#004785",
+                        "primary-container": "#3776c1",
+                        "on-primary-container": "#fefcff",
+                        "tertiary-fixed-dim": "#f4bf44",
+                        "tertiary-container": "#956e00",
+                        "on-tertiary-container": "#fffbff",
+                        "on-secondary-container": "#5d656e",
+                        "surface-container-high": "#eae7e7",
+                        "surface-container": "#f0eded",
+                        "on-surface": "#1b1c1c",
+                        "secondary": "#575f68",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#dcd9d9",
+                        "surface-container-highest": "#e4e2e1",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-primary-fixed": "#001c3a",
+                        "secondary-fixed": "#dbe3ed",
+                        "outline-variant": "#c2c6d3",
+                        "primary-fixed-dim": "#a5c8ff",
+                        "inverse-on-surface": "#f3f0f0",
+                        "tertiary-fixed": "#ffdf9f",
+                        "surface-variant": "#e4e2e1",
+                        "primary": "#105da7",
+                        "on-surface-variant": "#424751",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#a5c8ff",
+                        "inverse-surface": "#303030",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#bfc7d1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#261a00",
+                        "surface": "#fcf9f8",
+                        "primary-fixed": "#d4e3ff",
+                        "on-background": "#1b1c1c",
+                        "tertiary": "#765700",
+                        "secondary-container": "#dbe3ed",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "unit": "8px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "gutter": "16px",
+                        "container-margin": "24px",
+                        "section-gap": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Work Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Work Sans"],
+                        "kids-display": ["Plus Jakarta Sans"],
+                        "body-md": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "kids-display": ["32px", { "lineHeight": "40px", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Floating Label Custom CSS to supplement Tailwind */
+        .floating-input:focus-within label,
+        .floating-input input:not(:placeholder-shown) + label {
+            transform: translateY(-50%) scale(0.85);
+            top: 0;
+            background-color: white;
+            padding: 0 4px;
+            color: #105da7; /* primary color */
+        }
+        
+        .floating-input label {
+            transition: all 0.2s ease-out;
+            pointer-events: none;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-low min-h-screen flex items-center justify-center p-gutter">
+<!-- Main Content Canvas (No Nav Shell per Transactional Rule) -->
+<main class="w-full max-w-md bg-surface-container-lowest shadow-[0_4px_20px_0_rgba(0,0,0,0.05)] overflow-hidden flex flex-col rounded-lg">
+<!-- Illustration Header -->
+<div class="w-full h-48 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover" data-alt="A warm, minimalist 2D vector illustration of an adult holding hands with a small child. The artwork uses a calming palette of soft blues, warm creams, and gentle whites, typical of modern healthcare apps. The style is flat, accessible, and highly reassuring, creating a sense of trust and safety." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB04DYkgPUPCGVVZUhJzydlI5MnKP3XPzlFIDXwsyUPpp-P5Y93Heti4q65gD87eKgaesczZHBi4vlnBEPg0J1OxQHzm0XaLpD36_y03RIR0SGrRSWHrYNR1OrvuH71FMX-WlSIyUVstf1TaxQXTatyMQDr3kmh6Ed0iuUpeLV5kEkbJQMDpkualGiuO6stTHEQnOCtRC6IvI0EF53qKeCRJTPeJHN4oKjwBRX58mS6LAS30hFCTE2qoxPBm6UAJYMs2_rijTHgqxI">
+<!-- Subtle overlay gradient for smooth transition -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+</div>
+<!-- Login Form Container -->
+<div class="p-container-margin flex flex-col gap-stack-lg relative -mt-8 bg-surface-container-lowest rounded-t-xl z-10">
+<!-- Brand & Greeting -->
+<div class="text-center flex flex-col gap-unit">
+<h1 class="font-display-lg text-display-lg text-primary">KidVital</h1>
+<p class="font-headline-md text-headline-md text-on-surface">Selamat Datang Kembali</p>
+<p class="text-body-md text-on-surface-variant font-headline-md">Masuk untuk memantau kesehatan si kecil.</p>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-stack-md mt-4">
+<!-- Email/Phone Input (Floating Label) -->
+<div class="relative floating-input w-full">
+<input class="w-full h-[48px] px-4 border border-outline-variant bg-surface-container-lowest text-on-surface text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors rounded-lg font-headline-md" id="identifier" placeholder=" " type="text">
+<label class="absolute font-label-md text-label-md text-on-surface-variant bg-surface-container-lowest px-1 ml-1" for="identifier">Email / Nomor HP</label>
+</div>
+<!-- Password Input (Floating Label with toggle) -->
+<div class="relative floating-input w-full">
+<input class="w-full h-[48px] pl-4 pr-12 border border-outline-variant bg-surface-container-lowest text-on-surface text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors rounded-lg font-headline-md" id="password" placeholder=" " type="password">
+<label class="absolute font-label-md text-label-md text-on-surface-variant bg-surface-container-lowest px-1 ml-1" for="password">Password</label>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center h-full" type="button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">visibility_off</span>
+</button>
+</div>
+<!-- Forgot Password Link -->
+<div class="flex justify-end w-full">
+<a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="#">Lupa Password?</a>
+</div>
+<!-- Primary Action -->
+<button class="w-full h-[48px] mt-2 bg-primary hover:bg-primary-container active:scale-[0.98] transition-all rounded-xl flex items-center justify-center font-label-md text-label-md text-on-primary shadow-sm" type="submit" style="background-color: rgb(61, 123, 199); border-radius: 8px;">
+                    Masuk
+                </button>
+</form>
+<!-- Secondary Action / Registration -->
+<div class="text-center mt-2">
+<p class="text-body-md text-on-surface-variant font-headline-md">
+                    Belum punya akun? 
+                    <a class="font-label-md text-label-md text-primary hover:underline" href="#">Daftar</a>
+</p>
+</div>
+</div>
+</main>
+
+
+</body></html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KidVital - Pediatrician Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c2c6d3",
+                    "on-primary-fixed-variant": "#004785",
+                    "tertiary-container": "#956e00",
+                    "secondary": "#575f68",
+                    "surface": "#fcf9f8",
+                    "tertiary-fixed-dim": "#f4bf44",
+                    "on-secondary-fixed-variant": "#404850",
+                    "inverse-surface": "#303030",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#bfc7d1",
+                    "on-primary-fixed": "#001c3a",
+                    "on-background": "#1b1c1c",
+                    "outline": "#727782",
+                    "on-secondary-fixed": "#141c23",
+                    "surface-dim": "#dcd9d9",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#dbe3ed",
+                    "on-tertiary-fixed": "#261a00",
+                    "surface-tint": "#155fa9",
+                    "on-primary-container": "#fefcff",
+                    "on-surface": "#1b1c1c",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffdf9f",
+                    "on-secondary-container": "#5d656e",
+                    "inverse-on-surface": "#f3f0f0",
+                    "primary": "#105da7",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-variant": "#e4e2e1",
+                    "background": "#fcf9f8",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fcf9f8",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "on-surface-variant": "#424751",
+                    "surface-container-high": "#eae7e7",
+                    "surface-container": "#f0eded",
+                    "primary-container": "#3776c1",
+                    "inverse-primary": "#a5c8ff",
+                    "surface-container-low": "#f6f3f2",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "primary-fixed": "#d4e3ff",
+                    "tertiary": "#765700",
+                    "surface-container-highest": "#e4e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#dbe3ed",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "stack-sm": "8px",
+                    "stack-lg": "24px",
+                    "section-gap": "32px",
+                    "container-margin": "24px",
+                    "unit": "8px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Work Sans"],
+                    "kids-display": ["Plus Jakarta Sans"],
+                    "label-md": ["Work Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Work Sans"],
+                    "headline-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "kids-display": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #fcf9f8;
+            font-family: 'Work Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(114, 119, 130, 0.1);
+        }
+    </style>
+</head>
+<body class="text-on-surface pb-24 font-kids-display">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim shadow-sm z-50 flex justify-between items-center px-gutter h-16">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional medical headshot of a friendly pediatrician in a clean clinic setting. The lighting is bright and natural, using a color palette of soft whites and KidVital professional blues. The doctor has a kind expression, wearing a white coat and a stethoscope." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDtX8h_ztAaXeOe6CTYhlbwqFnn36nUoOQ9ZnRhYpSuP-KDb99CPNpAVH7ehNODgP6_216HhnefPYr4CgbONnje0gdLp_UyU5ebGtdaK9n_HlewZKtK05XWrN0Izl9JPFpubSJS9pfycvJgnUqMCtl4FEfh4Ac2T1HwR34KUseVkD31lQfun6uS-JwkhX--8rzh-cqLPx2jG1t4VJhtdA5RDPqAuVYG_OtaKb-WzVDraWFWIfEvvp5vgZZ9oiEZPLmw-_tPh08sqQ">
+</div>
+<h1 class="font-headline-md text-headline-md text-primary">Daftar Pasien</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-100 relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+</div>
+</header>
+<main class="px-container-margin mt-stack-md">
+<!-- Search & Filters -->
+<section class="mb-section-gap space-y-4">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/50 font-body-md" placeholder="Cari nama pasien atau ID..." type="text">
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-md whitespace-nowrap active:scale-95 transition-transform">Semua</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md whitespace-nowrap hover:bg-surface-variant transition-colors">Perlu Perhatian</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md whitespace-nowrap hover:bg-surface-variant transition-colors">Kontrol Rutin</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md whitespace-nowrap hover:bg-surface-variant transition-colors">Baru</button>
+</div>
+</section>
+<!-- Stats Overview (Bento Pattern) -->
+<section class="grid grid-cols-2 gap-4 mb-section-gap">
+<div class="glass-card p-4 flex flex-col justify-between shadow-sm border-l-4 border-primary rounded-lg">
+<p class="font-label-md text-on-surface-variant">Total Pasien</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">124</span>
+<span class="text-xs text-primary font-bold">+5 hari ini</span>
+</div>
+</div>
+<div class="glass-card p-4 flex flex-col justify-between shadow-sm border-l-4 border-error rounded-lg">
+<p class="font-label-md text-on-surface-variant">Kritis</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-error">3</span>
+<span class="text-xs text-on-surface-variant font-medium">butuh cek</span>
+</div>
+</div>
+</section>
+<!-- Patient Cards List -->
+<div class="space-y-4">
+<h2 class="font-label-md text-on-surface-variant uppercase tracking-wider mb-2">Pasien Aktif</h2>
+<!-- Patient Card 1 (Kirana - From Prompt) -->
+<div class="glass-card p-4 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer active:scale-[0.98] rounded-lg">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-secondary-container" src="https://lh3.googleusercontent.com/aida/AP1WRLtbyZo_yhznhIP8devPC-fgSdkDxPQ_v-fl4MjjR2dXyIfYAX2Py8zEsiBhSiEMII36r9tlSIjz_fhgTw-z8rdvbhzINzL0BQK3z-WphN_FkiitHxzkNra7GEIhoG3Et5j8_S9d811-1I0Dph9d9_iaVQZkla9kvRIRWKMhHHqchW_-CumAsWTyk5s-NTgVi-JlbjiHKMSNznQl_zrfgbd9Cb8wqYG3Tg3TekAgKRABT4NJp17Z4L4zX1U">
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-error border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Kirana</h3>
+<span class="font-label-md px-2 py-1 bg-error/10 text-error rounded-lg text-xs font-bold">Kritis</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<p class="font-body-md text-on-surface-variant text-sm">5 thn • Demam Tinggi</p>
+<p class="font-label-md text-[10px] text-outline uppercase">2 menit yang lalu</p>
+</div>
+</div>
+</div>
+<!-- Patient Card 2 (Budi) -->
+<div class="glass-card p-4 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer active:scale-[0.98] rounded-lg">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-secondary-container" data-alt="A portrait of a cheerful 2-year-old Indonesian boy named Budi, with short dark hair and a wide smile. He is wearing a colorful striped t-shirt. The background is a soft-focus pediatric clinic with warm, child-friendly colors. High-quality digital photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfI__XwgffZkimvjxH5KvYxUGvvUCBeT7A84EC_ii6Gw9FEcB8Dv8DfbrgVzZt_Rh6Jek0uusc37izFTQEJQ-gdfenTKuEbkJCdBhx9kbAESJ1exQGY0bFLZtkgyWv5jJsH35QiYclkVVDL6wtFipkeioV7BLt3CLFg_eI1WBWZxDipkkJ9zKRvAGGW9e_hc3Tq-5X_paern69ZIt2gd_-N9d_o8PqUwYgu33zTiXgj5f0P7qfwW0G4gLWpO3c28tKU8-IKwFSSGk">
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Budi</h3>
+<span class="font-label-md px-2 py-1 bg-green-500/10 text-green-700 rounded-lg text-xs font-bold">Normal</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<p class="font-body-md text-on-surface-variant text-sm">2 thn • Pemulihan</p>
+<p class="font-label-md text-[10px] text-outline uppercase">15 menit yang lalu</p>
+</div>
+</div>
+</div>
+<!-- Patient Card 3 (Siti) -->
+<div class="glass-card p-4 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer active:scale-[0.98] rounded-lg">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-secondary-container" data-alt="A close-up portrait of a young girl named Siti, around 4 years old, with her hair in neat braids. She has a curious and calm expression. The image is captured in a bright, modern light-mode pediatrician's office with soft pastel accents. Clean, professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCISjDRu4kEs98g26dNGBso6nvQkEk8bHonUfKjGnLSqy4zREF9oWxr-ve4P1b3AJKlkjPgzp7SeMJckEIPCjX2vlIzh4rA2mTtyxVBFRW_Xa3KcgZAGQ_SP3dDGh8UmtFzEFBqaC5JIVhIBSt2QVetHC7CKeygbny1ViBpZFz_aw7eAqG2JwDniJbVLRGp6F5yzEnk8nxAeVPuQzeu_atzOi_ZarXHZqI5WjEMYMFhY_5qjPLdZVG0ajNaD0dUB-AmwxdmcOtaU8U">
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-tertiary-fixed-dim border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Siti</h3>
+<span class="font-label-md px-2 py-1 bg-tertiary-fixed-dim/20 text-tertiary-container rounded-lg text-xs font-bold">Waspada</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<p class="font-body-md text-on-surface-variant text-sm">4 thn • Batuk Alergi</p>
+<p class="font-label-md text-[10px] text-outline uppercase">1 jam yang lalu</p>
+</div>
+</div>
+</div>
+<!-- Patient Card 4 (Aris) -->
+<div class="glass-card p-4 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer active:scale-[0.98] rounded-lg">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-secondary-container" data-alt="A profile picture of an 8-year-old boy named Aris, looking healthy and energetic. He has a friendly face and short black hair. The lighting is clean and professional, consistent with a high-end medical application UI. Soft background of a modern pediatric reception." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnnsAHI4Q2l-FYe7RcqJdD_qpiUGQoh0zmWm_sYHU89lCkcCX_0FUSulK10EebzbM6lMyAJTM2uSya20ndKAaLlijPH07S35ni7_JG_a-_eWpHJDp4iz-fCVobqJB7OI2dfrCRfFV-Pejng5lutZzaiCwy6F7i_XYYaUp4Fd4gF0El8b_LKN3bqwj28aghc0VNTUrfgfEuFSxzuNC4Lm9gG7mVWYPnAxzNbYKKAUuYwe1sfBxzOWVCRzl1RPNOXkgYkKK3uJLk9pA">
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md text-on-surface truncate">Aris</h3>
+<span class="font-label-md px-2 py-1 bg-green-500/10 text-green-700 rounded-lg text-xs font-bold">Normal</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<p class="font-body-md text-on-surface-variant text-sm">8 thn • Cek Rutin</p>
+<p class="font-label-md text-[10px] text-outline uppercase">3 jam yang lalu</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for quick action -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined filled-icon">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-container-lowest shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] h-20 px-2 pb-safe flex justify-around items-center rounded-t-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined filled-icon">settings_remote</span>
+<span class="font-label-md text-label-md font-bold">Pairing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-md text-label-md">Consult</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple ripple-like effect on patient cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Filter chips toggle
+        document.querySelectorAll('button.whitespace-nowrap').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('button.whitespace-nowrap').forEach(b => {
+                    b.classList.remove('bg-primary', 'text-on-primary');
+                    b.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+                });
+                this.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                this.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+    </script>
+
+
+</body></html>

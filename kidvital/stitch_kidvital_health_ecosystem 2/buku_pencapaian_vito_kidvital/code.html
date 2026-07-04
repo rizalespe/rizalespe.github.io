@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Buku Pencapaian Vito</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#5c4300",
+                    "on-tertiary-container": "#006179",
+                    "on-background": "#1b1c1c",
+                    "surface-dim": "#dbd9d9",
+                    "primary-fixed": "#ffdf9f",
+                    "surface-container-high": "#eae8e7",
+                    "on-surface": "#1b1c1c",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#007346",
+                    "surface-tint": "#795900",
+                    "secondary-fixed-dim": "#7adaa1",
+                    "background": "#FFF8EC",
+                    "surface-container-highest": "#e4e2e2",
+                    "inverse-on-surface": "#f2f0f0",
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#fbf9f8",
+                    "primary": "#795900",
+                    "surface": "#fbf9f8",
+                    "inverse-surface": "#303030",
+                    "secondary-fixed": "#95f7bb",
+                    "inverse-primary": "#f4bf44",
+                    "secondary-container": "#95f7bb",
+                    "secondary": "#006d41",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#ffc94d",
+                    "tertiary-fixed-dim": "#60d4fb",
+                    "on-secondary-fixed": "#002110",
+                    "surface-container-low": "#f5f3f3",
+                    "on-tertiary-fixed-variant": "#004e61",
+                    "on-primary-fixed": "#261a00",
+                    "on-primary-container": "#735400",
+                    "surface-variant": "#e4e2e2",
+                    "tertiary-container": "#7eddff",
+                    "on-secondary-fixed-variant": "#005230",
+                    "surface-container": "#efeded",
+                    "outline-variant": "#d2c5af",
+                    "tertiary": "#006780",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#4f4635",
+                    "primary-fixed-dim": "#f4bf44",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#b7eaff",
+                    "on-tertiary-fixed": "#001f28",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#817663"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "stack-sm": "12px",
+                    "margin-desktop": "64px",
+                    "stack-lg": "40px",
+                    "gutter": "24px",
+                    "stack-md": "24px",
+                    "margin-mobile": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-bold": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "headline-sm": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .block-shadow-sm { box-shadow: 0 4px 0 0 rgba(0,0,0,0.1); }
+        .block-shadow-md { box-shadow: 0 8px 0 0 rgba(0,0,0,0.1); }
+        .block-shadow-primary { box-shadow: 0 6px 0 0 #5c4300; }
+        .block-shadow-secondary { box-shadow: 0 6px 0 0 #005230; }
+        
+        .pressable:active { transform: translateY(4px); box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        .confetti-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-body-md text-on-background selection:bg-primary-container">
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-20 bg-background border-b-2 border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary bg-primary-container flex items-center justify-center block-shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A friendly, expressive cartoon fox mascot named Vito with bright orange fur, big sparkling eyes, and a cheerful smile, styled in a flat-cartoon illustration with bold outlines and warm colors against a soft cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDobKmVE31QsR0t4y6PS04A6hB-OSdOL1A2JLPJLfdB7ec9SyJKbcaxK09UkD2crl3PfFTOslr4Idi9bw2kkQIIAIPc2G8Ec1x65PM5SZLErTBd2qwjn88nocGvia6YZKp4RE1BWF8JlOcN-9ayHkNkFpmB__fme4ipHQhV1Ab19n68N9ggrvmuURx6hm-g6KHymNY7gZHeJYorluVqxxWPh6sDuoGjTFVg8b4DeMrnZTkQUr27Ai24qRHghGYs-LwLMD18uN0NdFo">
+</div>
+<h1 class="text-headline-sm font-headline-sm text-primary">Buku Pencapaian</h1>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high hover:bg-surface-container-highest transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</nav>
+<main class="pt-24 pb-32 px-margin-mobile max-w-4xl mx-auto overflow-x-hidden relative">
+<!-- Floating Confetti Background elements -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="absolute top-10 left-10 text-primary-container opacity-40 transform -rotate-12 animate-float">
+<span class="material-symbols-outlined text-[48px]">celebration</span>
+</div>
+<div class="absolute top-40 right-10 text-tertiary-container opacity-40 transform rotate-12 animate-float" style="animation-delay: 1s">
+<span class="material-symbols-outlined text-[56px]">stars</span>
+</div>
+<div class="absolute top-[50%] left-[-20px] text-secondary-container opacity-30 animate-float" style="animation-delay: 2s">
+<span class="material-symbols-outlined text-[64px]">workspace_premium</span>
+</div>
+</div>
+<!-- Hero Section: Level & Progress -->
+<section class="relative mb-stack-lg">
+<div class="bg-surface-container-lowest rounded-lg p-stack-md border-2 border-outline-variant block-shadow-md relative overflow-hidden">
+<!-- Background decoration -->
+<div class="absolute -right-4 -top-4 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl"></div>
+<div class="flex flex-col md:flex-row items-center gap-stack-md relative z-10">
+<div class="w-24 h-24 md:w-32 md:h-32 bg-primary-container rounded-full flex items-center justify-center border-4 border-primary block-shadow-primary shrink-0 bg-[#FFC94D]">
+<span class="text-display-lg-mobile md:text-display-lg text-on-primary-container font-black">5</span>
+</div>
+<div class="flex-grow w-full text-center md:text-left">
+<h2 class="text-headline-md font-headline-md text-primary mb-1">Sahabat Hebat</h2>
+<p class="text-body-lg text-on-surface-variant mb-stack-sm">Dikit lagi naik ke Level 6, yuk semangat!</p>
+<!-- Progress Bar -->
+<div class="w-full bg-surface-container-high rounded-full h-8 border-2 border-outline p-1 overflow-hidden">
+<div class="h-full bg-secondary rounded-full block-shadow-secondary flex items-center justify-end px-3 transition-all duration-1000 ease-out" style="width: 75%">
+<span class="text-[10px] text-white font-black">750/1000 XP</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Badge Collection Section -->
+<section class="mb-stack-lg">
+<div class="flex items-center justify-between mb-stack-md">
+<h3 class="text-headline-sm font-headline-sm text-on-background">Koleksi Badge Kamu</h3>
+<span class="bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-full font-label-bold block-shadow-sm">4 / 12 Terkumpul</span>
+</div>
+<!-- Badge Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-gutter">
+<!-- Unlocked: Pahlawan Air -->
+<div class="group flex flex-col items-center gap-2">
+<div class="w-full aspect-square bg-white border-2 border-primary p-4 flex flex-col items-center justify-center block-shadow-md pressable bg-gradient-to-br from-white to-[#E0F7FA] rounded-full">
+<div class="w-16 h-16 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container border-2 border-tertiary block-shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<p class="mt-4 text-label-bold text-primary text-center">Pahlawan Air</p>
+</div>
+<span class="text-[10px] font-bold text-secondary">DI DAPATKAN</span>
+</div>
+<!-- Unlocked: Si Paling Rapi -->
+<div class="group flex flex-col items-center gap-2">
+<div class="w-full aspect-square bg-white border-2 border-primary p-4 flex flex-col items-center justify-center block-shadow-md pressable bg-gradient-to-br from-white to-[#F9FBE7] rounded-full">
+<div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container border-2 border-secondary block-shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">clean_hands</span>
+</div>
+<p class="mt-4 text-label-bold text-primary text-center">Si Paling Rapi</p>
+</div>
+<span class="text-[10px] font-bold text-secondary">DI DAPATKAN</span>
+</div>
+<!-- Unlocked: Napas Naga -->
+<div class="group flex flex-col items-center gap-2">
+<div class="w-full aspect-square bg-white border-2 border-primary p-4 flex flex-col items-center justify-center block-shadow-md pressable bg-gradient-to-br from-white to-[#FFF9C4] rounded-full">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container border-2 border-primary block-shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">air</span>
+</div>
+<p class="mt-4 text-label-bold text-primary text-center">Napas Naga</p>
+</div>
+<span class="text-[10px] font-bold text-secondary">DI DAPATKAN</span>
+</div>
+<!-- Unlocked: Penjelajah Pagi -->
+<div class="group flex flex-col items-center gap-2">
+<div class="w-full aspect-square bg-white border-2 border-primary p-4 flex flex-col items-center justify-center block-shadow-md pressable bg-gradient-to-br from-white to-[#E1F5FE] rounded-full">
+<div class="w-16 h-16 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container border-2 border-tertiary block-shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">sunny</span>
+</div>
+<p class="mt-4 text-label-bold text-primary text-center">Penjelajah Pagi</p>
+</div>
+<span class="text-[10px] font-bold text-secondary">DI DAPATKAN</span>
+</div>
+<!-- Locked Badges -->
+<div class="group flex flex-col items-center gap-2 opacity-60">
+<div class="w-full aspect-square bg-surface-dim border-2 border-outline-variant p-4 flex flex-col items-center justify-center grayscale rounded-full">
+<div class="relative">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant border-2 border-outline">
+<span class="material-symbols-outlined text-[40px]">menu_book</span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-on-surface rounded-full p-1 border-2 border-white">
+<span class="material-symbols-outlined text-[16px] text-white">lock</span>
+</div>
+</div>
+<p class="mt-4 text-label-bold text-on-surface-variant text-center">Kutu Buku</p>
+</div>
+</div>
+<div class="group flex flex-col items-center gap-2 opacity-60">
+<div class="w-full aspect-square bg-surface-dim border-2 border-outline-variant p-4 flex flex-col items-center justify-center grayscale rounded-full">
+<div class="relative">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant border-2 border-outline">
+<span class="material-symbols-outlined text-[40px]">restaurant</span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-on-surface rounded-full p-1 border-2 border-white">
+<span class="material-symbols-outlined text-[16px] text-white">lock</span>
+</div>
+</div>
+<p class="mt-4 text-label-bold text-on-surface-variant text-center">Lalap Habis</p>
+</div>
+</div>
+<div class="group flex flex-col items-center gap-2 opacity-60">
+<div class="w-full aspect-square bg-surface-dim border-2 border-outline-variant p-4 flex flex-col items-center justify-center grayscale rounded-full">
+<div class="relative">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant border-2 border-outline">
+<span class="material-symbols-outlined text-[40px]">fitness_center</span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-on-surface rounded-full p-1 border-2 border-white">
+<span class="material-symbols-outlined text-[16px] text-white">lock</span>
+</div>
+</div>
+<p class="mt-4 text-label-bold text-on-surface-variant text-center">Otot Kawat</p>
+</div>
+</div>
+<div class="group flex flex-col items-center gap-2 opacity-60">
+<div class="w-full aspect-square bg-surface-dim border-2 border-outline-variant p-4 flex flex-col items-center justify-center grayscale rounded-full">
+<div class="relative">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant border-2 border-outline">
+<span class="material-symbols-outlined text-[40px]">forest</span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-on-surface rounded-full p-1 border-2 border-white">
+<span class="material-symbols-outlined text-[16px] text-white">lock</span>
+</div>
+</div>
+<p class="mt-4 text-label-bold text-on-surface-variant text-center">Sahabat Alam</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<section class="mb-stack-lg">
+<h3 class="text-headline-sm font-headline-sm text-on-background mb-stack-md">Statistik Keren</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+<div class="bg-primary-container p-stack-md border-2 border-primary block-shadow-primary flex flex-col items-center justify-center text-center bg-[#FFC94D] rounded-full">
+<span class="material-symbols-outlined text-primary text-[32px] mb-2">local_fire_department</span>
+<span class="text-display-lg-mobile font-black text-on-primary-fixed text-[#1b1c1c]">12</span>
+<span class="text-label-bold text-on-primary-container text-[#1b1c1c]">Hari Rajin</span>
+</div>
+<div class="bg-secondary-container p-stack-md border-2 border-secondary block-shadow-secondary flex flex-col items-center justify-center text-center bg-[#6FCF97] rounded-full">
+<span class="material-symbols-outlined text-secondary text-[32px] mb-2">task_alt</span>
+<span class="text-display-lg-mobile font-black text-on-secondary-fixed text-[#1b1c1c]">84</span>
+<span class="text-label-bold text-on-secondary-container text-[#1b1c1c]">Misi Selesai</span>
+</div>
+<div class="bg-tertiary-container p-stack-md border-2 border-tertiary block-shadow-md flex flex-col items-center justify-center text-center bg-[#56CCF2] rounded-full">
+<span class="material-symbols-outlined text-tertiary text-[32px] mb-2">emoji_events</span>
+<span class="text-display-lg-mobile font-black text-on-tertiary-fixed text-[#1b1c1c]">1.2k</span>
+<span class="text-label-bold text-on-tertiary-container text-[#1b1c1c]">Koin Emas</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container-lowest border-t-4 border-outline-variant shadow-[0_-4px_0_0_rgba(0,0,0,0.05)] rounded-t-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-bold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-label-bold">Missions</span>
+</a>
+<!-- Rewards is ACTIVE -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-lg px-6 py-2 border-b-4 border-secondary translate-y-[-2px] transition-all duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="text-label-bold">Rewards</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-bold">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Confetti generation
+        function createConfetti() {
+            const colors = ['#FFC94D', '#6FCF97', '#56CCF2', '#ffdf9f', '#95f7bb'];
+            const container = document.body;
+            for(let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-dot';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.top = '-10px';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.opacity = Math.random();
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+        
+        // Celebrate on load
+        window.addEventListener('load', () => {
+            setTimeout(createConfetti, 500);
+        });
+
+        // Trigger celebrate on Hero Click
+        document.querySelector('section.relative').addEventListener('click', createConfetti);
+    </script>
+
+
+</body></html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Emergency Alert - KidVital</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;family=Work+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#a5c8ff",
+                    "secondary-fixed-dim": "#bfc7d1",
+                    "secondary-container": "#dbe3ed",
+                    "on-primary-container": "#fefcff",
+                    "secondary-fixed": "#dbe3ed",
+                    "on-surface": "#1b1c1c",
+                    "on-background": "#1b1c1c",
+                    "surface-dim": "#dcd9d9",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container-high": "#eae7e7",
+                    "inverse-surface": "#303030",
+                    "surface-container": "#f0eded",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#424751",
+                    "outline-variant": "#c2c6d3",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#f4bf44",
+                    "surface-variant": "#e4e2e1",
+                    "primary-container": "#3776c1",
+                    "primary": "#105da7",
+                    "tertiary-fixed": "#ffdf9f",
+                    "tertiary-container": "#956e00",
+                    "surface-bright": "#fcf9f8",
+                    "on-tertiary-fixed": "#261a00",
+                    "on-secondary-fixed-variant": "#404850",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f3f0f0",
+                    "surface-container-low": "#f6f3f2",
+                    "surface": "#fcf9f8",
+                    "on-tertiary-fixed-variant": "#5c4300",
+                    "on-primary-fixed-variant": "#004785",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#575f68",
+                    "on-secondary-fixed": "#141c23",
+                    "primary-fixed": "#d4e3ff",
+                    "on-secondary-container": "#5d656e",
+                    "tertiary": "#765700",
+                    "primary-fixed-dim": "#a5c8ff",
+                    "error-container": "#ffdad6",
+                    "outline": "#727782",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#155fa9",
+                    "surface-container-highest": "#e4e2e1",
+                    "emergency": "#E4572E",
+                    "alert-bg": "#FFF4ED"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "24px",
+                    "section-gap": "32px",
+                    "stack-sm": "8px",
+                    "unit": "8px",
+                    "stack-md": "16px",
+                    "container-margin": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Work Sans"],
+                    "kids-display": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Work Sans"],
+                    "body-lg": ["Work Sans"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "kids-display": ["32px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      
+      @keyframes pulse-emergency {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(228, 87, 46, 0.4); }
+        70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(228, 87, 46, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(228, 87, 46, 0); }
+      }
+      
+      .emergency-pulse {
+        animation: pulse-emergency 2s infinite;
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col font-kids-display">
+<!-- Top App Bar -->
+<header class="bg-surface dark:bg-surface-dim text-primary dark:text-primary-fixed w-full top-0 sticky shadow-sm flex justify-between items-center px-gutter h-16 z-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+<img alt="Kirana's profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtbyZo_yhznhIP8devPC-fgSdkDxPQ_v-fl4MjjR2dXyIfYAX2Py8zEsiBhSiEMII36r9tlSIjz_fhgTw-z8rdvbhzINzL0BQK3z-WphN_FkiitHxzkNra7GEIhoG3Et5j8_S9d811-1I0Dph9d9_iaVQZkla9kvRIRWKMhHHqchW_-CumAsWTyk5s-NTgVi-JlbjiHKMSNznQl_zrfgbd9Cb8wqYG3Tg3TekAgKRABT4NJp17Z4L4zX1U">
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant leading-none">Status Vital</p>
+<p class="font-headline-md text-headline-md leading-tight">Kirana</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 duration-100">
+            notifications
+        </button>
+</header>
+<main class="flex-grow p-gutter flex flex-col justify-center max-w-2xl mx-auto w-full">
+<!-- Emergency Alert Card -->
+<div class="bg-alert-bg rounded-lg p-8 border-2 border-emergency shadow-[0_20px_40px_-15px_rgba(228,87,46,0.15)] flex flex-col items-center text-center space-y-6 relative overflow-hidden">
+<!-- Atmospheric Warning Icon -->
+<div class="bg-emergency/10 p-6 rounded-full emergency-pulse">
+<span class="material-symbols-outlined text-[64px] text-emergency" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="space-y-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface leading-tight">
+                    Saturasi Oksigen Anak Rendah
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant px-2">
+                    Saturasi oksigen Kirana berada di bawah batas normal (92%). Tetap tenang dan segera hubungi bantuan medis.
+                </p>
+</div>
+<!-- Vital Metric Highlight -->
+<div class="glass-card rounded-lg p-4 w-full flex justify-between items-center border border-emergency/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-emergency">air</span>
+<span class="font-label-md text-label-md">SpO2 Saat Ini</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-display-lg text-display-lg text-emergency">89</span>
+<span class="font-label-md text-label-md text-on-surface-variant">%</span>
+</div>
+</div>
+<!-- Visual Hint -->
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-emergency w-[89%]"></div>
+</div>
+</div>
+<!-- Quick Tips Bento Style -->
+<div class="mt-section-gap grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container p-4 rounded-lg flex gap-4 items-start border border-outline-variant/30">
+<div class="bg-white p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">psychology</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface">Tetap Tenang</h3>
+<p class="text-[13px] text-on-surface-variant">Kepala dingin membantu Anda mengambil keputusan tepat.</p>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-lg flex gap-4 items-start border border-outline-variant/30">
+<div class="bg-white p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">airline_seat_recline_extra</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface">Posisi Nyaman</h3>
+<p class="text-[13px] text-on-surface-variant">Dudukkan Kirana tegak untuk memudahkan pernapasan.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Action Bar -->
+<div class="sticky bottom-0 p-gutter bg-white/80 backdrop-blur-md flex flex-col md:flex-row gap-4 safe-bottom border-t border-surface-variant/20">
+<button class="flex-1 min-h-[56px] border-2 border-outline text-on-surface font-label-md text-label-md px-6 flex items-center justify-center gap-2 hover:bg-surface-container-low transition-all active:scale-95 rounded-lg">
+<span class="material-symbols-outlined">menu_book</span>
+            Lihat Panduan Pertolongan Pertama
+        </button>
+<button class="flex-1 min-h-[56px] bg-emergency text-white font-label-md text-label-md px-6 flex items-center justify-center gap-2 shadow-lg shadow-emergency/20 hover:brightness-110 transition-all active:scale-95 rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+            Hubungi Dokter Sekarang
+        </button>
+</div>
+<!-- Background Subtle Glow Effect -->
+<div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emergency rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary rounded-full blur-[100px]"></div>
+</div>
+<script>
+        // Simple micro-interaction for button feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Action triggered:', this.innerText.trim());
+            });
+        });
+        
+        // Dynamic update simulation (just for visual flair)
+        const spo2Element = document.querySelector('.text-display-lg');
+        setInterval(() => {
+            if(Math.random() > 0.7) {
+                const currentVal = parseInt(spo2Element.innerText);
+                const shift = Math.random() > 0.5 ? 1 : -1;
+                const newVal = Math.min(91, Math.max(85, currentVal + shift));
+                spo2Element.innerText = newVal;
+                document.querySelector('.bg-emergency.w-\\[89\\%\\]').style.width = newVal + '%';
+            }
+        }, 3000);
+    </script>
+
+
+</body></html>

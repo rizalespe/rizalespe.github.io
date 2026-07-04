@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KidVital - Onboarding</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Work+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#765700",
+                        "on-tertiary-fixed": "#261a00",
+                        "surface-dim": "#dcd9d9",
+                        "surface-container-highest": "#e4e2e1",
+                        "secondary-fixed-dim": "#bfc7d1",
+                        "outline": "#727782",
+                        "primary": "#105da7",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#dbe3ed",
+                        "outline-variant": "#c2c6d3",
+                        "on-primary-fixed": "#001c3a",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#155fa9",
+                        "surface-bright": "#fcf9f8",
+                        "on-tertiary-container": "#fffbff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#141c23",
+                        "primary-fixed": "#d4e3ff",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "tertiary-container": "#956e00",
+                        "tertiary-fixed-dim": "#f4bf44",
+                        "on-secondary": "#ffffff",
+                        "background": "#fcf9f8",
+                        "surface-container-low": "#f6f3f2",
+                        "tertiary-fixed": "#ffdf9f",
+                        "on-secondary-container": "#5d656e",
+                        "inverse-surface": "#303030",
+                        "inverse-on-surface": "#f3f0f0",
+                        "secondary-container": "#dbe3ed",
+                        "on-background": "#1b1c1c",
+                        "inverse-primary": "#a5c8ff",
+                        "primary-fixed-dim": "#a5c8ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#404850",
+                        "surface-container": "#f0eded",
+                        "surface-container-high": "#eae7e7",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#424751",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#3776c1",
+                        "on-primary-fixed-variant": "#004785",
+                        "on-primary-container": "#fefcff",
+                        "surface-variant": "#e4e2e1",
+                        "surface": "#fcf9f8",
+                        "secondary": "#575f68"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "section-gap": "32px",
+                        "container-margin": "24px",
+                        "unit": "8px",
+                        "stack-lg": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "kids-display": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-md": ["Work Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Work Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "kids-display": ["32px", { "lineHeight": "40px", "fontWeight": "800" }],
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-low min-h-screen flex flex-col font-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<div class="flex justify-end pt-container-margin px-container-margin z-10 relative">
+<button class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors duration-200 min-h-[48px] px-2 rounded-lg flex items-center justify-center">
+            Lewati
+        </button>
+</div>
+<main class="flex-1 flex flex-col items-center justify-center px-container-margin pb-section-gap -mt-12 relative z-0">
+<div class="w-full max-w-[280px] aspect-square relative mb-section-gap flex items-center justify-center">
+<div class="absolute inset-0 bg-primary-fixed opacity-30 rounded-full blur-3xl transform scale-110"></div>
+<img alt="Real-time Health Monitoring Illustration" class="w-full h-full object-contain relative z-10 drop-shadow-sm" data-alt="A clean, modern, flat vector illustration showing a smartphone screen syncing wirelessly with a sleek smart thermometer and a small pulse oximeter. The style is professional yet approachable, tailored for a parent-focused medical app. The color palette features a warm neutral background with professional blue accents. There are subtle, stylized Bluetooth waves connecting the devices. The lighting is bright and soft, creating a trustworthy, calm, and clear visual communicating real-time health data synchronization." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLfLZndMQ6LlWi3D2jGEmpJlc8z0L0YHUPCUljFso2vm5TPtDTZq-FEofs_B4uireET1k-TvSHM-Gve9d9OUzp4p6w0h0KXBaZoWv4g4ZLy-EAnqannAKkdOng2NDVQrsLuwr_4Pe_z4j7b6JlYDHVMl--hA5Rfn4xQ6fKPSIoZOFDd3m8DNwcNO_CQdaOurOpjfUoX-Ei22sDzhi4_g7CfX3Nt89wKqk6Z4gK-8K6tkde6uSYUQQtqSo_KYkPxx4CN9jlFt5URHc">
+</div>
+<div class="w-full flex flex-col items-center text-center max-w-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-stack-md tracking-tight">
+                Pantau Kesehatan Real-time
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-section-gap leading-relaxed px-2">
+                Hubungkan alat kesehatan Bluetooth untuk memantau kondisi si kecil secara akurat kapan saja.
+            </p>
+</div>
+</main>
+<footer class="bg-surface rounded-t-[32px] px-container-margin py-8 shadow-[0_-8px_30px_0_rgba(0,0,0,0.04)] flex flex-col gap-stack-lg z-20 relative">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center gap-2 pl-2">
+<div class="h-2 w-8 rounded-full bg-primary transition-all duration-300" style="background-color: rgb(61, 123, 199);"></div>
+<div class="h-2 w-2 rounded-full bg-outline-variant transition-all duration-300"></div>
+<div class="h-2 w-2 rounded-full bg-outline-variant transition-all duration-300"></div>
+</div>
+<button class="bg-[#3D7BC7] text-white font-label-md text-label-md min-h-[48px] px-8 rounded-lg flex items-center justify-center gap-2 shadow-sm hover:opacity-90 active:scale-95 transition-all duration-200">
+                Lanjut
+                <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0, 'wght' 600;">
+                    arrow_forward
+                </span>
+</button>
+</div>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KidVital — Product Mockup Showcase</title>
+<meta name="description" content="KidVital adalah konsep aplikasi kesehatan anak yang menghubungkan orang tua, dokter anak, dan rumah sakit. Pantau suhu, detak jantung, dan saturasi oksigen anak secara otomatis dari rumah.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="KidVital — Product Mockup Showcase">
+<meta property="og:description" content="Konsep aplikasi pemantauan kesehatan anak yang menjembatani orang tua, dokter, dan rumah sakit dalam satu ekosistem digital.">
+<meta property="og:image" content="stitch_kidvital_health_ecosystem/vito_mascot/screen.png">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KidVital — Product Mockup Showcase">
+<meta name="twitter:description" content="Konsep aplikasi pemantauan kesehatan anak yang menjembatani orang tua, dokter, dan rumah sakit dalam satu ekosistem digital.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#105da7;
+    --primary-container:#3776c1;
+    --bg:#fcf9f8;
+    --card:#ffffff;
+    --card-alt:#f6f3f2;
+    --on-surface:#1b1c1c;
+    --on-surface-variant:#575f68;
+    --outline:#e4e2e1;
+    --kids-yellow:#FFC94D;
+    --kids-green:#6FCF97;
+    --kids-blue:#56CCF2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--on-surface);
+    font-family:'Work Sans', sans-serif;
+  }
+  h1,h2,h3,.display{font-family:'Plus Jakarta Sans', sans-serif;}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+
+  header.hero{
+    padding:64px 24px 48px;
+    text-align:center;
+    background:linear-gradient(180deg,#eaf2fb 0%, var(--bg) 100%);
+    border-bottom:1px solid var(--outline);
+  }
+  header.hero .logo{
+    display:inline-flex;align-items:center;gap:10px;
+    font-weight:800;font-size:20px;color:var(--primary);
+    margin-bottom:20px;
+  }
+  header.hero .logo .material-symbols-outlined{
+    background:var(--primary);color:#fff;border-radius:50%;
+    width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  }
+  header.hero .eyebrow-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card);color:var(--primary);
+    border:1px solid var(--outline);
+    padding:7px 16px;border-radius:999px;
+    font-size:13px;font-weight:700;
+    margin-bottom:20px;
+  }
+  header.hero .eyebrow-badge::before{
+    content:"";width:7px;height:7px;border-radius:50%;background:#2E9E6D;
+  }
+  header.hero h1{
+    font-size:clamp(28px,5vw,48px);
+    font-weight:800;
+    letter-spacing:-0.02em;
+    margin:0 0 16px;
+  }
+  header.hero p{
+    max-width:620px;margin:0 auto;
+    color:var(--on-surface-variant);
+    font-size:18px;line-height:28px;
+  }
+  header.hero .badges{
+    display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:24px;
+  }
+  header.hero .badge{
+    background:var(--card);border:1px solid var(--outline);
+    padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;
+    color:var(--primary);
+  }
+
+  nav.jumplinks{
+    position:sticky;top:0;z-index:50;
+    background:rgba(252,249,248,0.9);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--outline);
+    display:flex;gap:4px;padding:12px 24px;overflow-x:auto;
+    justify-content:center;
+  }
+  nav.jumplinks a{
+    white-space:nowrap;
+    text-decoration:none;color:var(--on-surface-variant);
+    font-size:14px;font-weight:600;
+    padding:8px 14px;border-radius:999px;
+  }
+  nav.jumplinks a:hover{background:var(--card-alt);color:var(--primary);}
+
+  main{max-width:1200px;margin:0 auto;padding:48px 24px 96px;}
+
+  section.group{margin-bottom:72px;scroll-margin-top:70px;}
+  section.group .group-head{
+    display:flex;align-items:center;gap:12px;margin-bottom:8px;
+  }
+  section.group .group-head .material-symbols-outlined{
+    background:var(--primary-container);color:#fff;
+    width:40px;height:40px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  section.group.kids .group-head .material-symbols-outlined{background:var(--kids-green);}
+  section.group.doctor .group-head .material-symbols-outlined{background:#575f68;}
+  section.group.assistant .group-head .material-symbols-outlined{background:#8155d6;}
+  section.group h2{font-size:24px;margin:0;}
+  section.group h2 .count{
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;font-size:14px;color:var(--on-surface-variant);
+    margin-left:8px;
+  }
+  section.group .desc{
+    color:var(--on-surface-variant);
+    margin:4px 0 28px 0;
+    font-size:15px;max-width:640px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:28px;
+  }
+
+  .screen-card{
+    display:flex;flex-direction:column;align-items:center;
+    text-decoration:none;color:inherit;
+  }
+  .phone{
+    width:100%;
+    aspect-ratio:9/19.5;
+    background:#0b0b0c;
+    border-radius:28px;
+    padding:8px 8px 24px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+    transition:transform .2s ease, box-shadow .2s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .screen-card:hover .phone{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(16,93,167,0.22);
+  }
+  .phone .screen{
+    width:100%;height:100%;
+    border-radius:20px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .phone .screen img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:top;
+    display:block;
+  }
+  .phone .screen .iframe-wrap{
+    width:100%;height:100%;overflow:hidden;position:relative;
+  }
+  .phone .screen iframe{
+    position:absolute;top:0;left:0;
+    width:375px;height:812px;
+    border:0;
+    transform-origin:top left;
+    pointer-events:none;
+    background:#fff;
+  }
+  .phone .notch{
+    position:absolute;top:8px;left:50%;transform:translateX(-50%);
+    width:36%;height:18px;background:#0b0b0c;border-radius:0 0 12px 12px;
+    z-index:2;
+  }
+  .screen-card .label{
+    margin-top:14px;font-weight:700;font-size:14px;text-align:center;
+  }
+  .screen-card .sub{
+    font-size:12px;color:var(--on-surface-variant);
+    display:flex;align-items:center;gap:4px;margin-top:2px;
+  }
+  .screen-card.no-demo .phone{cursor:default;}
+  .screen-card.no-demo{cursor:default;}
+
+  footer{
+    text-align:center;padding:40px 24px;color:var(--on-surface-variant);
+    font-size:13px;border-top:1px solid var(--outline);
+  }
+
+  .skip-link{
+    position:absolute;
+    top:-100%;left:0;
+    background:var(--primary);color:#fff;
+    padding:10px 20px;
+    font-weight:700;font-size:14px;
+    border-radius:0 0 8px 0;
+    z-index:9999;
+    text-decoration:none;
+    transition:top .1s;
+  }
+  .skip-link:focus{top:0;}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Langsung ke konten utama</a>
+
+<header class="hero">
+  <div class="logo"><span class="material-symbols-outlined">favorite</span>KidVital</div>
+  <h1>Respons Cepat untuk Kesehatan Anak Anda</h1>
+  <p>Mockup aplikasi yang menghubungkan orang tua, dokter anak, dan rumah sakit — data vital anak terpantau otomatis dari rumah, lengkap dengan peringatan dini dan Vito si maskot rubah untuk anak. Klik layar mana pun untuk mencoba prototipenya.</p>
+</header>
+
+<nav class="jumplinks" aria-label="Navigasi seksi">
+  <a href="#onboarding">Onboarding &amp; Login</a>
+  <a href="#parent">Parent Mode</a>
+  <a href="#assistant">Asisten AI</a>
+  <a href="#kids">Kids Mode</a>
+  <a href="#doctor">Doctor Mode</a>
+  <a href="#brand">Brand Assets</a>
+</nav>
+
+<main id="main-content">
+
+  <section class="group" id="onboarding">
+    <div class="group-head">
+      <span class="material-symbols-outlined">waving_hand</span>
+      <h2>Onboarding &amp; Login <span class="count">6 layar</span></h2>
+    </div>
+    <p class="desc">Ini kesan pertama orang tua terhadap KidVital: kenapa pemantauan rutin di rumah itu penting, bagaimana notifikasi darurat bekerja, dan siapa itu Vito — sebelum akhirnya mereka membuat akun keluarga.</p>
+    <div class="grid">
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/onboarding_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/onboarding_kidvital/code.html" title="Onboarding KidVital" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Onboarding — Intro</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/onboarding_1_pantau_real_time/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/onboarding_1_pantau_real_time/code.html" title="Onboarding 1" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">1. Pantau Real-Time</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/onboarding_2_notifikasi_darurat/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/onboarding_2_notifikasi_darurat/code.html" title="Onboarding 2" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">2. Notifikasi Darurat</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/onboarding_3_edukasi_vito/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/onboarding_3_edukasi_vito/code.html" title="Onboarding 3" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">3. Edukasi Vito</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/login_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/login_kidvital/code.html" title="Login" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Login</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/login_kidvital_updated/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/login_kidvital_updated/code.html" title="Login Updated" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Login — Versi Revisi</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" id="parent">
+    <div class="group-head">
+      <span class="material-symbols-outlined">family_restroom</span>
+      <h2>Parent Mode — Monitoring &amp; Dashboard <span class="count">4 layar</span></h2>
+    </div>
+    <p class="desc">Di sinilah ide "pemantauan rutin di rumah" jadi kelihatan wujudnya: suhu, saturasi oksigen, dan detak jantung anak mengalir otomatis dari termometer atau oksimeter lewat Bluetooth, tanpa orang tua perlu mencatat manual. Begitu ada angka yang keluar dari batas wajar, KidVital langsung memberi peringatan lengkap dengan saran tindakan.</p>
+    <div class="grid">
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/dashboard_orang_tua_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/dashboard_orang_tua_kidvital/code.html" title="Dashboard Orang Tua" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Dashboard Orang Tua</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/monitoring_real_time_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/monitoring_real_time_kidvital/code.html" title="Monitoring Real-Time" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Monitoring Real-Time</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/hubungkan_alat_kesehatan_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/hubungkan_alat_kesehatan_kidvital/code.html" title="Hubungkan Alat Kesehatan" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Hubungkan Alat Kesehatan</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/peringatan_saturasi_oksigen_rendah/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/peringatan_saturasi_oksigen_rendah/code.html" title="Peringatan SpO2 Rendah" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Peringatan SpO2 Rendah</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group assistant" id="assistant">
+    <div class="group-head">
+      <span class="material-symbols-outlined">smart_toy</span>
+      <h2>Tanya KidVital — Asisten AI <span class="count">2 layar</span></h2>
+    </div>
+    <p class="desc">Kadang orang tua ragu: gejala ini perlu buru-buru ke dokter, atau cukup dipantau dulu di rumah? Asisten AI ini hadir untuk menjawab keraguan itu lewat obrolan santai, dengan rujukan ke pedoman medis resmi. Tapi digarisbawahi jelas: ini alat bantu skrining awal, bukan pengganti diagnosis dokter.</p>
+    <div class="grid">
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem/tanya_kidvital_asisten_ai/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem/tanya_kidvital_asisten_ai/code.html" title="Tanya KidVital v1" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Tanya KidVital — Versi Awal</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem%202/tanya_kidvital_asisten_ai/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem%202/tanya_kidvital_asisten_ai/code.html" title="Tanya KidVital v2" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Tanya KidVital — Versi Revisi</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group kids" id="kids">
+    <div class="group-head">
+      <span class="material-symbols-outlined">child_care</span>
+      <h2>Kids Mode <span class="count">3 layar</span></h2>
+    </div>
+    <p class="desc">Edukasi kesehatan buat anak biasanya membosankan dan satu arah. KidVital mencoba membaliknya lewat Vito, si rubah maskot, yang mengajak anak menyelesaikan misi harian seperti minum air, cek suhu, atau latihan napas. Setiap misi yang selesai jadi lencana untuk anak — sekaligus data kepatuhan yang bisa dilihat dokter.</p>
+    <div class="grid">
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem%202/beranda_anak_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem%202/beranda_anak_kidvital/code.html" title="Beranda Anak" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Beranda Anak</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem%202/buku_pencapaian_vito_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem%202/buku_pencapaian_vito_kidvital/code.html" title="Buku Pencapaian Vito" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Buku Pencapaian Vito</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem%202/game_bantu_vito_memilih_makanan_sehat/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem%202/game_bantu_vito_memilih_makanan_sehat/code.html" title="Game Makanan Sehat" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Game: Pilih Makanan Sehat</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group doctor" id="doctor">
+    <div class="group-head">
+      <span class="material-symbols-outlined">stethoscope</span>
+      <h2>Doctor Mode <span class="count">2 layar</span></h2>
+    </div>
+    <p class="desc">Dokter anak butuh gambaran cepat, bukan tumpukan berkas. Dashboard ini merangkum data vital dan riwayat tiap pasien secara real-time, menyatukan informasi yang selama ini tersebar di buku KIA, ingatan orang tua, dan rekam medis rumah sakit yang berbeda-beda.</p>
+    <div class="grid">
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem%202/dashboard_dokter_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem%202/dashboard_dokter_kidvital/code.html" title="Dashboard Dokter" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Dashboard Dokter</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+      <a class="screen-card" target="_blank" href="stitch_kidvital_health_ecosystem%202/detail_pasien_kirana_kidvital/code.html">
+        <div class="phone"><div class="notch"></div><div class="screen"><div class="iframe-wrap"><iframe src="stitch_kidvital_health_ecosystem%202/detail_pasien_kirana_kidvital/code.html" title="Detail Pasien Kirana" loading="lazy" tabindex="-1"></iframe></div></div></div>
+        <div class="label">Detail Pasien — Kirana</div>
+        <div class="sub"><span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>Lihat prototipe</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="group" id="brand">
+    <div class="group-head">
+      <span class="material-symbols-outlined">palette</span>
+      <h2>Brand Assets</h2>
+    </div>
+    <p class="desc">Vito si rubah kecil adalah wajah ramah KidVital di mata anak-anak — muncul sejak onboarding, di mode anak, sampai jadi indikator kepatuhan. Referensi visual anak ini dipakai supaya kesan "hangat dan dekat" tetap terasa di setiap layar, bukan sekadar aplikasi medis yang kaku.</p>
+    <div class="grid">
+      <div class="screen-card no-demo">
+        <div class="phone"><div class="notch"></div><div class="screen"><img src="stitch_kidvital_health_ecosystem/vito_mascot/screen.png" alt="Vito Mascot"></div></div>
+        <div class="label">Vito the Fox</div>
+      </div>
+      <div class="screen-card no-demo">
+        <div class="phone"><div class="notch"></div><div class="screen"><img src="stitch_kidvital_health_ecosystem/close_up_portrait_of_a_cute_5_year_old_indonesian_girl_with_black_hair_smiling/screen.png" alt="Referensi Anak"></div></div>
+        <div class="label">Referensi Karakter Anak</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function scaleIframes(){
+    document.querySelectorAll('.iframe-wrap').forEach(wrap => {
+      const iframe = wrap.querySelector('iframe');
+      if(!iframe) return;
+      const scale = wrap.clientWidth / 375;
+      iframe.style.transform = 'scale(' + scale + ')';
+      iframe.style.height = (wrap.clientHeight / scale) + 'px';
+    });
+  }
+
+  function debounce(fn, delay){
+    let t;
+    return function(){ clearTimeout(t); t = setTimeout(fn, delay); };
+  }
+
+  window.addEventListener('load', scaleIframes);
+  window.addEventListener('resize', debounce(scaleIframes, 100));
+
+  const ro = new ResizeObserver(debounce(scaleIframes, 100));
+  document.querySelectorAll('.grid').forEach(el => ro.observe(el));
+
+  document.querySelectorAll('.material-symbols-outlined').forEach(el => {
+    el.setAttribute('aria-hidden', 'true');
+  });
+</script>
+
+<footer>
+  KidVital masih berupa konsep produk pada tahap riset &amp; prototipe. Rancangan layar di halaman ini dibuat dengan Google Stitch untuk menguji alur dan tampilan sebelum pengembangan sesungguhnya dimulai — klik layar mana pun untuk membuka prototipe interaktifnya.
+</footer>
+
+</body>
+</html>
