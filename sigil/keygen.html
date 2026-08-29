@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sigil — Buat Kunci</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#c9a227" stroke-width="1.6"/>
+      <path d="M8 12.5L10.7 15L16 9" stroke="#c9a227" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>
+      <span class="wordmark">Sigil</span>
+      <span class="tagline">Team signing tool</span>
+    </span>
+  </a>
+  <nav class="tools">
+    <a href="index.html">Beranda</a>
+    <a href="keygen.html" class="active">Buat Kunci</a>
+    <a href="sign.html">Sign</a>
+    <a href="sign-pdf.html">Sign PDF</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1 class="page-title">Buat pasangan kunci</h1>
+  <p class="lede">Lakukan ini sekali saja. Private key adalah identitasmu — jangan pernah dibagikan atau di-upload ke mana pun selain dipakai di halaman Sign.</p>
+
+  <div class="warn-box">
+    <strong>Penting:</strong> passphrase yang kamu isi di bawah mengunci private key-mu. Kalau lupa, key tidak bisa dipulihkan — kamu harus buat key baru.
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="name">Nama</label>
+      <input type="text" id="name" placeholder="Rizal Setya Perdana">
+    </div>
+    <div class="field">
+      <label for="email">Email (opsional, membantu identifikasi)</label>
+      <input type="email" id="email" placeholder="rizal@contoh.com">
+    </div>
+    <div class="field">
+      <label for="pass1">Passphrase</label>
+      <input type="password" id="pass1" placeholder="Minimal 10 karakter">
+    </div>
+    <div class="field">
+      <label for="pass2">Ulangi passphrase</label>
+      <input type="password" id="pass2" placeholder="Ketik ulang">
+      <div class="hint" id="passHint"></div>
+    </div>
+    <button class="primary" id="genBtn">Buat kunci</button>
+  </div>
+
+  <div class="output" id="out"></div>
+
+  <div class="card" id="resultCard" style="display:none;">
+    <h2 style="margin-top:0; font-family: var(--font-display); font-weight:600; font-size:1.2rem;">Private key</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem;">Simpan ini di password manager atau tempat aman. Jangan commit ke repo.</p>
+    <textarea class="mono" id="privOut" readonly></textarea>
+    <div class="row" style="margin-top:10px;">
+      <button class="secondary" id="dlPriv">Download private key</button>
+    </div>
+
+    <h2 style="font-family: var(--font-display); font-weight:600; font-size:1.2rem; margin-top:28px;">Public key</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem;">Ini yang di-share ke tim. Download lalu tambahkan ke folder <code>/keys</code> di repo, dan daftarkan di <code>keys/manifest.json</code>.</p>
+    <textarea class="mono" id="pubOut" readonly></textarea>
+    <div class="row" style="margin-top:10px;">
+      <button class="secondary" id="dlPub">Download public key</button>
+    </div>
+  </div>
+</div>
+
+<footer class="note">Kunci dibuat sepenuhnya di browser (Web Crypto + openpgp.js). Tidak ada data yang dikirim ke server.</footer>
+
+<script src="https://unpkg.com/openpgp@5/dist/openpgp.min.js"></script>
+<script src="js/seal.js"></script>
+<script>
+const pass1 = document.getElementById('pass1');
+const pass2 = document.getElementById('pass2');
+const passHint = document.getElementById('passHint');
+
+function checkPass() {
+  if (!pass2.value) { passHint.textContent = ''; return; }
+  passHint.textContent = pass1.value === pass2.value ? '' : 'Passphrase tidak cocok';
+  passHint.style.color = pass1.value === pass2.value ? 'var(--text-muted)' : 'var(--danger)';
+}
+pass1.addEventListener('input', checkPass);
+pass2.addEventListener('input', checkPass);
+
+function showOutput(kind, html) {
+  const out = document.getElementById('out');
+  out.className = `output show ${kind}`;
+  out.innerHTML = html;
+}
+
+function download(filename, text) {
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+let lastPriv = '', lastPub = '', lastSlug = 'key';
+
+document.getElementById('genBtn').addEventListener('click', async () => {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const p1 = pass1.value, p2 = pass2.value;
+
+  if (!name) { showOutput('error', `<div class="status-line">${sealSVG('error')} Isi nama dulu</div>`); return; }
+  if (p1.length < 10) { showOutput('error', `<div class="status-line">${sealSVG('error')} Passphrase minimal 10 karakter</div>`); return; }
+  if (p1 !== p2) { showOutput('error', `<div class="status-line">${sealSVG('error')} Passphrase tidak cocok</div>`); return; }
+
+  showOutput('pending', `<div class="status-line">${sealSVG('pending')} Membuat kunci…</div>`);
+  document.getElementById('genBtn').disabled = true;
+
+  try {
+    const userID = email ? { name, email } : { name };
+    const { privateKey, publicKey } = await openpgp.generateKey({
+      type: 'ecc',
+      curve: 'ed25519',
+      userIDs: [userID],
+      passphrase: p1,
+      format: 'armored'
+    });
+
+    lastPriv = privateKey;
+    lastPub = publicKey;
+    lastSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'key';
+
+    document.getElementById('privOut').value = privateKey;
+    document.getElementById('pubOut').value = publicKey;
+    document.getElementById('resultCard').style.display = 'block';
+
+    showOutput('success', `<div class="status-line">${sealSVG('success')} Kunci berhasil dibuat</div>Simpan private key-mu sekarang, dan daftarkan public key ke tim.`);
+  } catch (e) {
+    showOutput('error', `<div class="status-line">${sealSVG('error')} Gagal membuat kunci</div>${e.message}`);
+  } finally {
+    document.getElementById('genBtn').disabled = false;
+  }
+});
+
+document.getElementById('dlPriv').addEventListener('click', () => download(`${lastSlug}-private.asc`, lastPriv));
+document.getElementById('dlPub').addEventListener('click', () => download(`${lastSlug}-public.asc`, lastPub));
+</script>
+
+</body>
+</html>

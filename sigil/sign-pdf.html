@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sigil — Sign PDF</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .position-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .pos-opt {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  .pos-opt.selected { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .custom-xy { display: none; gap: 12px; margin-top: 12px; }
+  .custom-xy .field { flex: 1; margin-bottom: 0; }
+  .preview-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#c9a227" stroke-width="1.6"/>
+      <path d="M8 12.5L10.7 15L16 9" stroke="#c9a227" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>
+      <span class="wordmark">Sigil</span>
+      <span class="tagline">Team signing tool</span>
+    </span>
+  </a>
+  <nav class="tools">
+    <a href="index.html">Beranda</a>
+    <a href="keygen.html">Buat Kunci</a>
+    <a href="sign.html">Sign</a>
+    <a href="sign-pdf.html" class="active">Sign PDF</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1 class="page-title">Tempel tanda tangan ke PDF</h1>
+  <p class="lede">Menempelkan gambar tanda tanganmu ke PDF, ditambah tanda segel kecil (nama, fingerprint, waktu) di sampingnya, lalu menandatangani PDF hasilnya secara kriptografis.</p>
+
+  <div class="warn-box">
+    <strong>Ingat:</strong> gambar tanda tangan cuma tampilan visual, bukan bukti keaslian. Bukti sahnya tetap file <code>.sig.asc</code> yang dihasilkan di langkah terakhir — simpan dan bagikan bersama PDF-nya.
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="pdfFile">Berkas PDF</label>
+      <input type="file" id="pdfFile" accept="application/pdf">
+    </div>
+
+    <div class="field">
+      <label for="imgFile">Gambar tanda tangan (PNG, latar transparan disarankan)</label>
+      <input type="file" id="imgFile" accept="image/png">
+    </div>
+
+    <div class="field">
+      <label for="pageTarget">Halaman tujuan</label>
+      <select id="pageTarget">
+        <option value="last" selected>Halaman terakhir</option>
+        <option value="first">Halaman pertama</option>
+        <option value="custom">Nomor halaman kustom</option>
+      </select>
+      <input type="text" id="pageNum" placeholder="Contoh: 2" style="margin-top:8px; display:none;">
+    </div>
+
+    <div class="field">
+      <label>Posisi tanda tangan</label>
+      <div class="position-grid">
+        <div class="pos-opt" data-pos="top-left">Kiri atas</div>
+        <div class="pos-opt" data-pos="top-center">Tengah atas</div>
+        <div class="pos-opt" data-pos="top-right">Kanan atas</div>
+        <div class="pos-opt" data-pos="bottom-left">Kiri bawah</div>
+        <div class="pos-opt" data-pos="bottom-center">Tengah bawah</div>
+        <div class="pos-opt selected" data-pos="bottom-right">Kanan bawah</div>
+      </div>
+      <div class="row custom-xy" id="customXY">
+        <div class="field">
+          <label for="customX">X kustom (%)</label>
+          <input type="text" id="customX" value="70">
+        </div>
+        <div class="field">
+          <label for="customY">Y kustom (%)</label>
+          <input type="text" id="customY" value="10">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="imgWidth">Lebar tanda tangan (pt, tinggi menyesuaikan proporsi)</label>
+      <input type="text" id="imgWidth" value="140">
+    </div>
+
+    <div class="field">
+      <label for="privkey">Private key (armored .asc)</label>
+      <textarea class="mono" id="privkey" placeholder="-----BEGIN PGP PRIVATE KEY BLOCK-----"></textarea>
+      <div class="hint">Atau upload berkas .asc:</div>
+      <input type="file" id="privkeyFile" accept=".asc,.txt,.pgp" style="margin-top:6px;">
+    </div>
+    <div class="field">
+      <label for="pass">Passphrase</label>
+      <input type="password" id="pass" placeholder="Passphrase private key-mu">
+    </div>
+
+    <button class="primary" id="goBtn">Tempel &amp; Tanda Tangani</button>
+  </div>
+
+  <div class="output" id="out"></div>
+
+  <div class="card" id="resultCard" style="display:none;">
+    <h2 style="margin-top:0; font-family: var(--font-display); font-weight:600; font-size:1.2rem;">Hasil</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem;">Download keduanya dan bagikan bersamaan. Penerima verifikasi lewat halaman Verify.</p>
+    <div class="row">
+      <button class="secondary" id="dlPdf">Download PDF bertanda tangan</button>
+      <button class="secondary" id="dlSig">Download .sig</button>
+    </div>
+  </div>
+</div>
+
+<footer class="note">Stempel visual dibuat dengan pdf-lib di browser. Signature akhir dihitung dari isi PDF setelah ditempel, jadi kalau stempel diubah, verifikasi akan gagal.</footer>
+
+<script src="https://unpkg.com/pdf-lib@1/dist/pdf-lib.min.js"></script>
+<script src="https://unpkg.com/openpgp@5/dist/openpgp.min.js"></script>
+<script src="js/seal.js"></script>
+<script>
+let selectedPos = 'bottom-right';
+
+document.querySelectorAll('.pos-opt').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.pos-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPos = el.dataset.pos;
+    document.getElementById('customXY').style.display = 'none';
+  });
+});
+
+document.getElementById('pageTarget').addEventListener('change', (e) => {
+  document.getElementById('pageNum').style.display = e.target.value === 'custom' ? 'block' : 'none';
+});
+
+document.getElementById('privkeyFile').addEventListener('change', async (e) => {
+  const f = e.target.files[0];
+  if (f) document.getElementById('privkey').value = await f.text();
+});
+
+function showOutput(kind, html) {
+  const out = document.getElementById('out');
+  out.className = `output show ${kind}`;
+  out.innerHTML = html;
+}
+
+function download(filename, data, mime = 'text/plain') {
+  const blob = data instanceof Uint8Array ? new Blob([data], { type: mime }) : new Blob([data], { type: mime });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function computeImagePosition(pos, pageW, pageH, imgW, imgH, customX, customY) {
+  const margin = 36;
+  switch (pos) {
+    case 'top-left': return { x: margin, y: pageH - margin - imgH, textAbove: false };
+    case 'top-center': return { x: (pageW - imgW) / 2, y: pageH - margin - imgH, textAbove: false };
+    case 'top-right': return { x: pageW - margin - imgW, y: pageH - margin - imgH, textAbove: false };
+    case 'bottom-left': return { x: margin, y: margin, textAbove: true };
+    case 'bottom-center': return { x: (pageW - imgW) / 2, y: margin, textAbove: true };
+    case 'bottom-right': return { x: pageW - margin - imgW, y: margin, textAbove: true };
+    case 'custom': {
+      const x = Math.min(Math.max((customX / 100) * pageW, 0), pageW - imgW);
+      const y = Math.min(Math.max((customY / 100) * pageH, 0), pageH - imgH);
+      return { x, y, textAbove: y < pageH / 2 };
+    }
+    default: return { x: margin, y: margin, textAbove: true };
+  }
+}
+
+let lastPdfBytes = null, lastSig = '', lastBaseName = 'dokumen';
+
+document.getElementById('goBtn').addEventListener('click', async () => {
+  const pdfFile = document.getElementById('pdfFile').files[0];
+  const imgFile = document.getElementById('imgFile').files[0];
+  const armoredKey = document.getElementById('privkey').value.trim();
+  const passphrase = document.getElementById('pass').value;
+  const imgWidthPt = parseFloat(document.getElementById('imgWidth').value) || 140;
+
+  if (!pdfFile) { showOutput('error', `<div class="status-line">${sealSVG('error')} Pilih berkas PDF dulu</div>`); return; }
+  if (!imgFile) { showOutput('error', `<div class="status-line">${sealSVG('error')} Pilih gambar tanda tangan (PNG)</div>`); return; }
+  if (!armoredKey) { showOutput('error', `<div class="status-line">${sealSVG('error')} Isi atau upload private key</div>`); return; }
+  if (!passphrase) { showOutput('error', `<div class="status-line">${sealSVG('error')} Isi passphrase</div>`); return; }
+
+  showOutput('pending', `<div class="status-line">${sealSVG('pending')} Menempel &amp; menandatangani…</div>`);
+  document.getElementById('goBtn').disabled = true;
+
+  try {
+    lastBaseName = pdfFile.name.replace(/\.pdf$/i, '');
+
+    // 1. Decrypt private key first so we know signer name + fingerprint for the stamp
+    const privateKeyObj = await openpgp.decryptKey({
+      privateKey: await openpgp.readPrivateKey({ armoredKey }),
+      passphrase
+    });
+    const signerName = privateKeyObj.getUserIDs()[0] || 'Tidak diketahui';
+    const fingerprint = privateKeyObj.getFingerprint().toUpperCase();
+    const shortFp = fingerprint.slice(-16).match(/.{1,4}/g).join(' ');
+    const dateStr = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+
+    // 2. Load PDF + image, stamp it
+    const { PDFDocument, rgb, StandardFonts } = PDFLib;
+    const pdfBytes = new Uint8Array(await pdfFile.arrayBuffer());
+    const pdfDoc = await PDFDocument.load(pdfBytes);
+    const pngBytes = new Uint8Array(await imgFile.arrayBuffer());
+    const pngImage = await pdfDoc.embedPng(pngBytes);
+
+    const pages = pdfDoc.getPages();
+    const pageTargetSel = document.getElementById('pageTarget').value;
+    let pageIndex = pages.length - 1;
+    if (pageTargetSel === 'first') pageIndex = 0;
+    if (pageTargetSel === 'custom') {
+      const n = parseInt(document.getElementById('pageNum').value, 10);
+      if (n >= 1 && n <= pages.length) pageIndex = n - 1;
+    }
+    const page = pages[pageIndex];
+    const { width: pageW, height: pageH } = page.getSize();
+
+    const aspect = pngImage.height / pngImage.width;
+    const imgW = imgWidthPt;
+    const imgH = imgWidthPt * aspect;
+
+    const customX = parseFloat(document.getElementById('customX').value) || 70;
+    const customY = parseFloat(document.getElementById('customY').value) || 10;
+    const { x, y, textAbove } = computeImagePosition(selectedPos, pageW, pageH, imgW, imgH, customX, customY);
+
+    page.drawImage(pngImage, { x, y, width: imgW, height: imgH });
+
+    // 3. Seal mark + signer info next to the signature image
+    const sealR = 8;
+    const sealCx = x + sealR + 2;
+    const blockGap = 6;
+    const sealCy = textAbove ? y + imgH + blockGap + sealR : y - blockGap - sealR * 2;
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const gold = rgb(0.79, 0.64, 0.15);
+    const muted = rgb(0.6, 0.63, 0.7);
+
+    page.drawEllipse({
+      x: sealCx, y: sealCy, xScale: sealR, yScale: sealR,
+      borderColor: gold, borderWidth: 1, color: undefined
+    });
+    page.drawSvgPath('M -2.5 0.2 L -0.3 2.3 L 3 -2', {
+      x: sealCx, y: sealCy, scale: 1.15, borderColor: gold, borderWidth: 1.2
+    });
+
+    const textX = sealCx + sealR + 6;
+    const lineH = 8.5;
+    const textTopY = sealCy + sealR - 3;
+    page.drawText('Ditandatangani secara digital', { x: textX, y: textTopY, size: 6.5, font, color: muted });
+    page.drawText(`${signerName} - ${dateStr}`, { x: textX, y: textTopY - lineH, size: 6.5, font, color: muted });
+    page.drawText(`Fingerprint: ${shortFp}`, { x: textX, y: textTopY - lineH * 2, size: 6.5, font, color: muted });
+
+    const stampedBytes = await pdfDoc.save();
+
+    // 4. Cryptographically sign the *stamped* PDF (detached), so verification covers the visible stamp too
+    const message = await openpgp.createMessage({ binary: stampedBytes });
+    const detachedSignature = await openpgp.sign({
+      message,
+      signingKeys: privateKeyObj,
+      detached: true,
+      format: 'armored'
+    });
+
+    lastPdfBytes = stampedBytes;
+    lastSig = detachedSignature;
+    document.getElementById('resultCard').style.display = 'block';
+
+    showOutput('success', `<div class="status-line">${sealSVG('success')} Selesai</div>PDF sudah ditempel tanda tangan dan ditandatangani secara kriptografis oleh <strong>${signerName}</strong>.`);
+  } catch (e) {
+    let msg = e.message || 'Terjadi kesalahan';
+    if (msg.toLowerCase().includes('passphrase') || msg.toLowerCase().includes('decrypt')) {
+      msg = 'Passphrase salah, atau private key tidak valid.';
+    }
+    showOutput('error', `<div class="status-line">${sealSVG('error')} Gagal memproses</div>${msg}`);
+  } finally {
+    document.getElementById('goBtn').disabled = false;
+  }
+});
+
+document.getElementById('dlPdf').addEventListener('click', () => {
+  if (lastPdfBytes) download(`${lastBaseName}-signed.pdf`, lastPdfBytes, 'application/pdf');
+});
+document.getElementById('dlSig').addEventListener('click', () => {
+  if (lastSig) download(`${lastBaseName}-signed.pdf.sig.asc`, lastSig);
+});
+</script>
+
+</body>
+</html>

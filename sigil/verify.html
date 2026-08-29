@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sigil — Verify</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#c9a227" stroke-width="1.6"/>
+      <path d="M8 12.5L10.7 15L16 9" stroke="#c9a227" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>
+      <span class="wordmark">Sigil</span>
+      <span class="tagline">Team signing tool</span>
+    </span>
+  </a>
+  <nav class="tools">
+    <a href="index.html">Beranda</a>
+    <a href="keygen.html">Buat Kunci</a>
+    <a href="sign.html">Sign</a>
+    <a href="sign-pdf.html">Sign PDF</a>
+    <a href="verify.html" class="active">Verify</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1 class="page-title">Verifikasi berkas</h1>
+  <p class="lede">Cek apakah berkas benar-benar ditandatangani oleh pemilik key yang diklaim, dan belum diubah sejak ditandatangani.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="file">Berkas asli</label>
+      <input type="file" id="file">
+    </div>
+    <div class="field">
+      <label for="sigfile">Berkas signature (.sig.asc)</label>
+      <input type="file" id="sigfile" accept=".asc,.sig,.txt">
+    </div>
+    <div class="field">
+      <label for="keySelect">Public key penandatangan</label>
+      <select id="keySelect">
+        <option value="">Memuat daftar key…</option>
+        <option value="__paste__">Tempel manual…</option>
+      </select>
+    </div>
+    <div class="field" id="pasteField" style="display:none;">
+      <label for="pubkey">Public key (armored .asc)</label>
+      <textarea class="mono" id="pubkey" placeholder="-----BEGIN PGP PUBLIC KEY BLOCK-----"></textarea>
+    </div>
+    <button class="primary" id="verifyBtn">Verifikasi</button>
+  </div>
+
+  <div class="output" id="out"></div>
+</div>
+
+<footer class="note">Verifikasi memeriksa integritas berkas (tidak berubah) dan identitas penanda tangan (cocok dengan public key). Ini bukan bukti hukum tersertifikasi.</footer>
+
+<script src="https://unpkg.com/openpgp@5/dist/openpgp.min.js"></script>
+<script src="js/seal.js"></script>
+<script>
+const keySelect = document.getElementById('keySelect');
+const pasteField = document.getElementById('pasteField');
+let manifest = [];
+
+fetch('keys/manifest.json')
+  .then(r => r.json())
+  .then(list => {
+    manifest = list;
+    const opts = list.map(k => `<option value="${k.file}">${k.name} (${k.fingerprint.slice(-8)})</option>`).join('');
+    keySelect.innerHTML = opts + '<option value="__paste__">Tempel manual…</option>';
+  })
+  .catch(() => {
+    keySelect.innerHTML = '<option value="__paste__" selected>Tempel manual…</option>';
+    pasteField.style.display = 'block';
+  });
+
+keySelect.addEventListener('change', () => {
+  pasteField.style.display = keySelect.value === '__paste__' ? 'block' : 'none';
+});
+
+function showOutput(kind, html) {
+  const out = document.getElementById('out');
+  out.className = `output show ${kind}`;
+  out.innerHTML = html;
+}
+
+document.getElementById('verifyBtn').addEventListener('click', async () => {
+  const fileInput = document.getElementById('file');
+  const sigInput = document.getElementById('sigfile');
+
+  if (!fileInput.files[0]) { showOutput('error', `<div class="status-line">${sealSVG('error')} Pilih berkas asli dulu</div>`); return; }
+  if (!sigInput.files[0]) { showOutput('error', `<div class="status-line">${sealSVG('error')} Pilih berkas signature</div>`); return; }
+
+  showOutput('pending', `<div class="status-line">${sealSVG('pending')} Memverifikasi…</div>`);
+  document.getElementById('verifyBtn').disabled = true;
+
+  try {
+    let armoredKey;
+    if (keySelect.value === '__paste__') {
+      armoredKey = document.getElementById('pubkey').value.trim();
+      if (!armoredKey) throw new Error('Tempel public key dulu, atau pilih dari daftar.');
+    } else {
+      armoredKey = await (await fetch('keys/' + keySelect.value)).text();
+    }
+
+    const file = fileInput.files[0];
+    const buf = new Uint8Array(await file.arrayBuffer());
+    const sigText = await sigInput.files[0].text();
+
+    const publicKeyObj = await openpgp.readKey({ armoredKey });
+    const message = await openpgp.createMessage({ binary: buf });
+    const signature = await openpgp.readSignature({ armoredSignature: sigText });
+
+    const result = await openpgp.verify({
+      message,
+      signature,
+      verificationKeys: publicKeyObj
+    });
+
+    const sigResult = result.signatures[0];
+    await sigResult.verified; // throws if invalid
+
+    const signerName = publicKeyObj.getUserIDs()[0] || 'penandatangan';
+    showOutput('success', `<div class="status-line">${sealSVG('success')} Signature valid</div>Berkas "${file.name}" ditandatangani oleh <strong>${signerName}</strong> dan tidak berubah sejak ditandatangani.`);
+  } catch (e) {
+    showOutput('error', `<div class="status-line">${sealSVG('error')} Signature tidak valid</div>Berkas mungkin sudah diubah, signature tidak cocok, atau public key salah. (${e.message})`);
+  } finally {
+    document.getElementById('verifyBtn').disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>

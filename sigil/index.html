@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sigil — Tanda tangan digital tim</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#c9a227" stroke-width="1.6"/>
+      <path d="M8 12.5L10.7 15L16 9" stroke="#c9a227" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>
+      <span class="wordmark">Sigil</span>
+      <span class="tagline">Team signing tool</span>
+    </span>
+  </a>
+  <nav class="tools">
+    <a href="index.html" class="active">Beranda</a>
+    <a href="keygen.html">Buat Kunci</a>
+    <a href="sign.html">Sign</a>
+    <a href="sign-pdf.html">Sign PDF</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1 class="page-title">Tanda tangan digital untuk tim</h1>
+  <p class="lede">Sigil menandatangani dan memverifikasi berkas pakai OpenPGP, sepenuhnya di browser kamu. Private key tidak pernah dikirim ke server mana pun — semuanya berjalan lokal di perangkatmu.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0; font-family: var(--font-display); font-weight:600;">Alur kerja</h2>
+    <ol style="color: var(--text-muted); padding-left: 20px;">
+      <li><strong style="color:var(--text)">Buat Kunci</strong> — sekali saja per orang. Simpan private key baik-baik, publish public key ke folder <code>/keys</code> di repo ini.</li>
+      <li><strong style="color:var(--text)">Sign</strong> — upload berkas + private key kamu, dapatkan berkas signature (<code>.sig</code>).</li>
+      <li><strong style="color:var(--text)">Verify</strong> — siapa pun di tim bisa cek keaslian berkas + signature terhadap public key yang terdaftar.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0; font-family: var(--font-display); font-weight:600;">Public key terdaftar</h2>
+    <p style="color: var(--text-muted); font-size: 0.88rem; margin-top:-8px;">Daftar ini dibaca dari <code>keys/manifest.json</code>. Tambahkan entri baru di sana setiap ada anggota baru.</p>
+    <ul class="keylist" id="keylist">
+      <li style="color: var(--text-muted); font-size: 0.85rem;">Memuat…</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="note">Sigil tidak menerbitkan sertifikat legal / tidak menggantikan tanda tangan elektronik tersertifikasi (PSrE). Untuk penggunaan internal tim saja.</footer>
+
+<script>
+fetch('keys/manifest.json')
+  .then(r => r.json())
+  .then(list => {
+    const el = document.getElementById('keylist');
+    if (!list.length) {
+      el.innerHTML = '<li style="color: var(--text-muted); font-size: 0.85rem;">Belum ada key terdaftar. Jadi yang pertama lewat halaman "Buat Kunci".</li>';
+      return;
+    }
+    el.innerHTML = list.map(k => `
+      <li>
+        <div>
+          <div>${k.name}</div>
+          <div class="fp">${k.fingerprint}</div>
+        </div>
+        <a class="badge" href="keys/${k.file}" download>public key</a>
+      </li>
+    `).join('');
+  })
+  .catch(() => {
+    document.getElementById('keylist').innerHTML =
+      '<li style="color: var(--text-muted); font-size: 0.85rem;">Belum ada key terdaftar. Jadi yang pertama lewat halaman "Buat Kunci".</li>';
+  });
+</script>
+
+</body>
+</html>

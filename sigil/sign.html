@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sigil — Sign</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="#c9a227" stroke-width="1.6"/>
+      <path d="M8 12.5L10.7 15L16 9" stroke="#c9a227" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>
+      <span class="wordmark">Sigil</span>
+      <span class="tagline">Team signing tool</span>
+    </span>
+  </a>
+  <nav class="tools">
+    <a href="index.html">Beranda</a>
+    <a href="keygen.html">Buat Kunci</a>
+    <a href="sign.html" class="active">Sign</a>
+    <a href="sign-pdf.html">Sign PDF</a>
+    <a href="verify.html">Verify</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1 class="page-title">Tanda tangani berkas</h1>
+  <p class="lede">Upload berkas dan private key-mu. Signature dibuat di browser — berkas dan key-mu tidak pernah diunggah ke server mana pun.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="file">Berkas yang akan ditandatangani</label>
+      <input type="file" id="file">
+    </div>
+    <div class="field">
+      <label for="privkey">Private key (armored .asc)</label>
+      <textarea class="mono" id="privkey" placeholder="-----BEGIN PGP PRIVATE KEY BLOCK-----"></textarea>
+      <div class="hint">Atau upload berkas .asc:</div>
+      <input type="file" id="privkeyFile" accept=".asc,.txt,.pgp" style="margin-top:6px;">
+    </div>
+    <div class="field">
+      <label for="pass">Passphrase</label>
+      <input type="password" id="pass" placeholder="Passphrase private key-mu">
+    </div>
+    <button class="primary" id="signBtn">Sign berkas</button>
+  </div>
+
+  <div class="output" id="out"></div>
+
+  <div class="card" id="resultCard" style="display:none;">
+    <h2 style="margin-top:0; font-family: var(--font-display); font-weight:600; font-size:1.2rem;">Signature</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem;">Bagikan berkas asli bersama file signature ini. Penerima butuh keduanya (+ public key-mu) untuk verifikasi.</p>
+    <textarea class="mono" id="sigOut" readonly></textarea>
+    <div class="row" style="margin-top:10px;">
+      <button class="secondary" id="dlSig">Download .sig</button>
+    </div>
+  </div>
+</div>
+
+<footer class="note">Signature memakai format OpenPGP detached signature — bisa diverifikasi lewat halaman Verify atau GPG biasa.</footer>
+
+<script src="https://unpkg.com/openpgp@5/dist/openpgp.min.js"></script>
+<script src="js/seal.js"></script>
+<script>
+document.getElementById('privkeyFile').addEventListener('change', async (e) => {
+  const f = e.target.files[0];
+  if (f) document.getElementById('privkey').value = await f.text();
+});
+
+function showOutput(kind, html) {
+  const out = document.getElementById('out');
+  out.className = `output show ${kind}`;
+  out.innerHTML = html;
+}
+
+function download(filename, text) {
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+let lastSig = '', lastName = 'file';
+
+document.getElementById('signBtn').addEventListener('click', async () => {
+  const fileInput = document.getElementById('file');
+  const armoredKey = document.getElementById('privkey').value.trim();
+  const passphrase = document.getElementById('pass').value;
+
+  if (!fileInput.files[0]) { showOutput('error', `<div class="status-line">${sealSVG('error')} Pilih berkas dulu</div>`); return; }
+  if (!armoredKey) { showOutput('error', `<div class="status-line">${sealSVG('error')} Isi atau upload private key</div>`); return; }
+  if (!passphrase) { showOutput('error', `<div class="status-line">${sealSVG('error')} Isi passphrase</div>`); return; }
+
+  showOutput('pending', `<div class="status-line">${sealSVG('pending')} Menandatangani…</div>`);
+  document.getElementById('signBtn').disabled = true;
+
+  try {
+    const file = fileInput.files[0];
+    lastName = file.name;
+    const buf = new Uint8Array(await file.arrayBuffer());
+
+    const privateKeyObj = await openpgp.decryptKey({
+      privateKey: await openpgp.readPrivateKey({ armoredKey }),
+      passphrase
+    });
+
+    const message = await openpgp.createMessage({ binary: buf });
+    const detachedSignature = await openpgp.sign({
+      message,
+      signingKeys: privateKeyObj,
+      detached: true,
+      format: 'armored'
+    });
+
+    lastSig = detachedSignature;
+    document.getElementById('sigOut').value = detachedSignature;
+    document.getElementById('resultCard').style.display = 'block';
+
+    showOutput('success', `<div class="status-line">${sealSVG('success')} Berhasil ditandatangani</div>Berkas "${file.name}" sudah punya signature. Download dan bagikan bersama berkas aslinya.`);
+  } catch (e) {
+    let msg = e.message || 'Terjadi kesalahan';
+    if (msg.toLowerCase().includes('passphrase') || msg.toLowerCase().includes('decrypt')) {
+      msg = 'Passphrase salah, atau private key tidak valid.';
+    }
+    showOutput('error', `<div class="status-line">${sealSVG('error')} Gagal menandatangani</div>${msg}`);
+  } finally {
+    document.getElementById('signBtn').disabled = false;
+  }
+});
+
+document.getElementById('dlSig').addEventListener('click', () => download(`${lastName}.sig.asc`, lastSig));
+</script>
+
+</body>
+</html>
