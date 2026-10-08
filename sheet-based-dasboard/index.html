@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panduan: Dashboard dari Google Sheets</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f5f4f0;
+  --card: #ffffff;
+  --ink: #18181b;
+  --ink2: #52525b;
+  --ink3: #a1a1aa;
+  --rule: #e4e4e7;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --green-border: #bbf7d0;
+  --blue: #2563eb;
+  --blue-bg: #eff6ff;
+  --blue-border: #bfdbfe;
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+  --code-bg: #1c1c27;
+  --step-size: 32px;
+  box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  padding: env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);
+}
+
+.wrap { max-width: 680px; margin: 0 auto; padding: 36px 20px 72px; }
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 40px 0 32px;
+  margin-bottom: 32px;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.hero p {
+  font-size: 16px;
+  color: var(--ink2);
+  max-width: 50ch;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* ── Flow diagram ── */
+.flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin: 24px 0 8px;
+}
+.flow-item {
+  text-align: center;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1.5px solid var(--rule);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+  min-width: 90px;
+}
+.flow-item.active {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.flow-arrow {
+  color: var(--ink3);
+  padding: 0 6px;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.flow-label {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink3);
+  margin-bottom: 28px;
+}
+
+/* ── Section ── */
+.section {
+  margin-bottom: 32px;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.card-head {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.card-num {
+  width: var(--step-size); height: var(--step-size);
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.card-head-text h2 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.card-head-text p {
+  font-size: 12.5px;
+  color: var(--ink3);
+  margin-top: 2px;
+}
+.card-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Steps inside card ── */
+.steps { display: flex; flex-direction: column; gap: 12px; }
+.step {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+.step-dot {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  border: 1.5px solid var(--green-border);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-text { font-size: 14.5px; line-height: 1.65; }
+.step-text strong { color: var(--ink); }
+
+/* ── Callouts ── */
+.note {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.note-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+.note.tip   { background: var(--blue-bg);  border: 1px solid var(--blue-border); }
+.note.warn  { background: var(--amber-bg); border: 1px solid var(--amber-border); }
+.note.ok    { background: var(--green-bg); border: 1px solid var(--green-border); }
+
+/* ── Prompt copy box ── */
+.prompt-wrap { position: relative; }
+.prompt-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.prompt-label::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.prompt-box {
+  background: #fafaf8;
+  border: 1.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 14px 50px 14px 16px;
+  font-size: 14px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  position: relative;
+  color: var(--ink);
+}
+.copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: var(--rule);
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.copy-btn:hover { background: var(--ink); color: #fff; }
+.copy-btn.copied { background: var(--green); color: #fff; }
+
+/* ── URL anatomy ── */
+.url-box {
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: #cdd6f4;
+  overflow-x: auto;
+}
+.u-gray   { color: #6c7086; }
+.u-green  { color: #a6e3a1; }
+.u-yellow { color: #f9e2af; }
+.u-blue   { color: #89b4fa; }
+.u-red    { color: #f38ba8; }
+
+/* ── Checklist ── */
+.checklist { display: flex; flex-direction: column; gap: 0; }
+.cl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+.cl-item:last-child { border-bottom: none; }
+.cl-box {
+  width: 20px; height: 20px;
+  border: 2px solid var(--rule);
+  border-radius: 5px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 12px; font-weight: 700;
+}
+.cl-item { cursor: pointer; user-select: none; }
+.cl-item.done .cl-box { background: var(--green); border-color: var(--green); }
+.cl-item.done .cl-box::after { content: '✓'; }
+.cl-item.done span { color: var(--ink3); text-decoration: line-through; }
+
+/* ── Error table ── */
+.err-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.err-table th {
+  background: #f4f4f5;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  border-bottom: 2px solid var(--rule);
+}
+.err-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.err-table tr:last-child td { border-bottom: none; }
+.err-table td:first-child { font-weight: 600; color: var(--amber); font-size: 13px; }
+
+/* ── Section divider ── */
+.divider {
+  text-align: center;
+  color: var(--ink3);
+  font-size: 20px;
+  letter-spacing: 4px;
+  margin: 4px 0 8px;
+}
+
+/* ── Glossary ── */
+.gloss { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 14px; }
+.gloss dt { font-weight: 700; color: var(--ink); }
+.gloss dd { color: var(--ink2); }
+
+/* ── Footer ── */
+.footer {
+  margin-top: 48px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink3);
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+}
+
+@media (max-width: 480px) {
+  .flow-item { min-width: 72px; font-size: 12px; padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">Panduan Praktis</div>
+  <h1>Dashboard dari Google Sheets<br>menggunakan Claude</h1>
+  <p>Tidak perlu bisa coding. Cukup punya data di Google Sheets, lalu ikuti 4 langkah ini — hasilnya halaman dashboard berisi ringkasan, tabel, dan grafik yang bisa Anda bagikan lewat link.</p>
+</div>
+
+<!-- Flow -->
+<div class="flow">
+  <div class="flow-item">Google<br>Sheets</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item active">Publish<br>ke Web</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">Claude membuat<br>dashboard</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">Dashboard<br>siap dibagi</div>
+</div>
+<div class="flow-label">Total waktu: sekitar 15–30 menit</div>
+
+<!-- ─── Istilah ─── -->
+<div class="section">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num" style="background:var(--blue)">i</div>
+    <div class="card-head-text">
+      <h2>Beberapa istilah yang akan Anda temui</h2>
+      <p>Tidak perlu dihafal — kembali ke sini kapan saja</p>
+    </div>
+  </div>
+  <div class="card-body">
+    <dl class="gloss">
+      <dt>Dashboard</dt><dd>Halaman yang merangkum data dalam bentuk angka ringkas, tabel, dan grafik supaya mudah dibaca sekilas.</dd>
+      <dt>Link / URL</dt><dd>Alamat sebuah halaman di internet, misalnya <em>https://docs.google.com/…</em></dd>
+      <dt>Publish to web</dt><dd>Fitur Google Sheets untuk membuat versi "baca saja" dari data Anda yang bisa diakses lewat link.</dd>
+      <dt>TSV</dt><dd>Salah satu format data teks. Anda tidak perlu memahaminya — cukup pilih format ini saat diminta.</dd>
+      <dt>Prompt</dt><dd>Pesan atau perintah yang Anda ketik ke Claude.</dd>
+      <dt>Artifact</dt><dd>Halaman web yang dibuat Claude dan bisa dibuka lewat link sendiri.</dd>
+    </dl>
+  </div>
+</div>
+</div>
+
+
+<!-- ─── LANGKAH 1 ─── -->
+<div class="section">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num">1</div>
+    <div class="card-head-text">
+      <h2>Publish Google Sheets ke Web</h2>
+      <p>Membuat link khusus agar data Anda bisa dibaca oleh dashboard</p>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot">a</div>
+        <div class="step-text">Buka Google Sheet Anda, klik menu <strong>File → Share → Publish to web</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-dot">b</div>
+        <div class="step-text">Pilih <strong>sheet/tab</strong> yang berisi data (bukan "Entire Document"), lalu ganti pilihan format (biasanya tertulis "Web page") menjadi <strong>Tab-separated values (.tsv)</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-dot">c</div>
+        <div class="step-text">Klik <strong>Publish</strong> → OK. Salin link yang muncul — inilah "alamat" data Anda. Simpan dulu di catatan, nanti dipakai di Langkah 2.</div>
+      </div>
+      <div class="step">
+        <div class="step-dot">d</div>
+        <div class="step-text"><strong>Cek dulu:</strong> tempel link tersebut di tab browser baru. Jika muncul halaman polos berisi tulisan data Anda (tanpa tampilan tabel seperti di Sheets), berarti berhasil. Di beberapa browser, file data justru langsung terunduh — itu juga tanda berhasil.</div>
+      </div>
+    </div>
+    <div class="note warn">
+      <span class="note-icon">⚠️</span>
+      <span>Siapa pun yang punya link ini bisa melihat data Anda. Jangan publish data rahasia atau data pribadi orang lain, seperti NIK, nomor HP, alamat, atau nilai mahasiswa.</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider">↓</div>
+
+<!-- ─── LANGKAH 2 ─── -->
+<div class="section">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num">2</div>
+    <div class="card-head-text">
+      <h2>Minta Claude membuat dashboard</h2>
+      <p>Salin pesan di bawah, lengkapi bagian yang ditandai, lalu kirim ke Claude</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="note tip">
+      <span class="note-icon">💡</span>
+      <span>Klik tombol <strong>Salin</strong>, tempel di kolom chat Claude, lalu ganti teks dalam kurung siku <em>[…]</em>: isi dengan link dari Langkah 1, dan 3–5 baris pertama data Anda (termasuk baris judul kolom) yang disalin langsung dari Google Sheets. Contoh baris ini membantu Claude memahami isi data Anda.</span>
+    </div>
+
+    <div>
+      <div class="prompt-label">Prompt 1 — Buat dashboard pertama</div>
+      <div class="prompt-wrap">
+        <div class="prompt-box" id="p1">Saya punya data di Google Sheets yang sudah dipublish ke web. Ini link-nya (format TSV):
+[TEMPEL LINK DARI LANGKAH 1 DI SINI]
+
+Ini beberapa baris pertama datanya:
+[TEMPEL 3–5 BARIS DATA DI SINI]
+
+Saya bukan orang IT. Tolong buatkan dashboard berupa halaman web (HTML) yang:
+- Mengambil data dari URL tersebut otomatis saat halaman dibuka
+- Menampilkan ringkasan singkat (jumlah data, dll)
+- Menampilkan tabel lengkap dengan fitur pencarian
+- Tampilan rapi dan profesional
+- Ada tombol Reload untuk memperbarui data
+
+Publish sebagai artifact, lalu jelaskan cara memakainya dengan bahasa sederhana.</div>
+        <button class="copy-btn" onclick="copyText('p1',this)">Salin</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="prompt-label">Prompt 2 — Jika dashboard muncul tapi datanya tidak tampil</div>
+      <div class="prompt-wrap">
+        <div class="prompt-box" id="p2">Dashboard-nya muncul, tapi data dari Google Sheets tidak tampil (kemungkinan error CORS). Tolong perbaiki dengan cara:
+1. Coba ambil data langsung dari link dulu
+2. Jika gagal, coba lewat proxy allorigins.win, lalu corsproxy.io
+3. Jika semua gagal, simpan salinan data langsung di dalam dashboard sebagai cadangan agar tetap bisa tampil
+4. Beri tanda kecil: hijau jika data terbaru dari Sheets, kuning jika memakai data cadangan</div>
+        <button class="copy-btn" onclick="copyText('p2',this)">Salin</button>
+      </div>
+    </div>
+
+    <div class="note warn">
+      <span class="note-icon">⚠️</span>
+      <span>Cara nomor 2 di pesan ini mengirim data Anda lewat layanan milik pihak lain (allorigins.win, corsproxy.io). Tidak masalah untuk data yang memang boleh dilihat umum, tapi jangan pakai untuk data pribadi.</span>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div class="divider">↓</div>
+
+<!-- ─── LANGKAH 3 ─── -->
+<div class="section">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num">3</div>
+    <div class="card-head-text">
+      <h2>Tambah fitur sesuai kebutuhan</h2>
+      <p>Tambahkan satu fitur per pesan</p>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="note tip">
+      <span class="note-icon">💡</span>
+      <span>Minta satu hal per pesan — hasilnya lebih baik daripada meminta banyak sekaligus. Ganti <em>[NAMA KOLOM]</em> dengan judul kolom yang persis sama seperti di Google Sheets Anda, misalnya "Program Studi" atau "Nilai Akhir".</span>
+    </div>
+
+    <div>
+      <div class="prompt-label">Tambah grafik</div>
+      <div class="prompt-wrap">
+        <div class="prompt-box" id="p3">Tambahkan grafik batang yang membandingkan nilai kolom "[NAMA KOLOM]" untuk setiap "[NAMA KOLOM LAIN]".</div>
+        <button class="copy-btn" onclick="copyText('p3',this)">Salin</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="prompt-label">Tambah filter dropdown</div>
+      <div class="prompt-wrap">
+        <div class="prompt-box" id="p4">Tambahkan filter dropdown untuk kolom "[NAMA KOLOM]" agar saya bisa menampilkan hanya data dari satu kategori.</div>
+        <button class="copy-btn" onclick="copyText('p4',this)">Salin</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="prompt-label">Beri warna pada nilai tertentu</div>
+      <div class="prompt-wrap">
+        <div class="prompt-box" id="p5">Di kolom "[NAMA KOLOM]", warnai teks: hijau jika nilainya "Ya" atau di atas 80%, merah jika "Tidak" atau di bawah 60%, abu-abu untuk yang lain.</div>
+        <button class="copy-btn" onclick="copyText('p5',this)">Salin</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="prompt-label">Ubah tampilan</div>
+      <div class="prompt-wrap">
+        <div class="prompt-box" id="p6">Ubah tampilan dashboard menjadi berlatar terang, dengan huruf yang lebih besar dan mudah dibaca saat ditampilkan di proyektor.</div>
+        <button class="copy-btn" onclick="copyText('p6',this)">Salin</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div class="divider">↓</div>
+
+<!-- ─── LANGKAH 4 ─── -->
+<div class="section">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num">4</div>
+    <div class="card-head-text">
+      <h2>Publish dan bagikan</h2>
+      <p>Dashboard Anda jadi link yang bisa dibuka orang lain</p>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot">a</div>
+        <div class="step-text">Jika Claude belum memberikan link, kirim pesan: <strong>"Publish sebagai artifact."</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-dot">b</div>
+        <div class="step-text">Salin link yang muncul — formatnya: <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#f4f4f5;padding:1px 5px;border-radius:4px">claude.ai/artifact/xxxxx</code></div>
+      </div>
+      <div class="step">
+        <div class="step-dot">c</div>
+        <div class="step-text">Awalnya dashboard hanya bisa dibuka oleh Anda sendiri. Klik tombol <strong>Share</strong> dan ubah aksesnya agar orang lain bisa membukanya. Untuk memastikan, buka link di jendela penyamaran/<em>incognito</em> (tekan <strong>Ctrl+Shift+N</strong> di Chrome, atau <strong>Cmd+Shift+N</strong> di Mac).</div>
+      </div>
+    </div>
+    <div class="note ok">
+      <span class="note-icon">✅</span>
+      <span>Jika data di Sheets diupdate, cukup buka dashboard dan klik <strong>Reload</strong> — data terbaru akan diambil. Perubahan di Sheets bisa butuh beberapa menit sebelum muncul di URL yang dipublish.</span>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ─── Bonus: Memahami URL ─── -->
+<div class="section" style="margin-top:40px">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num" style="background:var(--ink3)">+</div>
+    <div class="card-head-text">
+      <h2>Bonus: Membaca isi link data</h2>
+      <p>Opsional — hanya jika ingin memahami lebih dalam</p>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="url-box">
+<span class="u-gray">https://docs.google.com/spreadsheets/d/e/</span><span class="u-yellow">2PACX-1vT...</span><span class="u-gray">/pub?</span><span class="u-blue">gid=1007659113</span><span class="u-gray">&single=true&output=</span><span class="u-green">tsv</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13.5px">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline">
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#fef9c3;color:#92400e;padding:2px 6px;border-radius:4px;white-space:nowrap">2PACX-1vT…</code>
+        <span style="color:var(--ink2)">ID unik spreadsheet Anda yang dipublish (otomatis, tidak perlu diubah)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline">
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#dbeafe;color:#1e40af;padding:2px 6px;border-radius:4px;white-space:nowrap">gid=1007659113</code>
+        <span style="color:var(--ink2)">Nomor tab (lembar) di spreadsheet. Tiap tab punya nomor berbeda — terlihat di link bagian atas browser saat Anda klik tab tersebut</span>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline">
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#dcfce7;color:#166534;padding:2px 6px;border-radius:4px;white-space:nowrap">output=tsv</code>
+        <span style="color:var(--ink2)">Format data. Pada TSV, antarkolom dipisah jarak tab, sehingga angka desimal berkoma seperti 3,75 tidak terbaca sebagai dua kolom</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ─── Checklist ─── -->
+<div class="section" style="margin-top:40px">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num" style="background:var(--green)">✓</div>
+    <div class="card-head-text">
+      <h2>Checklist sebelum presentasi</h2>
+      <p>Centang satu per satu</p>
+    </div>
+  </div>
+  <div class="card-body" style="padding:12px 20px">
+    <div class="checklist">
+      <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0"><div class="cl-box"></div><span>Link dari Langkah 1 bisa dibuka di browser dan menampilkan data</span></div>
+      <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0"><div class="cl-box"></div><span>Dashboard menampilkan semua kolom dan baris dengan benar</span></div>
+      <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0"><div class="cl-box"></div><span>Tombol Reload berfungsi</span></div>
+      <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0"><div class="cl-box"></div><span>Tidak ada pesan error di dashboard</span></div>
+      <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0"><div class="cl-box"></div><span>Link artifact sudah dibagikan dan bisa dibuka di jendela incognito</span></div>
+      <div class="cl-item" role="checkbox" aria-checked="false" tabindex="0"><div class="cl-box"></div><span>Dashboard terlihat rapi di layar laptop maupun HP</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ─── Troubleshoot ─── -->
+<div class="section" style="margin-top:40px">
+<div class="card">
+  <div class="card-head">
+    <div class="card-num" style="background:var(--amber)">?</div>
+    <div class="card-head-text">
+      <h2>Masalah umum &amp; solusinya</h2>
+    </div>
+  </div>
+  <div class="card-body" style="padding:0">
+    <div style="overflow-x:auto">
+    <table class="err-table">
+      <thead>
+        <tr>
+          <th style="width:38%">Masalah</th>
+          <th>Yang harus dilakukan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dashboard kosong / tidak ada data</td>
+          <td>Ulangi langkah Publish to web. Pastikan pilih format TSV, bukan CSV atau lainnya.</td>
+        </tr>
+        <tr>
+          <td>Dashboard muncul, tapi data tidak tampil atau ada pesan error</td>
+          <td>Kirim Prompt 2 di Langkah 2. Jika masih gagal, salin pesan error yang terlihat dan kirim ke Claude.</td>
+        </tr>
+        <tr>
+          <td>Data lama, tidak update</td>
+          <td>Tunggu beberapa menit (Google butuh waktu memperbarui versi publish), lalu klik Reload. Jika tidak ada tombol, minta Claude menambahkannya.</td>
+        </tr>
+        <tr>
+          <td>Dashboard tidak rapi di HP</td>
+          <td>Kirim ke Claude: <em>"Perbaiki tampilan agar rapi saat dibuka di HP."</em></td>
+        </tr>
+        <tr>
+          <td>Link artifact tidak bisa dibuka orang lain</td>
+          <td>Cek pengaturan <strong>Share</strong> artifact — pastikan aksesnya sudah dibuka, bukan privat. Uji ulang di jendela incognito.</td>
+        </tr>
+        <tr>
+          <td>Menu "Publish to web" tidak bisa dipakai</td>
+          <td>Akun Google kantor/kampus kadang membatasi fitur ini. Hubungi admin, atau salin data ke spreadsheet di akun Google pribadi.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  Panduan ini dibuat dengan Claude.ai · Studi kasus: Dashboard CONNECT ETPD Jatim 2026
+</div>
+
+</div>
+
+<script>
+function copyText(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    btn.textContent = 'Tersalin ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Salin';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+document.querySelectorAll('.cl-item').forEach(item => {
+  const toggle = () => {
+    const done = item.classList.toggle('done');
+    item.setAttribute('aria-checked', done);
+  };
+  item.addEventListener('click', toggle);
+  item.addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+  });
+});
+</script>
+</body>
+</html>
