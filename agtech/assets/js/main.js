@@ -75,6 +75,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.event-card').forEach(card => {
+      card.style.display = (tab === 'all' || card.dataset.type === tab) ? '' : 'none';
+    });
   });
 });
 

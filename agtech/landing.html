@@ -1,6 +1,6 @@
 <title>Digital Agtech Indonesia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 
 <style>
 /* === TOKEN SYSTEM — Digital Agtech Indonesia ===
@@ -36,7 +36,7 @@
   --shadow-md: 0 4px 16px rgba(30,60,30,.12);
   --shadow-lg: 0 8px 32px rgba(30,60,30,.16);
 
-  --font-display: 'Lora', Georgia, serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
 
   --radius-sm:  6px;
@@ -84,6 +84,7 @@ body {
   max-width: 1440px;
   margin-inline: auto;
   font-family: var(--font-body);
+  font-size: 18px;
   background: var(--bg);
   color: var(--fg);
   line-height: 1.6;
@@ -461,7 +462,7 @@ section { padding-block: 80px; }
 }
 
 .current-event-body {
-  font-size: 15px;
+  font-size: 18px;
   color: var(--fg-muted);
   line-height: 1.7;
   margin-bottom: 16px;
@@ -483,6 +484,7 @@ section { padding-block: 80px; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
   padding: 14px 32px;
   border-radius: 14px;
   border: none;
@@ -496,7 +498,6 @@ section { padding-block: 80px; }
 .event-cta-row {
   display: flex;
   gap: 14px;
-  flex-wrap: wrap;
 }
 .event-cta-row .btn {
   flex: 1;
@@ -516,112 +517,118 @@ section { padding-block: 80px; }
 
 
 /* ── EVENT SCHEDULE ── */
-.event-schedule { background: var(--bg-soft); }
+.event-schedule { background: var(--bg); }
 
 .schedule-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1.4fr;
   gap: 64px;
-  align-items: center;
+  align-items: start;
 }
 
-.schedule-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.schedule-left .section-title { margin-bottom: 36px; }
+
+.schedule-events { display: flex; flex-direction: column; gap: 20px; }
+
+.schedule-event { display: flex; gap: 20px; align-items: stretch; }
+
+.schedule-date-card,
+.schedule-event-info {
+  background: var(--bg-soft);
+  border-radius: 14px;
 }
 
 .schedule-date-card {
-  background: var(--green-50);
-  border: 1.5px solid var(--green-100);
-  color: var(--green-900);
-  border-radius: 14px;
-  padding: 14px 20px;
-  display: inline-flex;
+  width: 104px;
+  flex-shrink: 0;
+  padding: 18px 12px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0;
+  justify-content: center;
 }
 
 .schedule-date-card .day-num {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 34px;
+  font-weight: 800;
   line-height: 1;
   color: var(--green-800);
 }
 
 .schedule-date-card .day-month {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--fg-subtle);
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  margin-top: 4px;
+  font-size: 15px;
+  color: var(--fg-muted);
+  margin-top: 6px;
 }
 
 .schedule-event-info {
   flex: 1;
+  padding: 22px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .schedule-event-info h4 {
-  font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--fg);
+  color: var(--fg-muted);
   margin-bottom: 4px;
 }
 
-.schedule-event-info p {
-  font-size: 13px;
-  color: var(--fg-subtle);
-}
+.schedule-event-info p { font-size: 15px; color: var(--fg-muted); }
 
 .rundown {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  background: var(--bg);
-  border-radius: 18px;
-  padding: 8px 24px;
-  border: 1.5px solid var(--border);
+  position: relative;
+  background: var(--bg-soft);
+  border-radius: 22px;
+  padding: 24px 32px;
 }
 
 .rundown-item {
+  position: relative;
   display: grid;
-  grid-template-columns: 20px 160px 1fr;
-  gap: 14px;
-  padding-block: 18px;
-  border-bottom: 1px solid var(--border);
+  grid-template-columns: 12px 180px 1fr;
+  gap: 18px;
+  padding-block: 13px;
   align-items: center;
 }
 
-.rundown-item:last-child { border-bottom: none; }
+/* vertical line linking the dots */
+.rundown-item::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: rgba(88,123,24,.25);
+}
+.rundown-item:first-child::before { top: 50%; }
+.rundown-item:last-child::before { bottom: 50%; }
 
 .rundown-dot {
-  width: 10px;
-  height: 10px;
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--green-700);
-  flex-shrink: 0;
 }
+.rundown-item:nth-child(1) .rundown-dot,
+.rundown-item:nth-child(6) .rundown-dot { background: #98a878; }
+.rundown-item:nth-child(3) .rundown-dot,
+.rundown-item:nth-child(4) .rundown-dot { background: var(--green-800); }
 
-.rundown-item:nth-child(n+4) .rundown-dot { background: var(--green-200, #b8d87a); opacity: .55; }
-
-.rundown-time {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--fg-subtle);
-  font-variant-numeric: tabular-nums;
-}
-
+.rundown-time,
 .rundown-event {
   font-size: 15px;
-  font-weight: 600;
-  color: var(--fg);
-  line-height: 1.4;
+  font-weight: 500;
+  color: var(--green-800);
+  font-variant-numeric: tabular-nums;
 }
+.rundown-event { line-height: 1.4; }
 
 /* ── SPEAKERS ── */
 .speakers { background: var(--bg); }
@@ -649,10 +656,10 @@ section { padding-block: 80px; }
   width: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: var(--green-100);
+  background: #f2f2ee;
 }
 
-.speaker-photo img { object-position: center top; }
+.speaker-photo img { object-position: center top; mix-blend-mode: multiply; }
 
 .speaker-info {
   padding: 20px;
@@ -782,6 +789,11 @@ section { padding-block: 80px; }
 /* ── UPCOMING EVENTS ── */
 .upcoming-events { background: var(--bg); }
 
+.section-head--center {
+  justify-content: center;
+  text-align: center;
+}
+
 .event-tabs {
   display: flex;
   gap: 4px;
@@ -789,6 +801,7 @@ section { padding-block: 80px; }
   border-radius: 50px;
   padding: 4px;
   width: fit-content;
+  margin-inline: auto;
   margin-bottom: 40px;
   border: 1px solid var(--border);
 }
@@ -814,8 +827,10 @@ section { padding-block: 80px; }
 
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
+  max-width: 800px;
+  margin-inline: auto;
 }
 
 .event-card {
@@ -835,64 +850,71 @@ section { padding-block: 80px; }
 
 .event-thumb {
   width: 100%;
-  aspect-ratio: 16/10;
+  aspect-ratio: 4/3;
   overflow: hidden;
   background: var(--green-100);
 }
 
-
 .event-body {
-  padding: 18px;
+  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
+.event-type-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green-700);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+}
+
 .event-title {
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--fg);
-  line-height: 1.4;
-  margin-bottom: 12px;
+  line-height: 1.3;
+  margin-bottom: 20px;
 }
 
 .event-meta {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
 .event-meta-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--fg-subtle);
+  gap: 10px;
+  font-size: 15px;
+  color: var(--fg-muted);
 }
 
-.event-meta-row svg { width: 12px; height: 12px; flex-shrink: 0; }
+.event-meta-row svg { width: 16px; height: 16px; flex-shrink: 0; }
 
 .detail-btn {
   margin-top: auto;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--green-700);
-  padding: 10px 18px;
-  border-radius: 8px;
-  background: var(--green-50);
-  border: 1px solid var(--green-100);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--green-700);
+  border: none;
   cursor: pointer;
-  border-width: 1px;
-  border-style: solid;
   font-family: var(--font-body);
   transition: background .15s;
   text-decoration: none;
 }
-.detail-btn:hover { background: var(--green-100); }
+.detail-btn:hover { background: var(--green-800); }
 
 /* ── GALLERY ── */
 .gallery { background: var(--bg-soft); }
@@ -1178,7 +1200,10 @@ section { padding-block: 80px; }
   .current-event-grid { grid-template-columns: 1fr; }
   .event-flyer { display: none; }
 
-  .schedule-grid { grid-template-columns: 1fr; }
+  .schedule-grid { grid-template-columns: 1fr; gap: 40px; }
+  .rundown { padding: 20px; }
+  .rundown-item { grid-template-columns: 12px 1fr; row-gap: 2px; }
+  .rundown-event { grid-column: 2; }
 
   .speakers-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -1246,8 +1271,6 @@ section { padding-block: 80px; }
         <ul class="dropdown">
           <li><a href="#program">Self-Learning Program</a></li>
           <li><a href="#program">Business Incubation</a></li>
-          <li><a href="#program">Jagoan Tani Banyuwangi</a></li>
-          <li><a href="#program">Kita Tani Muda Semarang</a></li>
         </ul>
       </li>
       <li class="nav-item">
@@ -1368,53 +1391,63 @@ section { padding-block: 80px; }
 <!-- EVENT SCHEDULE -->
 <section class="event-schedule">
   <div class="wrap">
-    <div class="section-head" style="margin-bottom:48px;">
-      <div>
-        <p class="eyebrow">Event Schedule</p>
-        <h2 class="section-title">Event Schedule</h2>
-      </div>
-    </div>
     <div class="schedule-grid">
       <div class="schedule-left">
-        <div class="schedule-date-card">
-          <span class="day-num">29</span>
-          <span class="day-month">Sep 2026</span>
-        </div>
-        <div class="schedule-event-info">
-          <h4>From Idea to Scale: Startup Pertanian</h4>
-          <p>Grow a Sustainable Agtech Startup</p>
+        <p class="eyebrow">Event Schedule</p>
+        <h2 class="section-title">Event Schedule</h2>
+        <div class="schedule-events">
+          <div class="schedule-event">
+            <div class="schedule-date-card">
+              <span class="day-num">29</span>
+              <span class="day-month">Sep 2026</span>
+            </div>
+            <div class="schedule-event-info">
+              <h4>From Idea to Scale: Startup Pertanian</h4>
+              <p>Webinar</p>
+            </div>
+          </div>
+          <div class="schedule-event">
+            <div class="schedule-date-card">
+              <span class="day-num">31</span>
+              <span class="day-month">Oct 2026</span>
+            </div>
+            <div class="schedule-event-info">
+              <h4>From Idea to Scale: Startup Pertanian</h4>
+              <p>Workshop</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="rundown">
         <div class="rundown-item">
           <span class="rundown-dot"></span>
-          <span class="rundown-time">09.00 AM &ndash; 10.00 AM</span>
-          <span class="rundown-event">Registration &amp; Welcome</span>
+          <span class="rundown-time">09.00 AM &ndash; 09.20 AM</span>
+          <span class="rundown-event">Opening &amp; Setting the Scene</span>
         </div>
         <div class="rundown-item">
           <span class="rundown-dot"></span>
-          <span class="rundown-time">10.00 AM &ndash; 11.00 AM</span>
-          <span class="rundown-event">Opening Keynote: Agriculture is the Next Frontier</span>
+          <span class="rundown-time">09.20 AM &ndash; 09.40 AM</span>
+          <span class="rundown-event">Keynote: Problem&ndash;Solution Fit</span>
         </div>
         <div class="rundown-item">
           <span class="rundown-dot"></span>
-          <span class="rundown-time">11.00 AM &ndash; 12.00 PM</span>
-          <span class="rundown-event">Building an Agritech Startup from Scratch</span>
+          <span class="rundown-time">09.40 AM &ndash; 09.50 AM</span>
+          <span class="rundown-event">Keynote: Market Fit &amp; Adoption</span>
         </div>
         <div class="rundown-item">
           <span class="rundown-dot"></span>
-          <span class="rundown-time">12.00 PM &ndash; 01.00 PM</span>
-          <span class="rundown-event">The Funding Landscape for Agritech</span>
+          <span class="rundown-time">09.50 AM &ndash; 10.00 AM</span>
+          <span class="rundown-event">Incubation, Investment &amp; Venture Perspectives</span>
         </div>
         <div class="rundown-item">
           <span class="rundown-dot"></span>
-          <span class="rundown-time">01.00 PM &ndash; 02.00 PM</span>
-          <span class="rundown-event">Panel Discussion: Lessons from the Field</span>
+          <span class="rundown-time">10.00 AM &ndash; 10.15 AM</span>
+          <span class="rundown-event">Sustainability, Growth &amp; Panel Discussion</span>
         </div>
         <div class="rundown-item">
           <span class="rundown-dot"></span>
-          <span class="rundown-time">02.00 PM &ndash; 03.00 PM</span>
-          <span class="rundown-event">Networking &amp; Startup Showcase</span>
+          <span class="rundown-time">10.15 AM &ndash; 11.00 AM</span>
+          <span class="rundown-event">Key Takeaways, Q&amp;A &amp; Closing</span>
         </div>
       </div>
     </div>
@@ -1429,14 +1462,14 @@ section { padding-block: 80px; }
         <p class="eyebrow">Our Speakers</p>
         <h2 class="section-title">Meet Our Speakers</h2>
       </div>
-      <a href="#" class="btn btn-outline btn-sm">
+      <a href="speakers.html" class="btn btn-outline btn-sm">
         View All Speakers
         <svg class="arrow-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg>
       </a>
     </div>
     <div class="speakers-grid">
       <div class="speaker-card">
-        <div class="speaker-photo"><img src="assets/img/speaker-ahmad.png" alt="Ahmad Syaifulloh" loading="lazy"></div>
+        <div class="speaker-photo"><img src="assets/img/speaker-ahmad.clean.png" alt="Ahmad Syaifulloh" loading="lazy"></div>
         <div class="speaker-info">
           <p class="speaker-name">Ahmad Syaifulloh</p>
           <p class="speaker-role">Precision agriculture, smart sensors &amp; data-driven farming</p>
@@ -1451,7 +1484,7 @@ section { padding-block: 80px; }
         </div>
       </div>
       <div class="speaker-card">
-        <div class="speaker-photo"><img src="assets/img/speaker-rossena.png" alt="Rossena Karisma Rosul" loading="lazy"></div>
+        <div class="speaker-photo"><img src="assets/img/speaker-rossena.clean.png" alt="Rossena Karisma Rosul" loading="lazy"></div>
         <div class="speaker-info">
           <p class="speaker-name">Rossena Karisma Rosul</p>
           <p class="speaker-role">AgTech innovation, startup ecosystem &amp; sustainable farming</p>
@@ -1466,7 +1499,7 @@ section { padding-block: 80px; }
         </div>
       </div>
       <div class="speaker-card">
-        <div class="speaker-photo"><img src="assets/img/speaker-aryo.png" alt="Aryo Wiryawan" loading="lazy"></div>
+        <div class="speaker-photo"><img src="assets/img/speaker-aryo.clean.png" alt="Aryo Wiryawan" loading="lazy"></div>
         <div class="speaker-info">
           <p class="speaker-name">Aryo Wiryawan</p>
           <p class="speaker-role">IoT deployment, supply chain &amp; agritech investment</p>
@@ -1481,7 +1514,7 @@ section { padding-block: 80px; }
         </div>
       </div>
       <div class="speaker-card">
-        <div class="speaker-photo"><img src="assets/img/speaker-andina.png" alt="Andina Paramitha" loading="lazy"></div>
+        <div class="speaker-photo"><img src="assets/img/speaker-andina.clean.png" alt="Andina Paramitha" loading="lazy"></div>
         <div class="speaker-info">
           <p class="speaker-name">Andina Paramitha</p>
           <p class="speaker-role">Agricultural policy, women in agritech &amp; rural entrepreneurship</p>
@@ -1555,97 +1588,57 @@ section { padding-block: 80px; }
 <!-- UPCOMING EVENTS -->
 <section class="upcoming-events" id="events">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head section-head--center">
       <div>
         <p class="eyebrow">Upcoming Events</p>
         <h2 class="section-title">Discover Events for Your Big Ideas</h2>
       </div>
     </div>
     <div class="event-tabs" role="tablist">
-      <button class="tab-btn active" data-tab="webinar">Webinar</button>
-      <button class="tab-btn" data-tab="seminar">Seminar</button>
+      <button class="tab-btn active" data-tab="all">All</button>
+      <button class="tab-btn" data-tab="webinar">Webinar</button>
       <button class="tab-btn" data-tab="workshop">Workshop</button>
     </div>
     <div class="events-grid" id="eventsGrid">
-      <div class="event-card">
-        <div class="event-thumb"><img src="assets/img/event-1.jpg" alt="Traktor di ladang dari udara" loading="lazy"></div>
+      <div class="event-card" data-type="webinar">
+        <div class="event-thumb"><img src="assets/img/event-1.jpg" alt="Webinar From Idea to Scale: Startup Pertanian" loading="lazy"></div>
         <div class="event-body">
-          <p class="event-title">Spotting Gaps in the Agriculture to Supply Chain</p>
+          <p class="event-type-label">Webinar</p>
+          <p class="event-title">From Idea to Scale:<br>Startup Pertanian</p>
           <div class="event-meta">
             <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="10" height="9" rx="1"/><line x1="1" y1="5" x2="11" y2="5"/><line x1="4" y1="1" x2="4" y2="3"/><line x1="8" y1="1" x2="8" y2="3"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="13" rx="1.5"/><line x1="1" y1="6" x2="15" y2="6"/><line x1="5" y1="1" x2="5" y2="4"/><line x1="11" y1="1" x2="11" y2="4"/></svg>
               29 September 2026
             </div>
             <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><polyline points="6 3 6 6 8 8"/></svg>
-              09.00 AM – 11.00 AM
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>
+              09:00 – 11:00 WIB
             </div>
             <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C4 1 2 2.8 2 5c0 3 4 7 4 7s4-4 4-7c0-2.2-2-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5C5.5 1.5 3 3.7 3 6.5c0 4 5 9 5 9s5-5 5-9c0-2.8-2.5-5-5-5z"/><circle cx="8" cy="6.5" r="2"/></svg>
               Zoom Meeting
             </div>
           </div>
           <a href="#" class="detail-btn">Detail Event →</a>
         </div>
       </div>
-      <div class="event-card">
-        <div class="event-thumb"><img src="assets/img/event-2.jpg" alt="Hamparan sawah hijau" loading="lazy"></div>
+      <div class="event-card" data-type="workshop">
+        <div class="event-thumb"><img src="assets/img/event-2.jpg" alt="Workshop From Idea to Scale: Startup Pertanian" loading="lazy"></div>
         <div class="event-body">
-          <p class="event-title">Regenerative Business Models for Farmers</p>
+          <p class="event-type-label">Workshop</p>
+          <p class="event-title">From Idea to Scale:<br>Startup Pertanian</p>
           <div class="event-meta">
             <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="10" height="9" rx="1"/><line x1="1" y1="5" x2="11" y2="5"/><line x1="4" y1="1" x2="4" y2="3"/><line x1="8" y1="1" x2="8" y2="3"/></svg>
-              04 October 2026
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="13" rx="1.5"/><line x1="1" y1="6" x2="15" y2="6"/><line x1="5" y1="1" x2="5" y2="4"/><line x1="11" y1="1" x2="11" y2="4"/></svg>
+              31 October 2026
             </div>
             <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><polyline points="6 3 6 6 8 8"/></svg>
-              10.00 AM – 02.00 PM
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><polyline points="8 4.5 8 8 10.5 10.5"/></svg>
+              08:00 – 16:00 WIB
             </div>
             <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C4 1 2 2.8 2 5c0 3 4 7 4 7s4-4 4-7c0-2.2-2-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
-              Zoom Meeting
-            </div>
-          </div>
-          <a href="#" class="detail-btn">Detail Event →</a>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-thumb"><img src="assets/img/event-3.jpg" alt="Presentasi di depan audiens" loading="lazy"></div>
-        <div class="event-body">
-          <p class="event-title">Raising Your First Ideas in AgTech Round</p>
-          <div class="event-meta">
-            <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="10" height="9" rx="1"/><line x1="1" y1="5" x2="11" y2="5"/><line x1="4" y1="1" x2="4" y2="3"/><line x1="8" y1="1" x2="8" y2="3"/></svg>
-              10 October 2026
-            </div>
-            <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><polyline points="6 3 6 6 8 8"/></svg>
-              01.00 PM – 03.00 PM
-            </div>
-            <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C4 1 2 2.8 2 5c0 3 4 7 4 7s4-4 4-7c0-2.2-2-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
-              Zoom Meeting
-            </div>
-          </div>
-          <a href="#" class="detail-btn">Detail Event →</a>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-thumb"><img src="assets/img/event-4.jpg" alt="Peneliti memeriksa tanaman di laboratorium" loading="lazy"></div>
-        <div class="event-body">
-          <p class="event-title">AI &amp; Sensors: The Next Farm Frontier Technology</p>
-          <div class="event-meta">
-            <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="10" height="9" rx="1"/><line x1="1" y1="5" x2="11" y2="5"/><line x1="4" y1="1" x2="4" y2="3"/><line x1="8" y1="1" x2="8" y2="3"/></svg>
-              18 October 2026
-            </div>
-            <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><polyline points="6 3 6 6 8 8"/></svg>
-              09.00 AM – 12.00 PM
-            </div>
-            <div class="event-meta-row">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C4 1 2 2.8 2 5c0 3 4 7 4 7s4-4 4-7c0-2.2-2-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
-              Zoom Meeting
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5C5.5 1.5 3 3.7 3 6.5c0 4 5 9 5 9s5-5 5-9c0-2.8-2.5-5-5-5z"/><circle cx="8" cy="6.5" r="2"/></svg>
+              Niat Baik Gn. Kawi, Malang
             </div>
           </div>
           <a href="#" class="detail-btn">Detail Event →</a>

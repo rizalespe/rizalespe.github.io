@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Speakers — Digital Agtech Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  --green-900: #081501;
+  --green-800: #1a4602;
+  --green-700: #587b18;
+  --green-600: #6a9620;
+  --green-500: #7db02a;
+  --green-400: #96c935;
+  --green-100: #deedb0;
+  --green-50:  #f0f7e0;
+  --lime:      #c9d829;
+  --lime-dark: #1a4602;
+  --fg:        #1a1f1a;
+  --fg-muted:  #4a5a4a;
+  --fg-subtle: #7a8a7a;
+  --bg:        #ffffff;
+  --bg-soft:   #f7faf7;
+  --bg-card:   #ffffff;
+  --border:    #ddeadd;
+  --shadow-sm: 0 1px 3px rgba(30,60,30,.08);
+  --shadow-md: 0 4px 16px rgba(30,60,30,.12);
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --content:   1440px;
+  --pad-x:     clamp(16px, 11.1vw, 160px);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  max-width: var(--content);
+  margin-inline: auto;
+  font-family: var(--font-body);
+  font-size: 18px;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+.wrap { max-width: var(--content); padding-inline: var(--pad-x); }
+
+/* ── NAVBAR ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 72px;
+}
+.nav-logo img { height: 48px; width: auto; }
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  margin-left: 8px;
+  flex: 1;
+}
+.nav-links a {
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg-muted);
+  transition: color .15s, background .15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--green-700); background: var(--green-50); }
+.nav-actions { display: flex; gap: 8px; margin-left: auto; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  border: none;
+}
+.btn-sm { padding: 8px 20px; font-size: 14px; }
+.btn-outline { border: 1.5px solid var(--green-700); color: var(--green-700); background: transparent; }
+.btn-outline:hover { background: var(--green-50); }
+.btn-primary { background: var(--green-700); color: #fff; }
+.btn-primary:hover { background: var(--green-800); }
+
+/* dropdown */
+.nav-item { position: relative; }
+.nav-links .nav-parent { cursor: default; user-select: none; }
+.nav-links .nav-parent:hover { color: var(--fg-muted); background: none; }
+.nav-links .nav-item:hover .nav-parent { color: var(--green-700); background: var(--green-50); }
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: var(--lime);
+  border-radius: 14px;
+  padding: 6px;
+  min-width: 220px;
+  list-style: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  z-index: 200;
+}
+.nav-item:hover .dropdown,
+.nav-item:focus-within .dropdown { display: block; }
+.dropdown a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lime-dark);
+  border-radius: 8px;
+}
+.dropdown a:hover { background: rgba(0,0,0,.06); }
+.dropdown li { list-style: none; }
+.dropdown li + li { border-top: 1px solid rgba(0,0,0,.08); }
+
+/* nav toggle */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.mobile-nav { display: none; flex-direction: column; gap: 4px; padding: 16px var(--pad-x); border-top: 1px solid var(--border); background: #fff; }
+.mobile-nav a { padding: 10px 0; font-size: 16px; font-weight: 500; border-bottom: 1px solid var(--border); }
+.mobile-nav-actions { display: flex; gap: 8px; padding-top: 8px; }
+.mobile-nav.open { display: flex; }
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--green-700);
+  padding: 48px var(--pad-x) 56px;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 24px;
+}
+.breadcrumb a { color: rgba(255,255,255,.6); }
+.breadcrumb a:hover { color: #fff; }
+.breadcrumb span { color: rgba(255,255,255,.9); font-weight: 600; }
+.page-hero-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+}
+
+/* ── SPEAKERS GRID ── */
+.speakers-page { padding: 64px var(--pad-x) 96px; }
+
+.speakers-grid-full {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 20px;
+}
+
+.speaker-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #efefe9;
+  box-shadow: 0 2px 10px rgba(40,50,20,.05);
+  transition: box-shadow .2s, transform .2s;
+}
+.speaker-card:hover {
+  box-shadow: 0 8px 24px rgba(40,50,20,.10);
+  transform: translateY(-3px);
+}
+.speaker-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f4f4ee;
+}
+.speaker-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.speaker-photo--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 700;
+  color: #c9cfba;
+}
+.speaker-info { padding: 20px 18px 22px; }
+.speaker-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1f3d06;
+  margin-bottom: 2px;
+}
+.speaker-role {
+  font-size: 13px;
+  color: #4a4f45;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+.speaker-socials { display: flex; gap: 8px; }
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #eef2e2;
+  transition: background .15s;
+}
+.social-btn:hover { background: #dfe8c6; }
+.social-btn svg { width: 14px; height: 14px; color: var(--green-700); }
+
+/* ── PAGINATION ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 56px;
+}
+.page-arrow, .page-numbers {
+  display: inline-flex;
+  align-items: center;
+  background: #f1f3ea;
+  border-radius: 50px;
+}
+.page-arrow {
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--green-700);
+}
+.page-arrow.disabled { color: #b8bfa8; pointer-events: none; }
+.page-arrow svg { width: 18px; height: 18px; }
+.page-numbers { gap: 2px; padding: 4px; }
+.page-numbers a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+.page-numbers a.active { background: var(--green-700); color: #fff; }
+.page-numbers a:not(.active):hover { color: var(--green-700); }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--green-700);
+  color: rgba(255,255,255,.7);
+  padding: 64px var(--pad-x) 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.footer-logo { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+.footer-body { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.5); margin-bottom: 20px; }
+.footer-socials { display: flex; gap: 10px; }
+.footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--lime);
+  transition: background .15s;
+}
+.footer-social-btn:hover { background: #d8e63a; }
+.footer-social-btn svg { width: 16px; height: 16px; color: var(--green-700); }
+.footer-col h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; letter-spacing: .04em; text-transform: uppercase; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 14px; color: rgba(255,255,255,.5); transition: color .15s; }
+.footer-links a:hover { color: #fff; }
+.footer-newsletter { display: flex; gap: 8px; margin-bottom: 20px; }
+.footer-input { flex: 1; padding: 10px 14px; border-radius: 8px; border: none; background: #fff; color: var(--fg); font-size: 14px; font-family: var(--font-body); outline: none; }
+.footer-input::placeholder { color: var(--fg-subtle); }
+.footer-go-btn { padding: 10px 18px; border-radius: 8px; background: var(--lime); border: none; color: var(--green-800); font-weight: 700; font-size: 14px; cursor: pointer; font-family: var(--font-body); transition: background .15s; }
+.footer-go-btn:hover { background: var(--green-400); }
+.footer-contact { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.8; }
+.footer-contact strong { color: rgba(255,255,255,.7); display: block; margin-bottom: 4px; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; gap: 16px; flex-wrap: wrap; }
+.footer-bottom p { font-size: 13px; color: rgba(255,255,255,.35); }
+.footer-bottom-links { display: flex; gap: 20px; list-style: none; }
+.footer-bottom-links a { font-size: 13px; color: rgba(255,255,255,.35); }
+.footer-bottom-links a:hover { color: rgba(255,255,255,.7); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .speakers-grid-full { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .speakers-grid-full { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .nav-links, .nav-actions { display: none; }
+  .nav-toggle { display: block; margin-left: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="wrap nav-inner">
+    <a href="landing.html" class="nav-logo">
+      <img src="assets/img/logo.png" alt="Digital Agtech Indonesia" width="114" height="72">
+    </a>
+    <ul class="nav-links">
+      <li><a href="landing.html">Home</a></li>
+      <li><a href="landing.html#about">About</a></li>
+      <li><a href="landing.html#events">Events</a></li>
+      <li><a href="landing.html#gallery">Gallery</a></li>
+      <li><a href="landing.html#news">News</a></li>
+      <li class="nav-item">
+        <a href="#" class="nav-parent" onclick="return false">Program</a>
+        <ul class="dropdown">
+          <li><a href="#">Self-Learning Program</a></li>
+          <li><a href="#">Business Incubation</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-parent" onclick="return false">Learning</a>
+        <ul class="dropdown">
+          <li><a href="#">Diagnose Test</a></li>
+          <li><a href="#">Courses</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="19" y2="6"/>
+        <line x1="3" y1="11" x2="19" y2="11"/>
+        <line x1="3" y1="16" x2="19" y2="16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="landing.html">Home</a>
+    <a href="landing.html#about">About</a>
+    <a href="landing.html#events">Events</a>
+    <a href="landing.html#gallery">Gallery</a>
+    <a href="landing.html#news">News</a>
+    <a href="#">Program</a>
+    <a href="#">Learning</a>
+    <div class="mobile-nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm" style="flex:1;justify-content:center">Login</a>
+      <a href="register.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Register</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="breadcrumb">
+    <a href="landing.html">Home</a>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 2 8 6 4 10"/></svg>
+    <span>Our Speakers</span>
+  </div>
+  <h1 class="page-hero-title">Meet Our Speakers</h1>
+</section>
+
+<!-- SPEAKERS GRID -->
+<section class="speakers-page">
+  <div class="speakers-grid-full">
+
+    <!-- Row 1 -->
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-ahmad-new.png" alt="Ahmad Syaifulloh" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Ahmad Syaifulloh</p>
+        <p class="speaker-role">CTO Chickin</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-rossena-new.png" alt="Rossena Karisma Rosul" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Rossena Karisma Rosul</p>
+        <p class="speaker-role">Founder FDS</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-aryo-new.png" alt="Aryo Wiryawan" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Aryo Wiryawan</p>
+        <p class="speaker-role">Founder JALA</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-andina-new.png" alt="Andina Paramitha" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Andina Paramitha</p>
+        <p class="speaker-role">Founder RVare.id</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-asri.png" alt="Asri Wijayanti" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Asri Wijayanti</p>
+        <p class="speaker-role">Founder MVP Room</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-pukka.png" alt="Pukka Simbolon" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Pukka Simbolon</p>
+        <p class="speaker-role">Founder Capcapung</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-catur.png" alt="Catur Sugiarto, Ph.D." loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Catur Sugiarto, Ph.D.</p>
+        <p class="speaker-role">President AIBI</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-rama.png" alt="Rama Mamuaya" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Rama Mamuaya</p>
+        <p class="speaker-role">Tech. Investment. Policy</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-dias.png" alt="Dias Satria, Ph.D." loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Dias Satria, Ph.D.</p>
+        <p class="speaker-role">Head of Innovation Universitas Brawijaya</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><img src="assets/img/speaker-justin.png" alt="Justin Ahmed" loading="lazy"></div>
+      <div class="speaker-info">
+        <p class="speaker-name">Justin Ahmed</p>
+        <p class="speaker-role">Beanstalk Australia</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo speaker-photo--empty" aria-label="Rachmat Anggara">RA</div>
+      <div class="speaker-info">
+        <p class="speaker-name">Rachmat Anggara</p>
+        <p class="speaker-role">CEO Qasir.id</p>
+        <div class="speaker-socials">
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="pagination" aria-label="Speakers pages">
+    <a href="#" class="page-arrow disabled" aria-label="Previous page"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="15" y1="9" x2="3" y2="9"/><polyline points="9 3 3 9 9 15"/></svg></a>
+    <div class="page-numbers">
+      <a href="#" class="active" aria-current="page">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+    </div>
+    <a href="#" class="page-arrow" aria-label="Next page"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="9 3 15 9 9 15"/></svg></a>
+  </nav>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Agtech</div>
+        <p class="footer-body">Southeast Asia's leading platform for agritech founders, innovators, and young agricultural entrepreneurs.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.23H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="footer-social-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3 1.9-1.2 2.7c-1.1 1.2-2.4 1.2-3 1.3-.4 0-2.6.2-5.8-2.1C10.3 6.8 8 4 8 4s3.2 2.5 5.6 3.6c-1.4-1.6-3-3.6-3-3.6s2 1.4 4.5 2.7C15.6 4.5 14.2 3 14.2 3s5.1 2.2 5.8 6.2c.4-.4.6-1 .6-1.7L23 7z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Events</h4>
+        <ul class="footer-links">
+          <li><a href="#">AgriStartup Summit 2026</a></li>
+          <li><a href="#">From Farm to Startup</a></li>
+          <li><a href="#">Funding Your Agritech Idea</a></li>
+          <li><a href="#">View All Events</a></li>
+          <li><a href="#">Past Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul class="footer-links">
+          <li><a href="speakers.html">Speakers</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;line-height:1.6;">Get early access to events, speaker announcements, and agritech insights.</p>
+        <div class="footer-newsletter">
+          <input type="email" class="footer-input" placeholder="Your email">
+          <button class="footer-go-btn">Go</button>
+        </div>
+        <div class="footer-contact">
+          <strong>Contact</strong>
+          agtech@gmail.com<br>
+          Malang, Indonesia
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 powered by Jagoan Indonesia. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+</script>
+</body>
+</html>
