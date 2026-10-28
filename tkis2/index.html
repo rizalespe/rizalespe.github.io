@@ -212,6 +212,32 @@ h2.title small{display:block;font-size:40px;font-family:'Nunito',sans-serif;font
 .krow .kd.got{border-style:solid;border-color:var(--c);box-shadow:0 8px 0 var(--c)}
 .krow .kd.now{transform:translateY(-14px) scale(1.08)}
 
+/* ---------- JARI (hand demo) ---------- */
+.s-jari{background:linear-gradient(180deg,#DDF6EA 0%,#F2FFF8 100%)}
+.s-jari h2.title{font-size:80px;top:44px}
+.jcam{position:absolute;left:100px;top:200px;width:1100px;height:619px;border-radius:48px;border:7px solid var(--navy);background:#0f1a3a;overflow:hidden;box-shadow:0 14px 0 rgba(22,33,79,.2)}
+.jcam video,.jcam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.jcam video{opacity:0;transition:opacity .5s}
+.s-jari.live .jcam video{opacity:1}
+.jcover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;color:#fff;text-align:center;padding:40px}
+.s-jari.live .jcover{display:none}
+.jcover .big{font-size:170px;line-height:1;animation:wiggle 1.6s ease-in-out infinite}
+.jmsg{font-size:38px;font-weight:800;color:#c9d3ff;max-width:820px;line-height:1.25}
+.s-jari.busy #jstart{opacity:.5;pointer-events:none}
+.jstop{position:absolute;right:22px;top:22px;z-index:2;font:800 28px 'Nunito',sans-serif;border:none;border-radius:30px;padding:10px 24px;background:rgba(255,255,255,.9);color:var(--navy);cursor:pointer;display:none}
+.s-jari.live .jstop{display:block}
+.jsteps{position:absolute;left:100px;width:1100px;top:868px;display:flex;gap:22px}
+.jsteps div{flex:1;background:#fff;border-radius:30px;padding:16px 18px;font-size:34px;font-weight:800;color:var(--navy);text-align:center;line-height:1.15;border:5px solid var(--c);box-shadow:0 8px 0 var(--c)}
+.jsteps b{font-family:'Baloo 2';color:var(--c);margin-right:6px}
+.jcard{position:absolute;right:100px;top:200px;width:580px;height:780px;background:#fff;border-radius:52px;border:7px solid var(--green);box-shadow:0 14px 0 #8fd9b0;display:flex;flex-direction:column;align-items:center;padding:36px 30px}
+.jcard .jl{font-size:42px;white-space:nowrap;font-weight:800;color:#5b6283;text-align:center;line-height:1.15}
+.jnum{font-family:'Baloo 2';font-weight:800;font-size:380px;line-height:1;color:var(--navy);height:420px;display:flex;align-items:center}
+.jnum.swap{animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+.jpips{display:flex;gap:16px}
+.jpip{width:84px;height:84px;border-radius:50%;border:5px dashed #cfd6e6;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:44px;color:#cfd6e6;transition:.3s}
+.jpip.on{border-style:solid;border-color:var(--c);background:var(--c);color:#fff;transform:scale(1.1);box-shadow:0 6px 0 rgba(0,0,0,.15)}
+.jcard .jw{margin-top:auto;font-family:'Baloo 2';font-weight:800;font-size:60px;color:var(--green)}
+
 /* ---------- COMPARE ---------- */
 .s-compare{background:linear-gradient(90deg,#FFF0F6 0%,#FFF0F6 50%,#E9F0FF 50%,#E9F0FF 100%)}
 .s-compare .cfig{position:absolute;top:70px;height:440px}
@@ -388,10 +414,10 @@ body.video #caption span{transition:opacity .3s}
 <!-- 4 QUIZ SERAGAM -->
 <section class="slide s-quiz" data-id="seragam" data-steps="1" data-quiz="1">
   <div class="qtag">Tebak, yuk!</div>
-  <h2 class="title">Seragam SMP warnanya apa? <i class=e-1f914></i></h2>
+  <h2 class="title">Seragam SD warnanya apa? <i class=e-1f914></i></h2>
   <div class="opts">
-    <button class="opt"><div class="ofig" data-fig="opt-sd"></div><div class="ol">Putih Merah</div></button>
-    <button class="opt" data-ok="1"><div class="ofig" data-fig="opt-smp"></div><div class="ol">Putih Biru</div></button>
+    <button class="opt" data-ok="1"><div class="ofig" data-fig="opt-sd"></div><div class="ol">Putih Merah</div></button>
+    <button class="opt"><div class="ofig" data-fig="opt-smp"></div><div class="ol">Putih Biru</div></button>
     <button class="opt"><div class="ofig" data-fig="opt-sma"></div><div class="ol">Putih Abu-abu</div></button>
   </div>
   <div class="feedback"></div>
@@ -473,6 +499,28 @@ body.video #caption span{transition:opacity .3s}
   <div class="kcard"><div class="ki"></div><div class="kt"><div class="kn"></div><div class="ks"></div></div></div>
   <div class="krow"></div>
   <img class="kkid pop" style="--d:.4s" data-img="12" alt="">
+</section>
+
+<!-- 9b DEMO JARI -->
+<section class="slide s-jari" data-id="jari" data-steps="1">
+  <h2 class="title">Komputer bisa menebak jarimu! <i class=e-1f44b></i></h2>
+  <div class="jcam">
+    <video playsinline muted></video>
+    <canvas class="jcv"></canvas>
+    <div class="jcover"><div class="big"><i class=e-1f44b></i></div><button class="tbtn" id="jstart">Nyalakan Kamera</button><div class="jmsg">Tunjukkan 1 sampai 5 jari ke kamera, ya!</div></div>
+    <button class="jstop" id="jstop">Matikan</button>
+  </div>
+  <div class="jsteps">
+    <div style="--c:#2F6FED"><b>1</b>Kamera melihat</div>
+    <div style="--c:#7C4DDB"><b>2</b>Cari kerangka</div>
+    <div style="--c:#22A863"><b>3</b>Hitung jari!</div>
+  </div>
+  <div class="jcard">
+    <div class="jl">Komputer menebak… <i class=e-1f914></i></div>
+    <div class="jnum">?</div>
+    <div class="jpips"><div class="jpip" style="--c:#F5B82E">1</div><div class="jpip" style="--c:#E5484D">2</div><div class="jpip" style="--c:#2F6FED">3</div><div class="jpip" style="--c:#22A863">4</div><div class="jpip" style="--c:#7C4DDB">5</div></div>
+    <div class="jw">jari! <i class=e-2728></i></div>
+  </div>
 </section>
 
 <!-- 10 COMPARE -->
@@ -699,19 +747,20 @@ const NARR={
   splash:["Assalamu'alaikum, adik-adik! Hari ini Bapak mau bercerita tentang satu cita-cita yang seru…","Bapak bekerja sebagai… DOSEN! Siapa yang pernah dengar kata dosen?"],
   tk:["Sebelum mulai, Bapak mau tanya dulu… Di TK IS 2, adik-adik belajar apa saja? Hayo, siapa yang mau jawab?","Mewarnai! Siapa yang suka mewarnai?","Bernyanyi! Wah, pasti suaranya bagus-bagus.","Berhitung! Satu, dua, tiga… pintar!","Mengaji dan berdoa! Masya Allah, hebat.","Mengenal huruf, A, B, C… sebentar lagi bisa membaca!","Bermain bersama teman-teman!","Hebat sekali! Semua itu bekal penting. Setelah TK, belajarnya akan makin seru!"],
   road:["Yuk kita lihat perjalanan belajar adik-adik, dari sekarang sampai besar nanti!","Adik-adik sekarang ada di sini: TK! Belajar warna, angka, dan cara berteman.","Setelah TK, masuk SD. Di SD, adik-adik bisa membaca buku sendiri dan keliling dunia lewat cerita!","Makin besar, makin penasaran! Di SMP, adik-adik mulai bertanya: kenapa? bagaimana?","Di SMA, mulai terasa: kamu suka apa? Hebat di bidang apa?","Dan akhirnya… KULIAH! Di sinilah kamu pilih satu ilmu dan jadi ahli!"],
-  seragam:["Nah, Bapak mau tanya. Seragam waktu SMP warnanya apa ya? Siapa yang mau maju dan pilih?"],
+  seragam:["Nah, Bapak mau tanya. Seragam anak SD warnanya apa ya? Siapa yang mau maju dan pilih?"],
   world:["Setelah SMA, adik-adik bisa kuliah di universitas. Universitas itu ada di mana ya?","Di Indonesia ada banyak sekali! Di Malang, Jakarta, Surabaya, Bali, dan kota-kota lain.","Bahkan di luar negeri juga ada! Di Malaysia, Jepang, Inggris, sampai Amerika!"],
   fields:["Di universitas, tiap orang boleh pilih satu ilmu yang paling disukai. Ada kedokteran, teknik, hukum, seni, pertanian…","Kalau mau bikin game dan robot, belajar apa ya? Ilmu Komputer!"],
   vote:["Kalau besar nanti, adik-adik mau bikin apa? Yuk maju satu-satu, sentuh gambar yang paling disukai!"],
   dosen:["Nah, ini Bapak! Bapak bekerja sebagai Dosen.","Dosen itu guru yang mengajar kakak-kakak mahasiswa di universitas.","Bapak mengajar Ilmu Komputer: ilmu tentang komputer, program, dan teknologi. Dengan ilmu ini, kita bisa bikin banyak hal seru!"],
   karya:["Yuk kita lihat satu per satu, apa saja yang bisa dibuat orang Ilmu Komputer!","Siapa yang suka main game? Game itu dibuat oleh orang Ilmu Komputer!","Aplikasi di HP yang dipakai Ayah dan Bunda, itu juga buatan ahli Ilmu Komputer!","Robot yang bisa jalan sendiri dan bisa bicara, itu hasil Ilmu Komputer!","Film kartun yang adik-adik tonton, dibuat pakai komputer!","Sekarang sudah ada mobil yang bisa jalan sendiri tanpa supir!","Mesin-mesin canggih di rumah sakit juga dibuat dengan Ilmu Komputer!","Dan semua yang ada di internet, itu karya orang Ilmu Komputer di seluruh dunia!"],
+  jari:["Sekarang Bapak mau tunjukkan keajaiban komputer! Siapa mau maju? Tunjukkan jarimu ke kamera: satu, dua, tiga, empat, lima! Garis-garis warna di tanganmu itu kerangka tangan yang dilihat komputer. Komputer menghitung jarimu sendiri. Ini juga dibuat dengan Ilmu Komputer!"],
   compare:["Bedanya Bapak dengan Ibu Guru di sini apa ya?","Ibu Guru mengajar adik-adik yang masih kecil. Bapak mengajar kakak-kakak mahasiswa.","Ibu Guru mengajar di sekolah TK. Bapak mengajar di universitas.","Di TK belajar mewarnai dan berhitung. Di kampus Bapak, belajar komputer dan coding.","Tapi ada yang sama: kita semua suka mengajar dan membantu orang lain belajar!"],
   q1:["Kuis final! Soal pertama: siapa yang mengajar di universitas?"],
   q2:["Soal kedua: mana yang dibuat oleh orang Ilmu Komputer?"],
   q3:["Soal terakhir: di mana dosen mengajar?"],
   close:["Adik-adik, perjalanan belajar kalian baru dimulai di TK ini…","Masih ada SD, SMP, SMA, dan kuliah yang menunggu. Perjalananmu baru dimulai dari sini!","Rajin belajar, pantang menyerah!","Nanti kalian bisa kuliah di mana saja, di Indonesia atau di luar negeri. Suatu hari, kita ketemu lagi di universitas!","Terima kasih, adik-adik! Semangat belajar ya. Wassalamu'alaikum!"]
 };
-const FEED={seragam:"Betul sekali! Putih biru itu seragam SMP.",q1:"Betul! Dosen mengajar di universitas. Seperti Bapak!",q2:"Ya! Aplikasi HP dibuat oleh ahli Ilmu Komputer!",q3:"Benar! Dosen mengajar di universitas, dan universitas ada di mana-mana!"};
+const FEED={seragam:"Betul sekali! Putih merah itu seragam SD.",q1:"Betul! Dosen mengajar di universitas. Seperti Bapak!",q2:"Ya! Aplikasi HP dibuat oleh ahli Ilmu Komputer!",q3:"Benar! Dosen mengajar di universitas, dan universitas ada di mana-mana!"};
 
 /* ===== Sound (WebAudio, no files) ===== */
 let AC=null, soundOn=true;
@@ -790,6 +839,76 @@ function showWin(){const m=Math.max(...votes);if(!m)return;setImg(vs.querySelect
   const b=vb[votes.indexOf(m)],r=b.getBoundingClientRect(),sr=stage.getBoundingClientRect(),k=1920/sr.width;confetti((r.left+r.width/2-sr.left)*k,(r.top-sr.top)*k+200,220);SFX.fan();
   if(VIDEO)setCap("Wah seru! Game dan robot bisa dipelajari di Ilmu Komputer, lho!");}
 
+/* hand demo: MediaPipe Hand Landmarker (needs internet + camera) */
+const JARI=(()=>{
+  const s=document.querySelector('.s-jari'),vid=s.querySelector('video'),cv=s.querySelector('.jcv'),g=cv.getContext('2d'),
+    num=s.querySelector('.jnum'),pips=[...s.querySelectorAll('.jpip')],msg=s.querySelector('.jmsg');
+  const MP='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14';
+  const MODEL='https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task';
+  const LINKS=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]];
+  const FC=['#F5B82E','#E5484D','#2F6FED','#22A863','#7C4DDB'];
+  const col=i=>i?FC[Math.floor((i-1)/4)]:'#fff';
+  let lm=null,stream=null,on=false,hist=[],shown=null,lastT=-1;
+  async function load(){
+    if(lm)return lm;
+    const V=await import(MP+'/vision_bundle.mjs'),fs=await V.FilesetResolver.forVisionTasks(MP+'/wasm');
+    const opt=d=>({baseOptions:{modelAssetPath:MODEL,delegate:d},runningMode:'VIDEO',numHands:1});
+    try{lm=await V.HandLandmarker.createFromOptions(fs,opt('GPU'));}catch(e){lm=await V.HandLandmarker.createFromOptions(fs,opt('CPU'));}
+    return lm;
+  }
+  function count(p){
+    const d=(a,b)=>Math.hypot(p[a].x-p[b].x,p[a].y-p[b].y);let n=0;
+    [[8,6],[12,10],[16,14],[20,18]].forEach(([t,j])=>{if(d(t,0)>d(j,0)*1.08)n++;});
+    if(d(4,17)>d(2,17)*1.15&&d(4,5)>d(3,5))n++;
+    return n;
+  }
+  function show(n){
+    if(n===shown)return;shown=n;
+    num.textContent=n===-1?'?':n;num.classList.remove('swap');void num.offsetWidth;num.classList.add('swap');
+    pips.forEach((p,i)=>p.classList.toggle('on',i<n));
+    if(n>0)SFX.pop();
+  }
+  function draw(p){
+    g.clearRect(0,0,cv.width,cv.height);if(!p)return;
+    const W=cv.width,Hh=cv.height,X=i=>p[i].x*W,Y=i=>p[i].y*Hh;
+    g.lineCap='round';
+    LINKS.forEach(([a,b])=>{g.beginPath();g.moveTo(X(a),Y(a));g.lineTo(X(b),Y(b));g.strokeStyle='#fff';g.lineWidth=16;g.stroke();
+      g.strokeStyle=col(b);g.lineWidth=9;g.stroke();});
+    p.forEach((_,i)=>{g.beginPath();g.arc(X(i),Y(i),i%4===0&&i?14:10,0,7);g.fillStyle='#fff';g.fill();g.lineWidth=5;g.strokeStyle=col(i);g.stroke();});
+  }
+  function tick(){
+    if(!on||!lm)return;
+    if(vid.readyState>=2&&vid.currentTime!==lastT){
+      lastT=vid.currentTime;
+      if(cv.width!==vid.videoWidth){cv.width=vid.videoWidth;cv.height=vid.videoHeight;}
+      const p=lm.detectForVideo(vid,performance.now()).landmarks[0];
+      draw(p);hist.push(p?count(p):-1);if(hist.length>8)hist.shift();
+      const c={};hist.forEach(v=>c[v]=(c[v]||0)+1);const [m,k]=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
+      if(k>=5)show(+m);
+    }
+    requestAnimationFrame(tick);
+  }
+  async function start(){
+    if(on)return;on=true;s.classList.add('busy');msg.textContent='Menyalakan kamera…';
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{width:1280,height:720,facingMode:'user'},audio:false});
+      if(!on)return stop();
+      vid.srcObject=stream;await vid.play();
+      msg.textContent='Komputer sedang bersiap…';await load();
+      if(!on)return;
+      s.classList.remove('busy');s.classList.add('live');tick();
+    }catch(e){console.warn(e);stop();msg.textContent='Kamera atau internet belum siap. Coba lagi, ya!';}
+  }
+  function stop(){
+    on=false;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;vid.srcObject=null;
+    s.classList.remove('live','busy');g.clearRect(0,0,cv.width,cv.height);hist=[];show(-1);
+    msg.textContent='Tunjukkan 1 sampai 5 jari ke kamera, ya!';
+  }
+  document.getElementById('jstart').onclick=e=>{e.stopPropagation();start();};
+  document.getElementById('jstop').onclick=e=>{e.stopPropagation();stop();};
+  return {stop};
+})();
+
 /* render */
 const stage=document.getElementById('stage'),notesEl=document.getElementById('notes'),capEl=document.querySelector('#caption span');
 function render(fwd){
@@ -803,7 +922,7 @@ function render(fwd){
   const total=slides.length;document.getElementById('count').textContent=(si+1)+' / '+total;
   document.getElementById('prog').style.width=((si+(st+1)/steps(s))/total*100)+'%';
 }
-function enterSlide(){const s=slides[si];if(s.dataset.quiz)resetQuiz(s);}
+function enterSlide(){const s=slides[si];if(s.dataset.quiz)resetQuiz(s);if(s.dataset.id!=='jari')JARI.stop();}
 function next(){ac();const s=slides[si];if(st<steps(s)-1){st++;}else if(si<slides.length-1){si++;st=0;enterSlide();}else return;render(true);}
 function prev(){ac();if(st>0){st--;}else if(si>0){si--;st=steps(slides[si])-1;enterSlide();}else return;render(false);}
 function go(i,s2){si=i;st=s2||0;enterSlide();render(false);}
